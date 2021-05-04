@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-05-04 Tue 18:27 -->
+<!-- 2021-05-04 Tue 18:36 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Time Series Examples</title>
@@ -230,7 +230,7 @@
 
 <tr>
 <td class="org-right"><b>Updated:</b></td>
-<td class="org-left"><i>2021-05-04 18:25:28</i></td>
+<td class="org-left"><i>2021-05-04 18:35:23</i></td>
 </tr>
 </tbody>
 </table>
@@ -242,62 +242,105 @@ Copyright 2020-2021 Mitch Richling. All rights reserved.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orge8859e7">1. Source Code and Files</a></li>
-<li><a href="#org09639b7">2. First Steps</a>
+<li><a href="#org4d65bed">1. Metadata</a></li>
+<li><a href="#org86ac27a">2. First Steps</a>
 <ul>
-<li><a href="#org0795186">2.1. First we create some data</a></li>
-<li><a href="#orgb6395c4">2.2. Construct time series object</a></li>
-<li><a href="#org0f75613">2.3. Plot our time series</a></li>
+<li><a href="#orgb64b75f">2.1. First we create some data</a></li>
+<li><a href="#org555a671">2.2. Construct time series object</a></li>
+<li><a href="#orgcbf9bfc">2.3. Plot our time series</a></li>
 </ul>
 </li>
-<li><a href="#org709050f">3. Decomposition</a>
+<li><a href="#org8a40447">3. Decomposition</a>
 <ul>
-<li><a href="#org9f84ac1">3.1. Decompose into an additive seasonal model</a></li>
-<li><a href="#org977529b">3.2. Plot our decomposition</a>
+<li><a href="#org55f958d">3.1. Decompose into an additive seasonal model</a></li>
+<li><a href="#orga82ab31">3.2. Plot our decomposition</a>
 <ul>
-<li><a href="#orgdd79837">3.2.1. With base</a></li>
-<li><a href="#org7e90566">3.2.2. With lattice</a></li>
-<li><a href="#org079c27d">3.2.3. With ggplot2</a></li>
-<li><a href="#org644214e">3.2.4. The KRAZY way</a></li>
+<li><a href="#orgc140911">3.2.1. With base</a></li>
+<li><a href="#org5943ae7">3.2.2. With lattice</a></li>
+<li><a href="#org957c839">3.2.3. With ggplot2</a></li>
+<li><a href="#orgc16d50f">3.2.4. The KRAZY way</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org6265e8c">4. Fitting</a>
+<li><a href="#org17c4e02">4. Fitting</a>
 <ul>
-<li><a href="#org807989c">4.1. Fit an arima model</a></li>
-<li><a href="#org4190409">4.2. predict the future</a></li>
-<li><a href="#orgef55a04">4.3. Compute error bounds at 95% confidence level</a></li>
-<li><a href="#org839b134">4.4. Plot  prediction</a></li>
+<li><a href="#org9b30965">4.1. Fit an arima model</a></li>
+<li><a href="#orgb4487fc">4.2. predict the future</a></li>
+<li><a href="#orgb6e1c1d">4.3. Compute error bounds at 95% confidence level</a></li>
+<li><a href="#org46297c6">4.4. Plot  prediction</a></li>
 </ul>
 </li>
-<li><a href="#orgce83484">5. Smoothing</a></li>
-<li><a href="#orgb4287db">6. Use lowess to smooth</a>
+<li><a href="#orgd1b9909">5. Smoothing</a></li>
+<li><a href="#org0220471">6. Use lowess to smooth</a>
 <ul>
-<li><a href="#orgc5e01b4">6.1. Put everything in a data.frame for ggplot</a></li>
-<li><a href="#org5cceb05">6.2. Plot it</a></li>
+<li><a href="#orgc5b2c4f">6.1. Put everything in a data.frame for ggplot</a></li>
+<li><a href="#org21e3714">6.2. Plot it</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orge8859e7" class="outline-2">
-<h2 id="orge8859e7"><span class="section-number-2">1</span> Source Code and Files</h2>
+<div id="outline-container-org4d65bed" class="outline-2">
+<h2 id="org4d65bed"><span class="section-number-2">1</span> Metadata</h2>
 <div class="outline-text-2" id="text-1">
-<ul class="org-ul">
-<li><a href="timeSeries.org">timeSeries.org</a></li>
-<li><a href="timeSeries.R">timeSeries.R</a></li>
-</ul>
+<p>
+The home for this HTML file is: <a href="https://richmit.github.io/ex-R/timeSeries.html">https://richmit.github.io/ex-R/timeSeries.html</a>
+</p>
+
+<p>
+Files related to this document may be found on github: <a href="https://github.com/richmit/ex-R">https://github.com/richmit/ex-R</a>
+</p>
+
+<p>
+Directory contents:
+</p>
+<table border="0" cellspacing="0" cellpadding="6" rules="none" frame="none" align="center">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left"><code>src</code></td>
+<td class="org-left">-</td>
+<td class="org-left">The org-mode file that generated this HTML document</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>docs</code></td>
+<td class="org-left">-</td>
+<td class="org-left">This html document</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>data</code></td>
+<td class="org-left">-</td>
+<td class="org-left">Data files</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>tangled</code></td>
+<td class="org-left">-</td>
+<td class="org-left">Tangled R code from this document</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 
-<div id="outline-container-org09639b7" class="outline-2">
-<h2 id="org09639b7"><span class="section-number-2">2</span> First Steps</h2>
+<div id="outline-container-org86ac27a" class="outline-2">
+<h2 id="org86ac27a"><span class="section-number-2">2</span> First Steps</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-org0795186" class="outline-3">
-<h3 id="org0795186"><span class="section-number-3">2.1</span> First we create some data</h3>
+<div id="outline-container-orgb64b75f" class="outline-3">
+<h3 id="orgb64b75f"><span class="section-number-3">2.1</span> First we create some data</h3>
 <div class="outline-text-3" id="text-2-1">
 <div class="org-src-container">
 <pre class="src src-R">daData          <span style="color: #8470ff; font-weight: bold;">&lt;-</span> data.frame(date=as.POSIXct(<span style="color: #fa8072;">'2012-01-01'</span>)+(1:365)*(60*60*24))
@@ -313,8 +356,8 @@ daData$val      <span style="color: #8470ff; font-weight: bold;">&lt;-</span> da
 </div>
 </div>
 
-<div id="outline-container-orgb6395c4" class="outline-3">
-<h3 id="orgb6395c4"><span class="section-number-3">2.2</span> Construct time series object</h3>
+<div id="outline-container-org555a671" class="outline-3">
+<h3 id="org555a671"><span class="section-number-3">2.2</span> Construct time series object</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 We use a frequency of 7 days
@@ -327,8 +370,8 @@ We use a frequency of 7 days
 </div>
 </div>
 
-<div id="outline-container-org0f75613" class="outline-3">
-<h3 id="org0f75613"><span class="section-number-3">2.3</span> Plot our time series</h3>
+<div id="outline-container-orgcbf9bfc" class="outline-3">
+<h3 id="orgcbf9bfc"><span class="section-number-3">2.3</span> Plot our time series</h3>
 <div class="outline-text-3" id="text-2-3">
 <div class="org-src-container">
 <pre class="src src-R">plot(daDataSeries)
@@ -336,7 +379,7 @@ We use a frequency of 7 days
 </div>
 
 
-<div id="org6ece25b" class="figure">
+<div id="org3635840" class="figure">
 <p><img src="figures/timeSeries/ts-basic.png" alt="ts-basic.png" />  
 </p>
 </div>
@@ -344,12 +387,12 @@ We use a frequency of 7 days
 </div>
 </div>
 
-<div id="outline-container-org709050f" class="outline-2">
-<h2 id="org709050f"><span class="section-number-2">3</span> Decomposition</h2>
+<div id="outline-container-org8a40447" class="outline-2">
+<h2 id="org8a40447"><span class="section-number-2">3</span> Decomposition</h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-org9f84ac1" class="outline-3">
-<h3 id="org9f84ac1"><span class="section-number-3">3.1</span> Decompose into an additive seasonal model</h3>
+<div id="outline-container-org55f958d" class="outline-3">
+<h3 id="org55f958d"><span class="section-number-3">3.1</span> Decompose into an additive seasonal model</h3>
 <div class="outline-text-3" id="text-3-1">
 <div class="org-src-container">
 <pre class="src src-R">daDataDecomp <span style="color: #8470ff; font-weight: bold;">&lt;-</span> decompose(daDataSeries, type=<span style="color: #fa8072;">'add'</span>)
@@ -358,12 +401,12 @@ We use a frequency of 7 days
 </div>
 </div>
 
-<div id="outline-container-org977529b" class="outline-3">
-<h3 id="org977529b"><span class="section-number-3">3.2</span> Plot our decomposition</h3>
+<div id="outline-container-orga82ab31" class="outline-3">
+<h3 id="orga82ab31"><span class="section-number-3">3.2</span> Plot our decomposition</h3>
 <div class="outline-text-3" id="text-3-2">
 </div>
-<div id="outline-container-orgdd79837" class="outline-4">
-<h4 id="orgdd79837"><span class="section-number-4">3.2.1</span> With base</h4>
+<div id="outline-container-orgc140911" class="outline-4">
+<h4 id="orgc140911"><span class="section-number-4">3.2.1</span> With base</h4>
 <div class="outline-text-4" id="text-3-2-1">
 <div class="org-src-container">
 <pre class="src src-R">plot(daDataDecomp)
@@ -371,15 +414,15 @@ We use a frequency of 7 days
 </div>
 
 
-<div id="orgfee8f92" class="figure">
+<div id="orged840ef" class="figure">
 <p><img src="figures/timeSeries/decomp-base.png" alt="decomp-base.png" />  
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org7e90566" class="outline-4">
-<h4 id="org7e90566"><span class="section-number-4">3.2.2</span> With lattice</h4>
+<div id="outline-container-org5943ae7" class="outline-4">
+<h4 id="org5943ae7"><span class="section-number-4">3.2.2</span> With lattice</h4>
 <div class="outline-text-4" id="text-3-2-2">
 <div class="org-src-container">
 <pre class="src src-R">xyplot(daData$val + daDataDecomp$trend + daDataDecomp$seasonal + daDataDecomp$random ~ daData$date, 
@@ -391,15 +434,15 @@ We use a frequency of 7 days
 </div>
 
 
-<div id="org437a5f0" class="figure">
+<div id="orgb9179f5" class="figure">
 <p><img src="figures/timeSeries/decomp-lattice.png" alt="decomp-lattice.png" />  
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org079c27d" class="outline-4">
-<h4 id="org079c27d"><span class="section-number-4">3.2.3</span> With ggplot2</h4>
+<div id="outline-container-org957c839" class="outline-4">
+<h4 id="org957c839"><span class="section-number-4">3.2.3</span> With ggplot2</h4>
 <div class="outline-text-4" id="text-3-2-3">
 <div class="org-src-container">
 <pre class="src src-R">daDataDecompDF <span style="color: #8470ff; font-weight: bold;">&lt;-</span> data.table(date=daData$date, 
@@ -416,15 +459,15 @@ ggplot(data=daDataDecompDF, aes(x=date)) +
 </div>
 
 
-<div id="org000c849" class="figure">
+<div id="org6174972" class="figure">
 <p><img src="figures/timeSeries/decomp-ggplot.png" alt="decomp-ggplot.png" />
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org644214e" class="outline-4">
-<h4 id="org644214e"><span class="section-number-4">3.2.4</span> The KRAZY way</h4>
+<div id="outline-container-orgc16d50f" class="outline-4">
+<h4 id="orgc16d50f"><span class="section-number-4">3.2.4</span> The KRAZY way</h4>
 <div class="outline-text-4" id="text-3-2-4">
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #8470ff; font-weight: bold;">par</span>(mfcol=c(4,1))
@@ -455,7 +498,7 @@ text(mean(<span style="color: #8470ff; font-weight: bold;">par</span>(<span styl
 </div>
 
 
-<div id="orgd59e7e3" class="figure">
+<div id="org99e3ae0" class="figure">
 <p><img src="figures/timeSeries/decomp-krazy.png" alt="decomp-krazy.png" />  
 </p>
 </div>
@@ -464,12 +507,12 @@ text(mean(<span style="color: #8470ff; font-weight: bold;">par</span>(<span styl
 </div>
 </div>
 
-<div id="outline-container-org6265e8c" class="outline-2">
-<h2 id="org6265e8c"><span class="section-number-2">4</span> Fitting</h2>
+<div id="outline-container-org17c4e02" class="outline-2">
+<h2 id="org17c4e02"><span class="section-number-2">4</span> Fitting</h2>
 <div class="outline-text-2" id="text-4">
 </div>
-<div id="outline-container-org807989c" class="outline-3">
-<h3 id="org807989c"><span class="section-number-3">4.1</span> Fit an arima model</h3>
+<div id="outline-container-org9b30965" class="outline-3">
+<h3 id="org9b30965"><span class="section-number-3">4.1</span> Fit an arima model</h3>
 <div class="outline-text-3" id="text-4-1">
 <div class="org-src-container">
 <pre class="src src-R">fit <span style="color: #8470ff; font-weight: bold;">&lt;-</span> arima(daDataSeries, order=c(5,0,0), seasonal=list(order=c(2,1,0), period=7))
@@ -494,8 +537,8 @@ sigma^2 estimated as 0.09406:  log likelihood = -87.07,  aic = 190.14
 </div>
 </div>
 
-<div id="outline-container-org4190409" class="outline-3">
-<h3 id="org4190409"><span class="section-number-3">4.2</span> predict the future</h3>
+<div id="outline-container-orgb4487fc" class="outline-3">
+<h3 id="orgb4487fc"><span class="section-number-3">4.2</span> predict the future</h3>
 <div class="outline-text-3" id="text-4-2">
 <div class="org-src-container">
 <pre class="src src-R">fore <span style="color: #8470ff; font-weight: bold;">&lt;-</span> predict(fit, n.ahead=7*5)
@@ -504,8 +547,8 @@ sigma^2 estimated as 0.09406:  log likelihood = -87.07,  aic = 190.14
 </div>
 </div>
 
-<div id="outline-container-orgef55a04" class="outline-3">
-<h3 id="orgef55a04"><span class="section-number-3">4.3</span> Compute error bounds at 95% confidence level</h3>
+<div id="outline-container-orgb6e1c1d" class="outline-3">
+<h3 id="orgb6e1c1d"><span class="section-number-3">4.3</span> Compute error bounds at 95% confidence level</h3>
 <div class="outline-text-3" id="text-4-3">
 <div class="org-src-container">
 <pre class="src src-R">U <span style="color: #8470ff; font-weight: bold;">&lt;-</span> fore$pred + 2*fore$se
@@ -515,8 +558,8 @@ L <span style="color: #8470ff; font-weight: bold;">&lt;-</span> fore$pred - 2*fo
 </div>
 </div>
 
-<div id="outline-container-org839b134" class="outline-3">
-<h3 id="org839b134"><span class="section-number-3">4.4</span> Plot  prediction</h3>
+<div id="outline-container-org46297c6" class="outline-3">
+<h3 id="org46297c6"><span class="section-number-3">4.4</span> Plot  prediction</h3>
 <div class="outline-text-3" id="text-4-4">
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #8470ff; font-weight: bold;">par</span>(mfcol=c(1,1))
@@ -527,7 +570,7 @@ legend(<span style="color: #fa8072;">"topleft"</span>, c(<span style="color: #fa
 </div>
 
 
-<div id="orgd64daad" class="figure">
+<div id="orgf115212" class="figure">
 <p><img src="figures/timeSeries/fore-ts.png" alt="fore-ts.png" />  
 </p>
 </div>
@@ -535,12 +578,12 @@ legend(<span style="color: #fa8072;">"topleft"</span>, c(<span style="color: #fa
 </div>
 </div>
 
-<div id="outline-container-orgce83484" class="outline-2">
-<h2 id="orgce83484"><span class="section-number-2">5</span> Smoothing</h2>
+<div id="outline-container-orgd1b9909" class="outline-2">
+<h2 id="orgd1b9909"><span class="section-number-2">5</span> Smoothing</h2>
 </div>
 
-<div id="outline-container-orgb4287db" class="outline-2">
-<h2 id="orgb4287db"><span class="section-number-2">6</span> Use lowess to smooth</h2>
+<div id="outline-container-org0220471" class="outline-2">
+<h2 id="org0220471"><span class="section-number-2">6</span> Use lowess to smooth</h2>
 <div class="outline-text-2" id="text-6">
 <div class="org-src-container">
 <pre class="src src-R">smoothedData <span style="color: #8470ff; font-weight: bold;">&lt;-</span> lowess(daData$idate, daData$val, f=.3)
@@ -548,8 +591,8 @@ legend(<span style="color: #fa8072;">"topleft"</span>, c(<span style="color: #fa
 </div>
 </div>
 
-<div id="outline-container-orgc5e01b4" class="outline-3">
-<h3 id="orgc5e01b4"><span class="section-number-3">6.1</span> Put everything in a data.frame for ggplot</h3>
+<div id="outline-container-orgc5b2c4f" class="outline-3">
+<h3 id="orgc5b2c4f"><span class="section-number-3">6.1</span> Put everything in a data.frame for ggplot</h3>
 <div class="outline-text-3" id="text-6-1">
 <p>
 Notice that we convert the integers we got from lowess at the same time.
@@ -566,8 +609,8 @@ Notice that we convert the integers we got from lowess at the same time.
 </div>
 </div>
 
-<div id="outline-container-org5cceb05" class="outline-3">
-<h3 id="org5cceb05"><span class="section-number-3">6.2</span> Plot it</h3>
+<div id="outline-container-org21e3714" class="outline-3">
+<h3 id="org21e3714"><span class="section-number-3">6.2</span> Plot it</h3>
 <div class="outline-text-3" id="text-6-2">
 <div class="org-src-container">
 <pre class="src src-R">ggplot(allDat, aes(x=date, y=val, col=smoother)) +
@@ -577,7 +620,7 @@ Notice that we convert the integers we got from lowess at the same time.
 </div>
 
 
-<div id="org7af2b3d" class="figure">
+<div id="org92bad6f" class="figure">
 <p><img src="figures/timeSeries/smooth.png" alt="smooth.png" />  
 </p>
 </div>
@@ -586,7 +629,7 @@ Notice that we convert the integers we got from lowess at the same time.
 </div>
 </div>
 <div id="postamble" class="status">
-Created by Mitch Richling <<a href="mailto:http://www.mitchr.me/">http://www.mitchr.me/</a>>.  Rendered on 2021-05-04 Tue 18:27 via <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.4.5)
+Created by Mitch Richling <<a href="mailto:http://www.mitchr.me/">http://www.mitchr.me/</a>>.  Rendered on 2021-05-04 Tue 18:36 via <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.4.5)
 </div>
 </body>
 </html>

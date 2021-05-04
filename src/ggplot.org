@@ -36,10 +36,18 @@ Copyright 2020-2021 Mitch Richling. All rights reserved.
 #        #         #         #         #         #         #         #         #         #         #         #         #         #         #         #         #         #
 #        #         #         #         #         #         #         #         #         #         #         #         #         #         #         #         #         #
 
-* Source Code and Files
+* Metadata
 
-  - file:ggplot.org
-  - file:ggplot.R
+The home for this HTML file is: https://richmit.github.io/ex-R/ggplot.html
+
+Files related to this document may be found on github: https://github.com/richmit/ex-R
+
+Directory contents:
+#+ATTR_HTML: :border 0 :frame none :rules none :align center
+   | =src=     | - | The org-mode file that generated this HTML document |
+   | =docs=    | - | This html document                                  |
+   | =data=    | - | Data files                                          |
+   | =tangled= | - | Tangled R code from this document                   |
 
 * Setup
 

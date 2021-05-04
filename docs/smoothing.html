@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-05-04 Tue 18:27 -->
+<!-- 2021-05-04 Tue 18:36 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Data Smoothing</title>
@@ -230,7 +230,7 @@
 
 <tr>
 <td class="org-right"><b>Updated:</b></td>
-<td class="org-left"><i>2021-05-04 17:58:03</i></td>
+<td class="org-left"><i>2021-05-04 18:35:06</i></td>
 </tr>
 </tbody>
 </table>
@@ -242,38 +242,81 @@ Copyright 2020-2021 Mitch Richling. All rights reserved.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org4b0737b">1. Source Code and Files</a></li>
-<li><a href="#orga08acae">2. Example Data</a></li>
-<li><a href="#orgc3e5125">3. Various Smoothers</a>
+<li><a href="#org0071101">1. Metadata</a></li>
+<li><a href="#org95c6157">2. Example Data</a></li>
+<li><a href="#orgb4fcdc0">3. Various Smoothers</a>
 <ul>
-<li><a href="#org7b88203">3.1. Compute various smoothed data sets</a></li>
-<li><a href="#org2bd19de">3.2. Put it all in a data.frame for ggplot</a></li>
-<li><a href="#org6e98a24">3.3. Plot them all</a></li>
+<li><a href="#org81027be">3.1. Compute various smoothed data sets</a></li>
+<li><a href="#orgee21b38">3.2. Put it all in a data.frame for ggplot</a></li>
+<li><a href="#org3345c34">3.3. Plot them all</a></li>
 </ul>
 </li>
-<li><a href="#org2247292">4. Lowess f values</a>
+<li><a href="#orgc171a91">4. Lowess f values</a>
 <ul>
-<li><a href="#orge595859">4.1. Compute three lowess smoothings with different f values</a></li>
-<li><a href="#orgadc0b4d">4.2. Put all of our lowess curves into a data.frame with the original data so we can plot it all with ggplot</a></li>
-<li><a href="#org03c87b5">4.3. Plot them all</a></li>
+<li><a href="#org4df9b97">4.1. Compute three lowess smoothings with different f values</a></li>
+<li><a href="#org013232f">4.2. Put all of our lowess curves into a data.frame with the original data so we can plot it all with ggplot</a></li>
+<li><a href="#org586862b">4.3. Plot them all</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org4b0737b" class="outline-2">
-<h2 id="org4b0737b"><span class="section-number-2">1</span> Source Code and Files</h2>
+<div id="outline-container-org0071101" class="outline-2">
+<h2 id="org0071101"><span class="section-number-2">1</span> Metadata</h2>
 <div class="outline-text-2" id="text-1">
-<ul class="org-ul">
-<li><a href="smoothing.org">smoothing.org</a></li>
-<li><a href="smoothing.R">smoothing.R</a></li>
-</ul>
+<p>
+The home for this HTML file is: <a href="https://richmit.github.io/ex-R/smoothing.html">https://richmit.github.io/ex-R/smoothing.html</a>
+</p>
+
+<p>
+Files related to this document may be found on github: <a href="https://github.com/richmit/ex-R">https://github.com/richmit/ex-R</a>
+</p>
+
+<p>
+Directory contents:
+</p>
+<table border="0" cellspacing="0" cellpadding="6" rules="none" frame="none" align="center">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left"><code>src</code></td>
+<td class="org-left">-</td>
+<td class="org-left">The org-mode file that generated this HTML document</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>docs</code></td>
+<td class="org-left">-</td>
+<td class="org-left">This html document</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>data</code></td>
+<td class="org-left">-</td>
+<td class="org-left">Data files</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>tangled</code></td>
+<td class="org-left">-</td>
+<td class="org-left">Tangled R code from this document</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 
-<div id="outline-container-orga08acae" class="outline-2">
-<h2 id="orga08acae"><span class="section-number-2">2</span> Example Data</h2>
+<div id="outline-container-org95c6157" class="outline-2">
+<h2 id="org95c6157"><span class="section-number-2">2</span> Example Data</h2>
 <div class="outline-text-2" id="text-2">
 <div class="org-src-container">
 <pre class="src src-R">nPts <span style="color: #8470ff; font-weight: bold;">&lt;-</span> 150
@@ -284,12 +327,12 @@ yDat <span style="color: #8470ff; font-weight: bold;">&lt;-</span> rnorm(nPts, m
 </div>
 </div>
 
-<div id="outline-container-orgc3e5125" class="outline-2">
-<h2 id="orgc3e5125"><span class="section-number-2">3</span> Various Smoothers</h2>
+<div id="outline-container-orgb4fcdc0" class="outline-2">
+<h2 id="orgb4fcdc0"><span class="section-number-2">3</span> Various Smoothers</h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-org7b88203" class="outline-3">
-<h3 id="org7b88203"><span class="section-number-3">3.1</span> Compute various smoothed data sets</h3>
+<div id="outline-container-org81027be" class="outline-3">
+<h3 id="org81027be"><span class="section-number-3">3.1</span> Compute various smoothed data sets</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 Some methods produce objects with new X data while others just produce new Y data.
@@ -313,8 +356,8 @@ smDatSupSmu     <span style="color: #8470ff; font-weight: bold;">&lt;-</span> su
 </div>
 </div>
 
-<div id="outline-container-org2bd19de" class="outline-3">
-<h3 id="org2bd19de"><span class="section-number-3">3.2</span> Put it all in a data.frame for ggplot</h3>
+<div id="outline-container-orgee21b38" class="outline-3">
+<h3 id="orgee21b38"><span class="section-number-3">3.2</span> Put it all in a data.frame for ggplot</h3>
 <div class="outline-text-3" id="text-3-2">
 <div class="org-src-container">
 <pre class="src src-R">allDat <span style="color: #8470ff; font-weight: bold;">&lt;-</span> rbind(data.frame(smoother=rep(<span style="color: #fa8072;">'actual'</span>,   nPts), x=xDat,           y=yDat),
@@ -330,8 +373,8 @@ smDatSupSmu     <span style="color: #8470ff; font-weight: bold;">&lt;-</span> su
 </div>
 </div>
 
-<div id="outline-container-org6e98a24" class="outline-3">
-<h3 id="org6e98a24"><span class="section-number-3">3.3</span> Plot them all</h3>
+<div id="outline-container-org3345c34" class="outline-3">
+<h3 id="org3345c34"><span class="section-number-3">3.3</span> Plot them all</h3>
 <div class="outline-text-3" id="text-3-3">
 <div class="org-src-container">
 <pre class="src src-R">ggplot(allDat, aes(x=x, y=y, col=smoother)) +
@@ -341,7 +384,7 @@ smDatSupSmu     <span style="color: #8470ff; font-weight: bold;">&lt;-</span> su
 </div>
 
 
-<div id="org6c26941" class="figure">
+<div id="org1d76a5f" class="figure">
 <p><img src="figures/smoothing/dif.png" alt="dif.png" />  
 </p>
 </div>
@@ -349,12 +392,12 @@ smDatSupSmu     <span style="color: #8470ff; font-weight: bold;">&lt;-</span> su
 </div>
 </div>
 
-<div id="outline-container-org2247292" class="outline-2">
-<h2 id="org2247292"><span class="section-number-2">4</span> Lowess f values</h2>
+<div id="outline-container-orgc171a91" class="outline-2">
+<h2 id="orgc171a91"><span class="section-number-2">4</span> Lowess f values</h2>
 <div class="outline-text-2" id="text-4">
 </div>
-<div id="outline-container-orge595859" class="outline-3">
-<h3 id="orge595859"><span class="section-number-3">4.1</span> Compute three lowess smoothings with different f values</h3>
+<div id="outline-container-org4df9b97" class="outline-3">
+<h3 id="org4df9b97"><span class="section-number-3">4.1</span> Compute three lowess smoothings with different f values</h3>
 <div class="outline-text-3" id="text-4-1">
 <div class="org-src-container">
 <pre class="src src-R">smDatLowess0d05   <span style="color: #8470ff; font-weight: bold;">&lt;-</span> lowess(xDat, yDat, f=.05)
@@ -365,8 +408,8 @@ smDatLowess0d50   <span style="color: #8470ff; font-weight: bold;">&lt;-</span> 
 </div>
 </div>
 
-<div id="outline-container-orgadc0b4d" class="outline-3">
-<h3 id="orgadc0b4d"><span class="section-number-3">4.2</span> Put all of our lowess curves into a data.frame with the original data so we can plot it all with ggplot</h3>
+<div id="outline-container-org013232f" class="outline-3">
+<h3 id="org013232f"><span class="section-number-3">4.2</span> Put all of our lowess curves into a data.frame with the original data so we can plot it all with ggplot</h3>
 <div class="outline-text-3" id="text-4-2">
 <div class="org-src-container">
 <pre class="src src-R">allDat <span style="color: #8470ff; font-weight: bold;">&lt;-</span> rbind(data.frame(smoother=rep(<span style="color: #fa8072;">'actual'</span>,       nPts), x=xDat,           y=yDat),
@@ -380,8 +423,8 @@ smDatLowess0d50   <span style="color: #8470ff; font-weight: bold;">&lt;-</span> 
 </div>
 </div>
 
-<div id="outline-container-org03c87b5" class="outline-3">
-<h3 id="org03c87b5"><span class="section-number-3">4.3</span> Plot them all</h3>
+<div id="outline-container-org586862b" class="outline-3">
+<h3 id="org586862b"><span class="section-number-3">4.3</span> Plot them all</h3>
 <div class="outline-text-3" id="text-4-3">
 <div class="org-src-container">
 <pre class="src src-R">ggplot(allDat, aes(x=x, y=y, col=smoother)) +
@@ -392,7 +435,7 @@ smDatLowess0d50   <span style="color: #8470ff; font-weight: bold;">&lt;-</span> 
 </div>
 
 
-<div id="org71eaaac" class="figure">
+<div id="org824d4e4" class="figure">
 <p><img src="figures/smoothing/low.png" alt="low.png" />  
 </p>
 </div>
@@ -401,7 +444,7 @@ smDatLowess0d50   <span style="color: #8470ff; font-weight: bold;">&lt;-</span> 
 </div>
 </div>
 <div id="postamble" class="status">
-Created by Mitch Richling <<a href="mailto:http://www.mitchr.me/">http://www.mitchr.me/</a>>.  Rendered on 2021-05-04 Tue 18:27 via <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.4.5)
+Created by Mitch Richling <<a href="mailto:http://www.mitchr.me/">http://www.mitchr.me/</a>>.  Rendered on 2021-05-04 Tue 18:36 via <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.4.5)
 </div>
 </body>
 </html>

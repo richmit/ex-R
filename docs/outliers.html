@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-05-04 Tue 18:27 -->
+<!-- 2021-05-04 Tue 18:35 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Outliers</title>
@@ -230,7 +230,7 @@
 
 <tr>
 <td class="org-right"><b>Updated:</b></td>
-<td class="org-left"><i>2021-05-04 18:17:26</i></td>
+<td class="org-left"><i>2021-05-04 18:34:17</i></td>
 </tr>
 </tbody>
 </table>
@@ -242,18 +242,72 @@ Copyright 2020-2021 Mitch Richling. All rights reserved.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org6fdd175">1. Example Data</a></li>
-<li><a href="#orgd6fb5e4">2. Good Old 3 sigma rule</a></li>
-<li><a href="#org33faf7e">3. Hampel identifier</a></li>
-<li><a href="#org3937f70">4. boxplot rule</a></li>
-<li><a href="#org9c73e2b">5. Plot it all</a></li>
+<li><a href="#orgaf90032">1. Metadata</a></li>
+<li><a href="#orgbe1f480">2. Example Data</a></li>
+<li><a href="#orge6321ae">3. Good Old 3 sigma rule</a></li>
+<li><a href="#org1aac5ff">4. Hampel identifier</a></li>
+<li><a href="#orgd1173ad">5. boxplot rule</a></li>
+<li><a href="#org6d987e8">6. Plot it all</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org6fdd175" class="outline-2">
-<h2 id="org6fdd175"><span class="section-number-2">1</span> Example Data</h2>
+<div id="outline-container-orgaf90032" class="outline-2">
+<h2 id="orgaf90032"><span class="section-number-2">1</span> Metadata</h2>
 <div class="outline-text-2" id="text-1">
+<p>
+The home for this HTML file is: <a href="https://richmit.github.io/ex-R/outliers.html">https://richmit.github.io/ex-R/outliers.html</a>
+</p>
+
+<p>
+Files related to this document may be found on github: <a href="https://github.com/richmit/ex-R">https://github.com/richmit/ex-R</a>
+</p>
+
+<p>
+Directory contents:
+</p>
+<table border="0" cellspacing="0" cellpadding="6" rules="none" frame="none" align="center">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left"><code>src</code></td>
+<td class="org-left">-</td>
+<td class="org-left">The org-mode file that generated this HTML document</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>docs</code></td>
+<td class="org-left">-</td>
+<td class="org-left">This html document</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>data</code></td>
+<td class="org-left">-</td>
+<td class="org-left">Data files</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>tangled</code></td>
+<td class="org-left">-</td>
+<td class="org-left">Tangled R code from this document</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-orgbe1f480" class="outline-2">
+<h2 id="orgbe1f480"><span class="section-number-2">2</span> Example Data</h2>
+<div class="outline-text-2" id="text-2">
 <p>
 Three kinds of data (set <code>dataType</code> to one of the following):
 </p>
@@ -282,9 +336,9 @@ dataType
 </div>
 </div>
 
-<div id="outline-container-orgd6fb5e4" class="outline-2">
-<h2 id="orgd6fb5e4"><span class="section-number-2">2</span> Good Old 3 sigma rule</h2>
-<div class="outline-text-2" id="text-2">
+<div id="outline-container-orge6321ae" class="outline-2">
+<h2 id="orge6321ae"><span class="section-number-2">3</span> Good Old 3 sigma rule</h2>
+<div class="outline-text-2" id="text-3">
 <p>
 Also called the "normal" Rule
 </p>
@@ -303,9 +357,9 @@ cutOffSig <span style="color: #8470ff; font-weight: bold;">&lt;-</span> cParmSig
 </div>
 </div>
 
-<div id="outline-container-org33faf7e" class="outline-2">
-<h2 id="org33faf7e"><span class="section-number-2">3</span> Hampel identifier</h2>
-<div class="outline-text-2" id="text-3">
+<div id="outline-container-org1aac5ff" class="outline-2">
+<h2 id="org1aac5ff"><span class="section-number-2">4</span> Hampel identifier</h2>
+<div class="outline-text-2" id="text-4">
 <p>
 Good data: [median–c*mad, median+c*mad]
 </p>
@@ -320,9 +374,9 @@ cutOffHem <span style="color: #8470ff; font-weight: bold;">&lt;-</span> cParmHem
 </div>
 </div>
 
-<div id="outline-container-org3937f70" class="outline-2">
-<h2 id="org3937f70"><span class="section-number-2">4</span> boxplot rule</h2>
-<div class="outline-text-2" id="text-4">
+<div id="outline-container-orgd1173ad" class="outline-2">
+<h2 id="orgd1173ad"><span class="section-number-2">5</span> boxplot rule</h2>
+<div class="outline-text-2" id="text-5">
 <p>
 Good data: [Q1–c*IQD,Q3+c*IQD], IQD=Q3–Q1, Q1 is the first quartile, and Q3 the third
 </p>
@@ -336,9 +390,9 @@ cutOffBox <span style="color: #8470ff; font-weight: bold;">&lt;-</span> daQUAR+c
 </div>
 </div>
 
-<div id="outline-container-org9c73e2b" class="outline-2">
-<h2 id="org9c73e2b"><span class="section-number-2">5</span> Plot it all</h2>
-<div class="outline-text-2" id="text-5">
+<div id="outline-container-org6d987e8" class="outline-2">
+<h2 id="org6d987e8"><span class="section-number-2">6</span> Plot it all</h2>
+<div class="outline-text-2" id="text-6">
 <div class="org-src-container">
 <pre class="src src-R">plot(1:length(daData), daData,                                                 <span style="color: #ffa500;"># </span><span style="color: #ff7f24;">Plot the data with artificial x-data</span>
      ylim=c(-1,1)*max(abs(c(daData,                                            <span style="color: #ffa500;"># </span><span style="color: #ff7f24;">Set the y-axis to be symmetric about 0 and</span>
@@ -368,7 +422,7 @@ points((1:length(daData))[outIdx], daData[outIdx], col=<span style="color: #fa80
 </div>
 
 
-<div id="org16ce2fd" class="figure">
+<div id="orge6df60d" class="figure">
 <p><img src="../docs/figures/outliers/plot.png" alt="plot.png" />
 </p>
 </div>
@@ -376,7 +430,7 @@ points((1:length(daData))[outIdx], daData[outIdx], col=<span style="color: #fa80
 </div>
 </div>
 <div id="postamble" class="status">
-Created by Mitch Richling <<a href="mailto:richmit@HOFUD">richmit@HOFUD</a>>.  Rendered on 2021-05-04 Tue 18:27 via <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.4.5)
+Created by Mitch Richling <<a href="mailto:richmit@HOFUD">richmit@HOFUD</a>>.  Rendered on 2021-05-04 Tue 18:35 via <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.4.5)
 </div>
 </body>
 </html>

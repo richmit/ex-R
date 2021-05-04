@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-05-04 Tue 18:27 -->
+<!-- 2021-05-04 Tue 18:36 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>T Tests</title>
@@ -230,7 +230,7 @@
 
 <tr>
 <td class="org-right"><b>Updated:</b></td>
-<td class="org-left"><i>2021-05-04 18:26:53</i></td>
+<td class="org-left"><i>2021-05-04 18:35:35</i></td>
 </tr>
 </tbody>
 </table>
@@ -242,32 +242,75 @@ Copyright 2020-2021 Mitch Richling. All rights reserved.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org2601f36">1. Source Code and Files</a></li>
-<li><a href="#org965a795">2. Some Data</a></li>
-<li><a href="#org6591258">3. Welch Two Sample t-test</a></li>
-<li><a href="#org986f613">4. Two Sample t-test</a></li>
-<li><a href="#org809c30f">5. Paired t-test</a></li>
-<li><a href="#org74d561d">6. One Sample t-test (not equal)</a></li>
-<li><a href="#orgd752511">7. One Sample t-test (greater than)</a></li>
-<li><a href="#orgaaf7286">8. Wilcoxon signed rank test with continuity correction</a></li>
-<li><a href="#org5786a24">9. Wilcoxon rank sum test with continuity correction</a></li>
-<li><a href="#org784ebde">10. Wilcoxon signed rank test with continuity correction</a></li>
+<li><a href="#org857c9a3">1. Metadata</a></li>
+<li><a href="#orgee26604">2. Some Data</a></li>
+<li><a href="#org6c0a267">3. Welch Two Sample t-test</a></li>
+<li><a href="#org518fe7f">4. Two Sample t-test</a></li>
+<li><a href="#org1ce8206">5. Paired t-test</a></li>
+<li><a href="#org9bef243">6. One Sample t-test (not equal)</a></li>
+<li><a href="#orgf13a260">7. One Sample t-test (greater than)</a></li>
+<li><a href="#org7bde253">8. Wilcoxon signed rank test with continuity correction</a></li>
+<li><a href="#orgdb026a1">9. Wilcoxon rank sum test with continuity correction</a></li>
+<li><a href="#org554f7a2">10. Wilcoxon signed rank test with continuity correction</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org2601f36" class="outline-2">
-<h2 id="org2601f36"><span class="section-number-2">1</span> Source Code and Files</h2>
+<div id="outline-container-org857c9a3" class="outline-2">
+<h2 id="org857c9a3"><span class="section-number-2">1</span> Metadata</h2>
 <div class="outline-text-2" id="text-1">
-<ul class="org-ul">
-<li><a href="tTests.org">tTests.org</a></li>
-<li><a href="tTests.R">tTests.R</a></li>
-</ul>
+<p>
+The home for this HTML file is: <a href="https://richmit.github.io/ex-R/tTests.html">https://richmit.github.io/ex-R/tTests.html</a>
+</p>
+
+<p>
+Files related to this document may be found on github: <a href="https://github.com/richmit/ex-R">https://github.com/richmit/ex-R</a>
+</p>
+
+<p>
+Directory contents:
+</p>
+<table border="0" cellspacing="0" cellpadding="6" rules="none" frame="none" align="center">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left"><code>src</code></td>
+<td class="org-left">-</td>
+<td class="org-left">The org-mode file that generated this HTML document</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>docs</code></td>
+<td class="org-left">-</td>
+<td class="org-left">This html document</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>data</code></td>
+<td class="org-left">-</td>
+<td class="org-left">Data files</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>tangled</code></td>
+<td class="org-left">-</td>
+<td class="org-left">Tangled R code from this document</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 
-<div id="outline-container-org965a795" class="outline-2">
-<h2 id="org965a795"><span class="section-number-2">2</span> Some Data</h2>
+<div id="outline-container-orgee26604" class="outline-2">
+<h2 id="orgee26604"><span class="section-number-2">2</span> Some Data</h2>
 <div class="outline-text-2" id="text-2">
 <div class="org-src-container">
 <pre class="src src-R">popsz  <span style="color: #8470ff; font-weight: bold;">&lt;-</span> 1000
@@ -288,15 +331,15 @@ names(allDat) <span style="color: #8470ff; font-weight: bold;">&lt;-</span> c(<s
 </div>
 
 
-<div id="orga5958e6" class="figure">
+<div id="orga304c4c" class="figure">
 <p><img src="figures/tTests/tt-data.png" alt="tt-data.png" />
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org6591258" class="outline-2">
-<h2 id="org6591258"><span class="section-number-2">3</span> Welch Two Sample t-test</h2>
+<div id="outline-container-org6c0a267" class="outline-2">
+<h2 id="org6c0a267"><span class="section-number-2">3</span> Welch Two Sample t-test</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Use when you don't know the variance of the two populations is equal
@@ -324,8 +367,8 @@ mean of x mean of y
 </div>
 </div>
 
-<div id="outline-container-org986f613" class="outline-2">
-<h2 id="org986f613"><span class="section-number-2">4</span> Two Sample t-test</h2>
+<div id="outline-container-org518fe7f" class="outline-2">
+<h2 id="org518fe7f"><span class="section-number-2">4</span> Two Sample t-test</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 Use when you DO know the variance of the two populations is equal
@@ -353,8 +396,8 @@ mean of x mean of y
 </div>
 </div>
 
-<div id="outline-container-org809c30f" class="outline-2">
-<h2 id="org809c30f"><span class="section-number-2">5</span> Paired t-test</h2>
+<div id="outline-container-org1ce8206" class="outline-2">
+<h2 id="org1ce8206"><span class="section-number-2">5</span> Paired t-test</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 Use when the measurements in each group are related pairwise.  
@@ -386,8 +429,8 @@ mean of the differences
 </div>
 </div>
 
-<div id="outline-container-org74d561d" class="outline-2">
-<h2 id="org74d561d"><span class="section-number-2">6</span> One Sample t-test (not equal)</h2>
+<div id="outline-container-org9bef243" class="outline-2">
+<h2 id="org9bef243"><span class="section-number-2">6</span> One Sample t-test (not equal)</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 Use when you want to know if the sample mean is equal to a hypothesized population mean
@@ -439,8 +482,8 @@ sample estimates:
 </div>
 </div>
 
-<div id="outline-container-orgd752511" class="outline-2">
-<h2 id="orgd752511"><span class="section-number-2">7</span> One Sample t-test (greater than)</h2>
+<div id="outline-container-orgf13a260" class="outline-2">
+<h2 id="orgf13a260"><span class="section-number-2">7</span> One Sample t-test (greater than)</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 Use when you want to know if the sample mean is less than a hypothesized population mean
@@ -468,8 +511,8 @@ sample estimates:
 </div>
 </div>
 
-<div id="outline-container-orgaaf7286" class="outline-2">
-<h2 id="orgaaf7286"><span class="section-number-2">8</span> Wilcoxon signed rank test with continuity correction</h2>
+<div id="outline-container-org7bde253" class="outline-2">
+<h2 id="org7bde253"><span class="section-number-2">8</span> Wilcoxon signed rank test with continuity correction</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 Use when you want to know if the sample mean is equal to a hypothesized population mean
@@ -492,8 +535,8 @@ alternative hypothesis: true location is not equal to 1
 </div>
 </div>
 
-<div id="outline-container-org5786a24" class="outline-2">
-<h2 id="org5786a24"><span class="section-number-2">9</span> Wilcoxon rank sum test with continuity correction</h2>
+<div id="outline-container-orgdb026a1" class="outline-2">
+<h2 id="orgdb026a1"><span class="section-number-2">9</span> Wilcoxon rank sum test with continuity correction</h2>
 <div class="outline-text-2" id="text-9">
 <p>
 Use when the measurements in each group are related pairwise.  This test is also known as the "independent 2-group Mann-Whitney U Test".  T-test above.
@@ -516,8 +559,8 @@ alternative hypothesis: true location shift is not equal to 0
 </div>
 </div>
 
-<div id="outline-container-org784ebde" class="outline-2">
-<h2 id="org784ebde"><span class="section-number-2">10</span> Wilcoxon signed rank test with continuity correction</h2>
+<div id="outline-container-org554f7a2" class="outline-2">
+<h2 id="org554f7a2"><span class="section-number-2">10</span> Wilcoxon signed rank test with continuity correction</h2>
 <div class="outline-text-2" id="text-10">
 <p>
 Use when the measurements in each group are related pairwise.  See the paired T-test above.
@@ -541,7 +584,7 @@ alternative hypothesis: true location shift is not equal to 0
 </div>
 </div>
 <div id="postamble" class="status">
-Created by Mitch Richling <<a href="mailto:http://www.mitchr.me/">http://www.mitchr.me/</a>>.  Rendered on 2021-05-04 Tue 18:27 via <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.4.5)
+Created by Mitch Richling <<a href="mailto:http://www.mitchr.me/">http://www.mitchr.me/</a>>.  Rendered on 2021-05-04 Tue 18:36 via <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.4.5)
 </div>
 </body>
 </html>
