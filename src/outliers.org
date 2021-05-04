@@ -1,0 +1,160 @@
+# -*- Mode:Org; Coding:utf-8; fill-column:158 org-html-link-org-files-as-html:nil -*-
+#+TITLE:       Outliers
+#+AUTHOR:      Mitch Richling
+#+EMAIL:       http://www.mitchr.me/
+#+DATE:        2020-01-25
+#+DESCRIPTION: Outliers.@EOL
+#+KEYWORDS:    Outliers R
+#+LANGUAGE:    en
+#+OPTIONS:     num:t toc:nil \n:nil @:t ::t |:t ^:nil -:t f:t *:t <:t skip:nil d:nil todo:t pri:nil H:5 p:t author:t html-scripts:nil 
+#+SEQ_TODO:    TODO:NEW(t)                         TODO:WORK(w)    TODO:HOLD(h)    | TODO:FUTURE(f)   TODO:DONE(d)    TODO:CANCELED(c)
+#+HTML_HEAD: <style>body { width: 95%; margin: 2% auto; font-size: 18px; line-height: 1.4em; font-family: Georgia, serif; color: black; background-color: white; }</style>
+#+HTML_HEAD: <style>body { min-width: 820px; max-width: 1024px; }</style>
+#+HTML_HEAD: <style>h1,h2,h3,h4,h5,h6 { color: #A5573E; line-height: 1em; font-family: Helvetica, sans-serif; }</style>
+#+HTML_HEAD: <style>h1,h2,h3 { line-height: 1.4em; }</style>
+#+HTML_HEAD: <style>h1.title { font-size: 3em; }</style>
+#+HTML_HEAD: <style>h4,h5,h6 { font-size: 1em; }</style>
+#+HTML_HEAD: <style>.org-src-container { border: 1px solid #ccc; box-shadow: 3px 3px 3px #eee; font-family: Lucida Console, monospace; font-size: 80%; margin: 0px; padding: 0px 0px; position: relative; }</style>
+#+HTML_HEAD: <style>.org-src-container>pre { line-height: 1.2em; padding-top: 1.5em; margin: 0.5em; background-color: #404040; color: white; overflow: auto; }</style>
+#+HTML_HEAD: <style>.org-src-container>pre:before { display: block; position: absolute; background-color: #b3b3b3; top: 0; right: 0; padding: 0 0.2em 0 0.4em; border-bottom-left-radius: 8px; border: 0; color: white; font-size: 100%; font-family: Helvetica, sans-serif;}</style>
+#+HTML_HEAD: <style>pre.example { white-space: pre-wrap; white-space: -moz-pre-wrap; white-space: -o-pre-wrap; font-family: Lucida Console, monospace; font-size: 80%; background: #404040; color: white; display: block; padding: 0em; border: 2px solid black; }</style>
+#+HTML_LINK_HOME: https://www.mitchr.me/
+#+HTML_LINK_UP: https://richmit.github.io/ex-R/
+#+EXPORT_FILE_NAME: ../docs/outliers
+
+#+ATTR_HTML: :border 2 solid #ccc :frame hsides :align center
+|        <r> | <l>                             |
+|  *Author:* | /{{{author}}}/                  |
+| *Updated:* | /{{{time(%Y-%m-%d)}}}/ |
+#+ATTR_HTML: :align center
+Copyright 2020 Mitch Richling. All rights reserved.
+
+#+TOC: headlines 5
+
+#        #         #         #         #         #         #         #         #         #         #         #         #         #         #         #         #         #
+#   00   #    10   #    20   #    30   #    40   #    50   #    60   #    70   #    80   #    90   #   100   #   110   #   120   #   130   #   140   #   150   #   160   #
+# 234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+#        #         #         #         #         #         #         #         #         #         #         #         #         #         #         #         #         #
+#        #         #         #         #         #         #         #         #         #         #         #         #         #         #         #         #         #
+
+* Source Code and Files
+
+  - file:outliers.org
+  - file:outliers.R
+
+* Example Data
+
+Three kinds of data (set =dataType= to one of the following):
+   - '=hand='      -- Hand crafted for a nice plot
+   - '=normzoom='  -- Heavy tails constructed from a sequence of normals
+   - '=weibull='   -- Weibull has a heavy tail, and it is always positive
+
+#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/outliers.R"
+dataType <- 'hand'
+if(dataType=='normzoom')
+  daData <- do.call(c, lapply(1:5, function (x) rnorm(2^(7-x), sd=2*x)))      
+if(dataType=='hand')
+  daData <- c(rep(c(1,-1), 10), c(8,11,15))
+if(dataType=='weibull')
+  daData <- rweibull(200, .8)                                                      
+dataType
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+null device 
+          1
+null device 
+          1
+null device 
+          1
+null device 
+          1
+null device 
+          1
+null device 
+          1
+null device 
+          1
+null device 
+          1
+null device 
+          1
+null device 
+          1
+null device 
+          1
+null device 
+          1
+null device 
+          1
+[1] "hand"
+#+end_example
+
+
+* Good Old 3 sigma rule
+
+Also called the "normal" Rule
+
+Good data: [mean–c*sd, mean+c*sd]
+
+#+BEGIN_SRC R :session :results silent :exports code :tangle "../tangled/outliers.R"
+cParmSig  <- 3                                                # This is where the "3" comes from in "3 Sigma"
+daMean    <- mean(daData)                                     # The "center" of our "non-outlier" interval
+daSD      <- sd(daData)                                       # The "radius" of our "non-outlier" interval
+cutOffSig <- cParmSig*c(-1, 1)*daSD+daMean                    # Lower and upper limits of our "non-outlier" interval
+#+END_SRC
+
+* Hampel identifier
+
+Good data: [median–c*mad, median+c*mad]
+
+#+BEGIN_SRC R :session :results silent :exports code :tangle "../tangled/outliers.R"
+cParmHem  <- 3                                                # This is the most common value used today
+daMAD     <- mad(daData)                                      # The "center" of our "non-outlier" interval
+daMedian  <- median(daData)                                   # The "radius" of our "non-outlier" interval
+cutOffHem <- cParmHem*c(-1, 1)*daMAD+daMedian                 # Lower and upper limits of our "non-outlier" interval
+#+END_SRC
+
+* boxplot rule
+
+Good data: [Q1–c*IQD,Q3+c*IQD], IQD=Q3–Q1, Q1 is the first quartile, and Q3 the third
+
+#+BEGIN_SRC R :session :results silent :exports code :tangle "../tangled/outliers.R"
+cParmBox  <- 1.5                                              # This is the most common value used today
+daQUAR    <- quantile(daData, c(.25, .75))                    # The first and third quartiles (Q1 & Q3)
+cutOffBox <- daQUAR+cParmBox*c(-1,1)*(daQUAR[2]-daQUAR[1])    # Lower and upper limits of our "non-outlier" interval
+#+END_SRC
+
+* Plot it all
+
+#+BEGIN_SRC R :session :file ../docs/figures/outl/plot.png :width 800 :height 600 :results graphics :exports code :tangle "../tangled/outliers.R"
+plot(1:length(daData), daData,                                                 # Plot the data with artificial x-data
+     ylim=c(-1,1)*max(abs(c(daData,                                            # Set the y-axis to be symmetric about 0 and
+                            cutOffSig, cutOffHem, cutOffBox))),                  # big enough for all data and intervals
+     pch='.')                                                                  # Plot tiny dots for data points!
+
+abline(h=cutOffSig, col='red')                                                 # Draw the interval limit lines
+outIdx <- daData<cutOffSig[1] | daData>cutOffSig[2]                            # Find outliers
+points((1:length(daData))[outIdx], daData[outIdx], col='red', cex=2, pch=3)    # Draw red, pch=3 points on outliers
+if(dataType=='hand') text(12, cutOffSig, "3 Sigma", pos=c(3,1), col='red')     # For hand crafted data, label interval limit lines
+
+abline(h=cutOffHem, col='blue')                                                # Draw the interval limit lines
+outIdx <- daData<cutOffHem[1] | daData>cutOffHem[2]                            # Find outliers
+points((1:length(daData))[outIdx], daData[outIdx], col='blue', cex=2, pch=4)   # Draw blue, pch=4 points on outliers
+if(dataType=='hand') text(12, cutOffHem, "Hampel", pos=c(3,1), col='blue')     # For hand crafted data, label interval limit lines
+
+abline(h=cutOffBox, col='green3')                                              # Draw the interval limit lines
+outIdx <- daData<cutOffBox[1] | daData>cutOffBox[2]                            # Find outliers
+points((1:length(daData))[outIdx], daData[outIdx], col='green3', cex=2, pch=5) # Draw green3, pch=5 points on outliers
+if(dataType=='hand') text(12, cutOffBox, "BoxPlot", pos=c(3,1), col='green3')  # For hand crafted data, label interval limit lines
+
+if(dataType!='hand')                                                           # For non-hand crafted data, draw a legend
+  legend("bottomleft", legend=c("3 Sigma", "Hampel", "BoxPlot"),
+         text.col=c('red', 'blue', 'green3'), col=c('red', 'blue', 'green3'),  
+         pch=c(3,4,5))
+#+END_SRC
+
+#+RESULTS:
+
+file:figures/outl/plot.png

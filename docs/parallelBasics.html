@@ -1,0 +1,478 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2021-05-04 Tue 13:18 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Parallel Examples</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Mitch Richling" />
+<meta name="description" content="Parallel Examples.@EOL"
+ />
+<meta name="keywords" content="Parallel Examples" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<style>body { width: 95%; margin: 2% auto; font-size: 18px; line-height: 1.4em; font-family: Georgia, serif; color: black; background-color: white; }</style>
+<style>body { min-width: 820px; max-width: 1024px; }</style>
+<style>h1,h2,h3,h4,h5,h6 { color: #A5573E; line-height: 1em; font-family: Helvetica, sans-serif; }</style>
+<style>h1,h2,h3 { line-height: 1.4em; }</style>
+<style>h1.title { font-size: 3em; }</style>
+<style>h4,h5,h6 { font-size: 1em; }</style>
+<style>.org-src-container { border: 1px solid #ccc; box-shadow: 3px 3px 3px #eee; font-family: Lucida Console, monospace; font-size: 80%; margin: 0px; padding: 0px 0px; position: relative; }</style>
+<style>.org-src-container>pre { line-height: 1.2em; padding-top: 1.5em; margin: 0.5em; background-color: #404040; color: white; overflow: auto; }</style>
+<style>.org-src-container>pre:before { display: block; position: absolute; background-color: #b3b3b3; top: 0; right: 0; padding: 0 0.2em 0 0.4em; border-bottom-left-radius: 8px; border: 0; color: white; font-size: 100%; font-family: Helvetica, sans-serif;}</style>
+<style>pre.example { white-space: pre-wrap; white-space: -moz-pre-wrap; white-space: -o-pre-wrap; font-family: Lucida Console, monospace; font-size: 80%; background: #404040; color: white; display: block; padding: 0em; border: 2px solid black; }</style>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="https://richmit.github.io/ex-R/"> UP </a>
+ |
+ <a accesskey="H" href="https://www.mitchr.me/"> HOME </a>
+</div><div id="content">
+<h1 class="title">Parallel Examples</h1>
+<table border="2 solid #ccc" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" align="center">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-right"><b>Author:</b></td>
+<td class="org-left"><i>Mitch Richling</i></td>
+</tr>
+
+<tr>
+<td class="org-right"><b>Updated:</b></td>
+<td class="org-left"><i>2021-05-04</i></td>
+</tr>
+</tbody>
+</table>
+<p align="center">
+Copyright 2020 Mitch Richling. All rights reserved.
+</p>
+
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org1730c6d">1. Source Code and Files</a></li>
+<li><a href="#org13bd962">2. Starting a cluster</a>
+<ul>
+<li><a href="#org8bbfc1b">2.1. Load the library</a></li>
+<li><a href="#org4934330">2.2. Calculate the number instances based on core count</a></li>
+<li><a href="#org3b0ae43">2.3. Start up the cluster</a></li>
+</ul>
+</li>
+<li><a href="#org6da23e8">3. Using the cluster</a>
+<ul>
+<li><a href="#org2b1cb92">3.1. Run a function in each instance (you can add arguments after the function name)</a></li>
+<li><a href="#orgf75f08d">3.2. Run an expression in each instance</a></li>
+<li><a href="#orgde0d024">3.3. Using data across the cluster</a></li>
+<li><a href="#org1207d85">3.4. Explicitly exporting data across the cluster</a></li>
+</ul>
+</li>
+<li><a href="#orgb048d20">4. Performance</a>
+<ul>
+<li><a href="#org5eb4adc">4.1. Create some big data data and put it in 'cVar'</a></li>
+<li><a href="#org7b01664">4.2. Export 'cVar' to to each instance</a></li>
+<li><a href="#orgb87af20">4.3. Compute in serial</a></li>
+<li><a href="#org57c1b5b">4.4. Compute in parallel</a></li>
+</ul>
+</li>
+<li><a href="#orgc3a08e5">5. Shut down cluster</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org1730c6d" class="outline-2">
+<h2 id="org1730c6d"><span class="section-number-2">1</span> Source Code and Files</h2>
+<div class="outline-text-2" id="text-1">
+<ul class="org-ul">
+<li><a href="parallelBasics.org">parallelBasics.org</a></li>
+<li><a href="parallelBasics.R">parallelBasics.R</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org13bd962" class="outline-2">
+<h2 id="org13bd962"><span class="section-number-2">2</span> Starting a cluster</h2>
+<div class="outline-text-2" id="text-2">
+</div>
+<div id="outline-container-org8bbfc1b" class="outline-3">
+<h3 id="org8bbfc1b"><span class="section-number-3">2.1</span> Load the library</h3>
+<div class="outline-text-3" id="text-2-1">
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #8470ff; font-weight: bold;">library</span>(parallel)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4934330" class="outline-3">
+<h3 id="org4934330"><span class="section-number-3">2.2</span> Calculate the number instances based on core count</h3>
+<div class="outline-text-3" id="text-2-2">
+<div class="org-src-container">
+<pre class="src src-R">instancesInMyComputeCluster <span style="color: #8470ff; font-weight: bold;">&lt;-</span> detectCores()
+instancesInMyComputeCluster
+</pre>
+</div>
+
+<pre class="example" id="org0e6b3bd">
+Error in png(filename = "../docs/figures/outl/plot.png", width = 800,  : 
+  unable to start png() device
+In addition: Warning messages:
+1: In png(filename = "../docs/figures/outl/plot.png", width = 800,  :
+  unable to open file '../docs/figures/outl/plot.png' for writing
+2: In png(filename = "../docs/figures/outl/plot.png", width = 800,  :
+  opening device failed
+[1] 8
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org3b0ae43" class="outline-3">
+<h3 id="org3b0ae43"><span class="section-number-3">2.3</span> Start up the cluster</h3>
+<div class="outline-text-3" id="text-2-3">
+<div class="org-src-container">
+<pre class="src src-R">myComputeCluster <span style="color: #8470ff; font-weight: bold;">&lt;-</span> makeCluster(instancesInMyComputeCluster)
+myComputeCluster
+</pre>
+</div>
+
+<pre class="example" id="orgcbaec1c">
+socket cluster with 8 nodes on host 'localhost'
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6da23e8" class="outline-2">
+<h2 id="org6da23e8"><span class="section-number-2">3</span> Using the cluster</h2>
+<div class="outline-text-2" id="text-3">
+</div>
+<div id="outline-container-org2b1cb92" class="outline-3">
+<h3 id="org2b1cb92"><span class="section-number-3">3.1</span> Run a function in each instance (you can add arguments after the function name)</h3>
+<div class="outline-text-3" id="text-3-1">
+<div class="org-src-container">
+<pre class="src src-R">unlist(clusterCall(myComputeCluster, <span style="color: #fa8072;">'Sys.getpid'</span>))
+</pre>
+</div>
+
+<pre class="example" id="orgb707f48">
+[1] 17580  6528 26212 22120  9432 20056 19420  9000
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgf75f08d" class="outline-3">
+<h3 id="orgf75f08d"><span class="section-number-3">3.2</span> Run an expression in each instance</h3>
+<div class="outline-text-3" id="text-3-2">
+<div class="org-src-container">
+<pre class="src src-R">unlist(clusterEvalQ(myComputeCluster, 2*Sys.getpid()))
+</pre>
+</div>
+
+<pre class="example" id="orgb9050c7">
+[1] 35160 13056 52424 44240 18864 40112 38840 18000
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgde0d024" class="outline-3">
+<h3 id="orgde0d024"><span class="section-number-3">3.3</span> Using data across the cluster</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+Notice <code>aVar</code> need not be exported because it is the second argument of <code>parSapply</code>!
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">aVar <span style="color: #8470ff; font-weight: bold;">&lt;-</span> 1:10
+parSapply(myComputeCluster, aVar, sin)
+<span style="color: #ffa500;">#</span><span style="color: #ff7f24;">parLapply(myComputeCluster, aVar, sin)</span>
+</pre>
+</div>
+
+<pre class="example" id="org706717b">
+[1]  0.8414710  0.9092974  0.1411200 -0.7568025 -0.9589243 -0.2794155  0.6569866  0.9893582  0.4121185 -0.5440211
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org1207d85" class="outline-3">
+<h3 id="org1207d85"><span class="section-number-3">3.4</span> Explicitly exporting data across the cluster</h3>
+<div class="outline-text-3" id="text-3-4">
+<p>
+While <code>aVar</code> need not be exported, <code>bVar</code> must be exported &#x2013; because it is not the second argument of <code>parSapply</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">bVar <span style="color: #8470ff; font-weight: bold;">&lt;-</span> 10
+clusterExport(myComputeCluster, <span style="color: #fa8072;">'bVar'</span>)
+parSapply(myComputeCluster, aVar, <span style="color: #00ffff;">function</span> (x) bVar*x)
+</pre>
+</div>
+
+<pre class="example" id="orgf7b17c1">
+[1]  10  20  30  40  50  60  70  80  90 100
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb048d20" class="outline-2">
+<h2 id="orgb048d20"><span class="section-number-2">4</span> Performance</h2>
+<div class="outline-text-2" id="text-4">
+</div>
+<div id="outline-container-org5eb4adc" class="outline-3">
+<h3 id="org5eb4adc"><span class="section-number-3">4.1</span> Create some big data data and put it in 'cVar'</h3>
+<div class="outline-text-3" id="text-4-1">
+<div class="org-src-container">
+<pre class="src src-R">cVar <span style="color: #8470ff; font-weight: bold;">&lt;-</span> rnorm(instancesInMyComputeCluster*2^14)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7b01664" class="outline-3">
+<h3 id="org7b01664"><span class="section-number-3">4.2</span> Export 'cVar' to to each instance</h3>
+<div class="outline-text-3" id="text-4-2">
+<div class="org-src-container">
+<pre class="src src-R">clusterExport(myComputeCluster, <span style="color: #fa8072;">"cVar"</span>)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb87af20" class="outline-3">
+<h3 id="orgb87af20"><span class="section-number-3">4.3</span> Compute in serial</h3>
+<div class="outline-text-3" id="text-4-3">
+<div class="org-src-container">
+<pre class="src src-R">system.time(b<span style="color: #8470ff; font-weight: bold;">&lt;-</span>sapply(cVar, <span style="color: #00ffff;">function</span> (x) <span style="color: #00ffff;">for</span>(i <span style="color: #00ffff;">in</span> 1:500) sin(x)))
+</pre>
+</div>
+
+<pre class="example" id="orgb1ce550">
+user  system elapsed 
+5.08    0.00    5.07
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org57c1b5b" class="outline-3">
+<h3 id="org57c1b5b"><span class="section-number-3">4.4</span> Compute in parallel</h3>
+<div class="outline-text-3" id="text-4-4">
+<div class="org-src-container">
+<pre class="src src-R">system.time(b<span style="color: #8470ff; font-weight: bold;">&lt;-</span>parSapply(myComputeCluster, cVar, <span style="color: #00ffff;">function</span> (x) <span style="color: #00ffff;">for</span>(i <span style="color: #00ffff;">in</span> 1:500) sin(x)))
+</pre>
+</div>
+
+<pre class="example" id="org8e83e0d">
+user  system elapsed 
+0.02    0.03    1.13
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc3a08e5" class="outline-2">
+<h2 id="orgc3a08e5"><span class="section-number-2">5</span> Shut down cluster</h2>
+<div class="outline-text-2" id="text-5">
+<div class="org-src-container">
+<pre class="src src-R">stopCluster(myComputeCluster)
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+Created by Mitch Richling <<a href="mailto:http://www.mitchr.me/">http://www.mitchr.me/</a>>.  Rendered on 2021-05-04 Tue 13:18 via <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.4.5)
+</div>
+</body>
+</html>

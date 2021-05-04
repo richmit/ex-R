@@ -1,0 +1,270 @@
+# -*- Mode:Org; Coding:utf-8; fill-column:158 org-html-link-org-files-as-html:nil -*-
+#+TITLE:       Time Series Examples
+#+AUTHOR:      Mitch Richling
+#+EMAIL:       http://www.mitchr.me/
+#+DATE:        2020-01-25
+#+DESCRIPTION: timeseries.@EOL
+#+KEYWORDS:    timeseries 
+#+LANGUAGE:    en
+#+OPTIONS:     num:t toc:nil \n:nil @:t ::t |:t ^:nil -:t f:t *:t <:t skip:nil d:nil todo:t pri:nil H:5 p:t author:t html-scripts:nil 
+#+SEQ_TODO:    TODO:NEW(t)                         TODO:WORK(w)    TODO:HOLD(h)    | TODO:FUTURE(f)   TODO:DONE(d)    TODO:CANCELED(c)
+#+HTML_HEAD: <style>body { width: 95%; margin: 2% auto; font-size: 18px; line-height: 1.4em; font-family: Georgia, serif; color: black; background-color: white; }</style>
+#+HTML_HEAD: <style>body { min-width: 820px; max-width: 1024px; }</style>
+#+HTML_HEAD: <style>h1,h2,h3,h4,h5,h6 { color: #A5573E; line-height: 1em; font-family: Helvetica, sans-serif; }</style>
+#+HTML_HEAD: <style>h1,h2,h3 { line-height: 1.4em; }</style>
+#+HTML_HEAD: <style>h1.title { font-size: 3em; }</style>
+#+HTML_HEAD: <style>h4,h5,h6 { font-size: 1em; }</style>
+#+HTML_HEAD: <style>.org-src-container { border: 1px solid #ccc; box-shadow: 3px 3px 3px #eee; font-family: Lucida Console, monospace; font-size: 80%; margin: 0px; padding: 0px 0px; position: relative; }</style>
+#+HTML_HEAD: <style>.org-src-container>pre { line-height: 1.2em; padding-top: 1.5em; margin: 0.5em; background-color: #404040; color: white; overflow: auto; }</style>
+#+HTML_HEAD: <style>.org-src-container>pre:before { display: block; position: absolute; background-color: #b3b3b3; top: 0; right: 0; padding: 0 0.2em 0 0.4em; border-bottom-left-radius: 8px; border: 0; color: white; font-size: 100%; font-family: Helvetica, sans-serif;}</style>
+#+HTML_HEAD: <style>pre.example { white-space: pre-wrap; white-space: -moz-pre-wrap; white-space: -o-pre-wrap; font-family: Lucida Console, monospace; font-size: 80%; background: #404040; color: white; display: block; padding: 0em; border: 2px solid black; }</style>
+#+HTML_LINK_HOME: https://www.mitchr.me/
+#+HTML_LINK_UP: https://richmit.github.io/ex-R/
+#+EXPORT_FILE_NAME: ../docs/timeSeries
+
+#+ATTR_HTML: :border 2 solid #ccc :frame hsides :align center
+|        <r> | <l>                    |
+|  *Author:* | /{{{author}}}/         |
+| *Updated:* | /{{{time(%Y-%m-%d)}}}/ |
+#+ATTR_HTML: :align center
+Copyright 2020 Mitch Richling. All rights reserved.
+
+#+TOC: headlines 5
+
+#        #         #         #         #         #         #         #         #         #         #         #         #         #         #         #         #         #
+#   00   #    10   #    20   #    30   #    40   #    50   #    60   #    70   #    80   #    90   #   100   #   110   #   120   #   130   #   140   #   150   #   160   #
+# 234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+#        #         #         #         #         #         #         #         #         #         #         #         #         #         #         #         #         #
+#        #         #         #         #         #         #         #         #         #         #         #         #         #         #         #         #         #
+
+* Source Code and Files
+
+  - file:timeSeries.org
+  - file:timeSeries.R
+
+* First Steps
+
+** First we create some data
+
+#+BEGIN_SRC R :session :results silent :exports code :tangle "../tangled/timeSeries.R"
+daData          <- data.frame(date=as.POSIXct('2012-01-01')+(1:365)*(60*60*24))
+daData$idate    <- as.numeric(daData$date)
+daData$x        <- (daData$idate-min(daData$idate))/(60*60*24)
+daData$trend    <- daData$x/50
+daData$seasonal <- sin(pi*daData$x/3.5)            ######## TRY THIS: equal positive and negative components
+#daData$seasonal <- abs(1+sin(pi*daData$x/3.5))    ######## TRY THIS: positive seasonal component
+daData$random   <- rnorm(daData$x, sd=.25)
+daData$val      <- daData$trend+daData$seasonal+daData$random
+#+END_SRC
+
+** Construct time series object
+
+We use a frequency of 7 days
+
+#+BEGIN_SRC R :session :results silent :exports code :tangle "../tangled/timeSeries.R"
+daDataSeries <- ts(daData$val, frequency=7)
+#+END_SRC
+
+** Plot our time series
+
+#+BEGIN_SRC R :session :file ../docs/figures/timeSeries/ts-basic.png :width 800 :height 600 :results graphics :exports code :tangle "../tangled/timeSeries.R"
+plot(daDataSeries)
+#+END_SRC
+
+#+RESULTS:
+
+file:figures/timeSeries/ts-basic.png  
+
+* Decomposition
+
+** Decompose into an additive seasonal model
+
+#+BEGIN_SRC R :session :results silent :exports code :tangle "../tangled/timeSeries.R"
+daDataDecomp <- decompose(daDataSeries, type='add')
+#+END_SRC
+
+** Plot our decomposition
+
+*** With base
+
+#+BEGIN_SRC R :session :file ../docs/figures/timeSeries/decomp-base.png :width 800 :height 600 :results graphics :exports code :tangle "../tangled/timeSeries.R"
+plot(daDataDecomp)
+#+END_SRC
+
+#+RESULTS:
+
+file:figures/timeSeries/decomp-base.png  
+
+*** With lattice
+
+#+BEGIN_SRC R :session :file ../docs/figures/timeSeries/decomp-lattice.png :width 800 :height 600 :results graphics :exports code :tangle "../tangled/timeSeries.R"
+xyplot(daData$val + daDataDecomp$trend + daDataDecomp$seasonal + daDataDecomp$random ~ daData$date, 
+       type='l', 
+       outer=TRUE, 
+       horizontal=FALSE, 
+       layout=c(1,4))
+#+END_SRC
+
+#+RESULTS:
+
+file:figures/timeSeries/decomp-lattice.png  
+
+*** With ggplot2
+
+#+BEGIN_SRC R :session :file ../docs/figures/timeSeries/decomp-ggplot.png :width 800 :height 600 :results graphics :exports code :tangle "../tangled/timeSeries.R"
+daDataDecompDF <- data.frame(date=daData$date, 
+                             val=daData$val,
+                             trend=daDataDecomp$trend, 
+                             seasonal=daDataDecomp$seasonal, 
+                             random=daDataDecomp$random)
+daDataDecompDF <- melt(daDataDecompDF, id="date")
+
+ggplot(data=daDataDecompDF, aes(x=date)) +
+    geom_line(aes(y=value))  +
+    facet_grid(variable ~ ., scales = "free")
+#+END_SRC
+
+#+RESULTS:
+
+file:figures/timeSeries/decomp-ggplot.png  
+
+*** The KRAZY way
+
+#+BEGIN_SRC R :session :file ../docs/figures/timeSeries/decomp-krazy.png :width 800 :height 600 :results graphics :exports code :tangle "../tangled/timeSeries.R"
+par(mfcol=c(4,1))
+par(mar=c(.5,2.5,.5,.5))
+plot(daData$date, daData$val, type='l', ylab='', xaxt='n')
+text(mean(par('usr')[1:2]), par('usr')[4], 'Value', pos=1, cex=3, col='blue')
+par(mar=c(.5,2.5,0,.5))
+plot(as.POSIXct('2012-01-01'), 0,
+     xlim=range(daData$date), ylim=range(c(daDataDecomp$trend, daData$trend), na.rm=TRUE),
+     col=NA, ylab='', xaxt='n')
+points(daData$date, daDataDecomp$trend, type='l', xaxt='n')
+points(daData$date, daData$trend,       type='l', col='red')
+text(mean(par('usr')[1:2]), par('usr')[4], 'Trend', pos=1, cex=3, col='blue')
+plot(as.POSIXct('2012-01-01'), 0,
+     xlim=range(daData$date), ylim=2*range(c(daDataDecomp$seasonal, daData$seasonal), na.rm=TRUE),
+     col=NA, ylab='', xaxt='n')
+points(daData$date, daDataDecomp$seasonal, type='l', xaxt='n')
+points(daData$date, daData$seasonal,       type='l', col='red')
+text(mean(par('usr')[1:2]), par('usr')[4], 'Seasonal', pos=1, cex=3, col='blue')
+par(mar=c(2.5,2.5,0,.5))
+plot(as.POSIXct('2012-01-01'), 0,
+     xlim=range(daData$date), ylim=range(c(daDataDecomp$random, daData$random), na.rm=TRUE),
+     col=NA, xlab='', ylab='')
+points(daData$date, daData$random,       type='p', col='red', pch=20)
+points(daData$date, daDataDecomp$random, type='l', xaxt='n')
+text(mean(par('usr')[1:2]), par('usr')[4], 'Random', pos=1, cex=3, col='blue')
+#+END_SRC
+
+#+RESULTS:
+
+file:figures/timeSeries/decomp-krazy.png  
+    
+* Fitting
+
+** Fit an arima model
+
+#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/timeSeries.R"
+fit <- arima(daDataSeries, order=c(5,0,0), seasonal=list(order=c(2,1,0), period=7))
+fit
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+null device 
+          1 
+Warning messages:
+1: Use of `daDat$f` is discouraged. Use `f` instead. 
+2: Use of `daDat$fit` is discouraged. Use `fit` instead. 
+3: Use of `daDat$f` is discouraged. Use `f` instead. 
+4: Use of `daDat$fit` is discouraged. Use `fit` instead.
+null device 
+          1 
+Warning message:
+Removed 20 row(s) containing missing values (geom_path).
+null device 
+          1
+null device 
+          1
+null device 
+          1
+null device 
+          1
+[1] "ERROR : The melt generic in data.table has been passed a data.frame, but data.table::melt currently only has a method for data.tables. Please confirm your input is a data.table, with setDT(daDataDecompDF) or as.data.table(daDataDecompDF). If you intend to use a method from reshape2, try installing that package first, but do note that reshape2 is deprecated and you should be migrating your code away from using it."
+null device 
+          1
+null device 
+          1
+
+Call:
+arima(x = daDataSeries, order = c(5, 0, 0), seasonal = list(order = c(2, 1, 
+    0), period = 7))
+
+Coefficients:
+         ar1     ar2     ar3     ar4     ar5     sar1     sar2
+      0.1831  0.1385  0.1226  0.2301  0.1423  -0.6045  -0.3440
+s.e.  0.0529  0.0517  0.0526  0.0522  0.0526   0.0520   0.0515
+
+sigma^2 estimated as 0.09739:  log likelihood = -92.89,  aic = 201.79
+#+end_example
+
+** predict the future
+
+#+BEGIN_SRC R :session :results silent :exports code :tangle "../tangled/timeSeries.R"
+fore <- predict(fit, n.ahead=7*5)
+#+END_SRC
+
+** Compute error bounds at 95% confidence level
+
+#+BEGIN_SRC R :session :results silent :exports code :tangle "../tangled/timeSeries.R"
+U <- fore$pred + 2*fore$se
+L <- fore$pred - 2*fore$se
+#+END_SRC
+
+** Plot  prediction
+
+#+BEGIN_SRC R :session :file ../docs/figures/timeSeries/fore-ts.png :width 800 :height 600 :results graphics :exports code :tangle "../tangled/timeSeries.R"
+par(mfcol=c(1,1))
+par(mar=c(5,5,5,5))
+ts.plot(daDataSeries, fore$pred, U, L, col=c(1,2,4,4), lty = c(1,1,2,2))
+legend("topleft", c("Actual", "Forecast", "Error Bounds (95% Confidence)"), col=c(1,2,4), lty=c(1,1,2))
+#+END_SRC
+
+#+RESULTS:
+
+file:figures/timeSeries/fore-ts.png  
+
+* Smoothing
+
+* Use lowess to smooth
+
+#+BEGIN_SRC R :session :results silent :exports code :tangle "../tangled/timeSeries.R"
+smoothedData <- lowess(daData$idate, daData$val, f=.3)
+#+END_SRC
+
+** Put everything in a data.frame for ggplot
+
+Notice that we convert the integers we got from lowess at the same time.
+
+#+BEGIN_SRC R :session :results silent :exports code :tangle "../tangled/timeSeries.R"
+allDat <- bind_rows(mutate(select(daData, date, val), 
+                           smoother='actual'), 
+                    mutate(data.frame(date=as.POSIXct(smoothedData$x, origin='1970-01-01 00:00:00 UTC'), 
+                                      val=smoothedData$y), 
+                           smoother='lowess'))
+#+END_SRC
+
+#+RESULTS:
+
+** Plot it
+
+#+BEGIN_SRC R :session :file ../docs/figures/timeSeries/smooth.png :width 800 :height 600 :results graphics :exports code :tangle "../tangled/timeSeries.R"
+ggplot(allDat, aes(x=date, y=val, col=smoother)) +
+  geom_line() +
+  labs(title='Smoothing Time Series With A Generic Smoother')
+#+END_SRC
+
+#+RESULTS:
+
+file:figures/timeSeries/smooth.png  

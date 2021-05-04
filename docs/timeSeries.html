@@ -1,0 +1,615 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2021-05-04 Tue 13:18 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Time Series Examples</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Mitch Richling" />
+<meta name="description" content="timeseries.@EOL"
+ />
+<meta name="keywords" content="timeseries" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<style>body { width: 95%; margin: 2% auto; font-size: 18px; line-height: 1.4em; font-family: Georgia, serif; color: black; background-color: white; }</style>
+<style>body { min-width: 820px; max-width: 1024px; }</style>
+<style>h1,h2,h3,h4,h5,h6 { color: #A5573E; line-height: 1em; font-family: Helvetica, sans-serif; }</style>
+<style>h1,h2,h3 { line-height: 1.4em; }</style>
+<style>h1.title { font-size: 3em; }</style>
+<style>h4,h5,h6 { font-size: 1em; }</style>
+<style>.org-src-container { border: 1px solid #ccc; box-shadow: 3px 3px 3px #eee; font-family: Lucida Console, monospace; font-size: 80%; margin: 0px; padding: 0px 0px; position: relative; }</style>
+<style>.org-src-container>pre { line-height: 1.2em; padding-top: 1.5em; margin: 0.5em; background-color: #404040; color: white; overflow: auto; }</style>
+<style>.org-src-container>pre:before { display: block; position: absolute; background-color: #b3b3b3; top: 0; right: 0; padding: 0 0.2em 0 0.4em; border-bottom-left-radius: 8px; border: 0; color: white; font-size: 100%; font-family: Helvetica, sans-serif;}</style>
+<style>pre.example { white-space: pre-wrap; white-space: -moz-pre-wrap; white-space: -o-pre-wrap; font-family: Lucida Console, monospace; font-size: 80%; background: #404040; color: white; display: block; padding: 0em; border: 2px solid black; }</style>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="https://richmit.github.io/ex-R/"> UP </a>
+ |
+ <a accesskey="H" href="https://www.mitchr.me/"> HOME </a>
+</div><div id="content">
+<h1 class="title">Time Series Examples</h1>
+<table border="2 solid #ccc" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" align="center">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-right"><b>Author:</b></td>
+<td class="org-left"><i>Mitch Richling</i></td>
+</tr>
+
+<tr>
+<td class="org-right"><b>Updated:</b></td>
+<td class="org-left"><i>2021-05-04</i></td>
+</tr>
+</tbody>
+</table>
+<p align="center">
+Copyright 2020 Mitch Richling. All rights reserved.
+</p>
+
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org39125f3">1. Source Code and Files</a></li>
+<li><a href="#org3bb24ad">2. First Steps</a>
+<ul>
+<li><a href="#orgd542711">2.1. First we create some data</a></li>
+<li><a href="#org8e2dd7d">2.2. Construct time series object</a></li>
+<li><a href="#org7699228">2.3. Plot our time series</a></li>
+</ul>
+</li>
+<li><a href="#orga4faff2">3. Decomposition</a>
+<ul>
+<li><a href="#orgdcb98af">3.1. Decompose into an additive seasonal model</a></li>
+<li><a href="#org30c4c5c">3.2. Plot our decomposition</a>
+<ul>
+<li><a href="#org90d902a">3.2.1. With base</a></li>
+<li><a href="#org25c3148">3.2.2. With lattice</a></li>
+<li><a href="#org9dbe429">3.2.3. With ggplot2</a></li>
+<li><a href="#orgbcee914">3.2.4. The KRAZY way</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org92a93be">4. Fitting</a>
+<ul>
+<li><a href="#org84fa6f6">4.1. Fit an arima model</a></li>
+<li><a href="#org7ba025b">4.2. predict the future</a></li>
+<li><a href="#org8cd6984">4.3. Compute error bounds at 95% confidence level</a></li>
+<li><a href="#org5b84eb9">4.4. Plot  prediction</a></li>
+</ul>
+</li>
+<li><a href="#orge4cae5c">5. Smoothing</a></li>
+<li><a href="#org48d53f1">6. Use lowess to smooth</a>
+<ul>
+<li><a href="#org51af208">6.1. Put everything in a data.frame for ggplot</a></li>
+<li><a href="#org965612b">6.2. Plot it</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org39125f3" class="outline-2">
+<h2 id="org39125f3"><span class="section-number-2">1</span> Source Code and Files</h2>
+<div class="outline-text-2" id="text-1">
+<ul class="org-ul">
+<li><a href="timeSeries.org">timeSeries.org</a></li>
+<li><a href="timeSeries.R">timeSeries.R</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org3bb24ad" class="outline-2">
+<h2 id="org3bb24ad"><span class="section-number-2">2</span> First Steps</h2>
+<div class="outline-text-2" id="text-2">
+</div>
+<div id="outline-container-orgd542711" class="outline-3">
+<h3 id="orgd542711"><span class="section-number-3">2.1</span> First we create some data</h3>
+<div class="outline-text-3" id="text-2-1">
+<div class="org-src-container">
+<pre class="src src-R">daData          <span style="color: #8470ff; font-weight: bold;">&lt;-</span> data.frame(date=as.POSIXct(<span style="color: #fa8072;">'2012-01-01'</span>)+(1:365)*(60*60*24))
+daData$idate    <span style="color: #8470ff; font-weight: bold;">&lt;-</span> as.numeric(daData$date)
+daData$x        <span style="color: #8470ff; font-weight: bold;">&lt;-</span> (daData$idate-min(daData$idate))/(60*60*24)
+daData$trend    <span style="color: #8470ff; font-weight: bold;">&lt;-</span> daData$x/50
+daData$seasonal <span style="color: #8470ff; font-weight: bold;">&lt;-</span> sin(pi*daData$x/3.5)            <span style="color: #ffa500;">######## </span><span style="color: #ff7f24;">TRY THIS: equal positive and negative components</span>
+<span style="color: #ffa500;">#</span><span style="color: #ff7f24;">daData$seasonal &lt;- abs(1+sin(pi*daData$x/3.5))    ######## TRY THIS: positive seasonal component</span>
+daData$random   <span style="color: #8470ff; font-weight: bold;">&lt;-</span> rnorm(daData$x, sd=.25)
+daData$val      <span style="color: #8470ff; font-weight: bold;">&lt;-</span> daData$trend+daData$seasonal+daData$random
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8e2dd7d" class="outline-3">
+<h3 id="org8e2dd7d"><span class="section-number-3">2.2</span> Construct time series object</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+We use a frequency of 7 days
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">daDataSeries <span style="color: #8470ff; font-weight: bold;">&lt;-</span> ts(daData$val, frequency=7)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7699228" class="outline-3">
+<h3 id="org7699228"><span class="section-number-3">2.3</span> Plot our time series</h3>
+<div class="outline-text-3" id="text-2-3">
+<div class="org-src-container">
+<pre class="src src-R">plot(daDataSeries)
+</pre>
+</div>
+
+
+<div id="org553f9f8" class="figure">
+<p><img src="figures/timeSeries/ts-basic.png" alt="ts-basic.png" />  
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga4faff2" class="outline-2">
+<h2 id="orga4faff2"><span class="section-number-2">3</span> Decomposition</h2>
+<div class="outline-text-2" id="text-3">
+</div>
+<div id="outline-container-orgdcb98af" class="outline-3">
+<h3 id="orgdcb98af"><span class="section-number-3">3.1</span> Decompose into an additive seasonal model</h3>
+<div class="outline-text-3" id="text-3-1">
+<div class="org-src-container">
+<pre class="src src-R">daDataDecomp <span style="color: #8470ff; font-weight: bold;">&lt;-</span> decompose(daDataSeries, type=<span style="color: #fa8072;">'add'</span>)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org30c4c5c" class="outline-3">
+<h3 id="org30c4c5c"><span class="section-number-3">3.2</span> Plot our decomposition</h3>
+<div class="outline-text-3" id="text-3-2">
+</div>
+<div id="outline-container-org90d902a" class="outline-4">
+<h4 id="org90d902a"><span class="section-number-4">3.2.1</span> With base</h4>
+<div class="outline-text-4" id="text-3-2-1">
+<div class="org-src-container">
+<pre class="src src-R">plot(daDataDecomp)
+</pre>
+</div>
+
+
+<div id="org410a375" class="figure">
+<p><img src="figures/timeSeries/decomp-base.png" alt="decomp-base.png" />  
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org25c3148" class="outline-4">
+<h4 id="org25c3148"><span class="section-number-4">3.2.2</span> With lattice</h4>
+<div class="outline-text-4" id="text-3-2-2">
+<div class="org-src-container">
+<pre class="src src-R">xyplot(daData$val + daDataDecomp$trend + daDataDecomp$seasonal + daDataDecomp$random ~ daData$date, 
+       type=<span style="color: #fa8072;">'l'</span>, 
+       outer=<span style="color: #63b8ff;">TRUE</span>, 
+       horizontal=<span style="color: #63b8ff;">FALSE</span>, 
+       layout=c(1,4))
+</pre>
+</div>
+
+
+<div id="org482fba7" class="figure">
+<p><img src="figures/timeSeries/decomp-lattice.png" alt="decomp-lattice.png" />  
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9dbe429" class="outline-4">
+<h4 id="org9dbe429"><span class="section-number-4">3.2.3</span> With ggplot2</h4>
+<div class="outline-text-4" id="text-3-2-3">
+<div class="org-src-container">
+<pre class="src src-R">daDataDecompDF <span style="color: #8470ff; font-weight: bold;">&lt;-</span> data.frame(date=daData$date, 
+                             val=daData$val,
+                             trend=daDataDecomp$trend, 
+                             seasonal=daDataDecomp$seasonal, 
+                             random=daDataDecomp$random)
+daDataDecompDF <span style="color: #8470ff; font-weight: bold;">&lt;-</span> melt(daDataDecompDF, id=<span style="color: #fa8072;">"date"</span>)
+
+ggplot(data=daDataDecompDF, aes(x=date)) +
+    geom_line(aes(y=value))  +
+    facet_grid(variable ~ ., scales = <span style="color: #fa8072;">"free"</span>)
+</pre>
+</div>
+
+
+<div id="org7827adc" class="figure">
+<p><img src="figures/timeSeries/decomp-ggplot.png" alt="decomp-ggplot.png" />  
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgbcee914" class="outline-4">
+<h4 id="orgbcee914"><span class="section-number-4">3.2.4</span> The KRAZY way</h4>
+<div class="outline-text-4" id="text-3-2-4">
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #8470ff; font-weight: bold;">par</span>(mfcol=c(4,1))
+<span style="color: #8470ff; font-weight: bold;">par</span>(mar=c(.5,2.5,.5,.5))
+plot(daData$date, daData$val, type=<span style="color: #fa8072;">'l'</span>, ylab=<span style="color: #fa8072;">''</span>, xaxt=<span style="color: #fa8072;">'n'</span>)
+text(mean(<span style="color: #8470ff; font-weight: bold;">par</span>(<span style="color: #fa8072;">'usr'</span>)[1:2]), <span style="color: #8470ff; font-weight: bold;">par</span>(<span style="color: #fa8072;">'usr'</span>)[4], <span style="color: #fa8072;">'Value'</span>, pos=1, cex=3, col=<span style="color: #fa8072;">'blue'</span>)
+<span style="color: #8470ff; font-weight: bold;">par</span>(mar=c(.5,2.5,0,.5))
+plot(as.POSIXct(<span style="color: #fa8072;">'2012-01-01'</span>), 0,
+     xlim=range(daData$date), ylim=range(c(daDataDecomp$trend, daData$trend), na.rm=<span style="color: #63b8ff;">TRUE</span>),
+     col=<span style="color: #63b8ff;">NA</span>, ylab=<span style="color: #fa8072;">''</span>, xaxt=<span style="color: #fa8072;">'n'</span>)
+points(daData$date, daDataDecomp$trend, type=<span style="color: #fa8072;">'l'</span>, xaxt=<span style="color: #fa8072;">'n'</span>)
+points(daData$date, daData$trend,       type=<span style="color: #fa8072;">'l'</span>, col=<span style="color: #fa8072;">'red'</span>)
+text(mean(<span style="color: #8470ff; font-weight: bold;">par</span>(<span style="color: #fa8072;">'usr'</span>)[1:2]), <span style="color: #8470ff; font-weight: bold;">par</span>(<span style="color: #fa8072;">'usr'</span>)[4], <span style="color: #fa8072;">'Trend'</span>, pos=1, cex=3, col=<span style="color: #fa8072;">'blue'</span>)
+plot(as.POSIXct(<span style="color: #fa8072;">'2012-01-01'</span>), 0,
+     xlim=range(daData$date), ylim=2*range(c(daDataDecomp$seasonal, daData$seasonal), na.rm=<span style="color: #63b8ff;">TRUE</span>),
+     col=<span style="color: #63b8ff;">NA</span>, ylab=<span style="color: #fa8072;">''</span>, xaxt=<span style="color: #fa8072;">'n'</span>)
+points(daData$date, daDataDecomp$seasonal, type=<span style="color: #fa8072;">'l'</span>, xaxt=<span style="color: #fa8072;">'n'</span>)
+points(daData$date, daData$seasonal,       type=<span style="color: #fa8072;">'l'</span>, col=<span style="color: #fa8072;">'red'</span>)
+text(mean(<span style="color: #8470ff; font-weight: bold;">par</span>(<span style="color: #fa8072;">'usr'</span>)[1:2]), <span style="color: #8470ff; font-weight: bold;">par</span>(<span style="color: #fa8072;">'usr'</span>)[4], <span style="color: #fa8072;">'Seasonal'</span>, pos=1, cex=3, col=<span style="color: #fa8072;">'blue'</span>)
+<span style="color: #8470ff; font-weight: bold;">par</span>(mar=c(2.5,2.5,0,.5))
+plot(as.POSIXct(<span style="color: #fa8072;">'2012-01-01'</span>), 0,
+     xlim=range(daData$date), ylim=range(c(daDataDecomp$random, daData$random), na.rm=<span style="color: #63b8ff;">TRUE</span>),
+     col=<span style="color: #63b8ff;">NA</span>, xlab=<span style="color: #fa8072;">''</span>, ylab=<span style="color: #fa8072;">''</span>)
+points(daData$date, daData$random,       type=<span style="color: #fa8072;">'p'</span>, col=<span style="color: #fa8072;">'red'</span>, pch=20)
+points(daData$date, daDataDecomp$random, type=<span style="color: #fa8072;">'l'</span>, xaxt=<span style="color: #fa8072;">'n'</span>)
+text(mean(<span style="color: #8470ff; font-weight: bold;">par</span>(<span style="color: #fa8072;">'usr'</span>)[1:2]), <span style="color: #8470ff; font-weight: bold;">par</span>(<span style="color: #fa8072;">'usr'</span>)[4], <span style="color: #fa8072;">'Random'</span>, pos=1, cex=3, col=<span style="color: #fa8072;">'blue'</span>)
+</pre>
+</div>
+
+
+<div id="org0d32363" class="figure">
+<p><img src="figures/timeSeries/decomp-krazy.png" alt="decomp-krazy.png" />  
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org92a93be" class="outline-2">
+<h2 id="org92a93be"><span class="section-number-2">4</span> Fitting</h2>
+<div class="outline-text-2" id="text-4">
+</div>
+<div id="outline-container-org84fa6f6" class="outline-3">
+<h3 id="org84fa6f6"><span class="section-number-3">4.1</span> Fit an arima model</h3>
+<div class="outline-text-3" id="text-4-1">
+<div class="org-src-container">
+<pre class="src src-R">fit <span style="color: #8470ff; font-weight: bold;">&lt;-</span> arima(daDataSeries, order=c(5,0,0), seasonal=list(order=c(2,1,0), period=7))
+fit
+</pre>
+</div>
+
+<pre class="example" id="org9296354">
+null device 
+          1 
+Warning messages:
+1: Use of `daDat$f` is discouraged. Use `f` instead. 
+2: Use of `daDat$fit` is discouraged. Use `fit` instead. 
+3: Use of `daDat$f` is discouraged. Use `f` instead. 
+4: Use of `daDat$fit` is discouraged. Use `fit` instead.
+null device 
+          1 
+Warning message:
+Removed 20 row(s) containing missing values (geom_path).
+null device 
+          1
+null device 
+          1
+null device 
+          1
+null device 
+          1
+[1] "ERROR : The melt generic in data.table has been passed a data.frame, but data.table::melt currently only has a method for data.tables. Please confirm your input is a data.table, with setDT(daDataDecompDF) or as.data.table(daDataDecompDF). If you intend to use a method from reshape2, try installing that package first, but do note that reshape2 is deprecated and you should be migrating your code away from using it."
+null device 
+          1
+null device 
+          1
+
+Call:
+arima(x = daDataSeries, order = c(5, 0, 0), seasonal = list(order = c(2, 1, 
+    0), period = 7))
+
+Coefficients:
+         ar1     ar2     ar3     ar4     ar5     sar1     sar2
+      0.1831  0.1385  0.1226  0.2301  0.1423  -0.6045  -0.3440
+s.e.  0.0529  0.0517  0.0526  0.0522  0.0526   0.0520   0.0515
+
+sigma^2 estimated as 0.09739:  log likelihood = -92.89,  aic = 201.79
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org7ba025b" class="outline-3">
+<h3 id="org7ba025b"><span class="section-number-3">4.2</span> predict the future</h3>
+<div class="outline-text-3" id="text-4-2">
+<div class="org-src-container">
+<pre class="src src-R">fore <span style="color: #8470ff; font-weight: bold;">&lt;-</span> predict(fit, n.ahead=7*5)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8cd6984" class="outline-3">
+<h3 id="org8cd6984"><span class="section-number-3">4.3</span> Compute error bounds at 95% confidence level</h3>
+<div class="outline-text-3" id="text-4-3">
+<div class="org-src-container">
+<pre class="src src-R">U <span style="color: #8470ff; font-weight: bold;">&lt;-</span> fore$pred + 2*fore$se
+L <span style="color: #8470ff; font-weight: bold;">&lt;-</span> fore$pred - 2*fore$se
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5b84eb9" class="outline-3">
+<h3 id="org5b84eb9"><span class="section-number-3">4.4</span> Plot  prediction</h3>
+<div class="outline-text-3" id="text-4-4">
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #8470ff; font-weight: bold;">par</span>(mfcol=c(1,1))
+<span style="color: #8470ff; font-weight: bold;">par</span>(mar=c(5,5,5,5))
+ts.plot(daDataSeries, fore$pred, U, L, col=c(1,2,4,4), lty = c(1,1,2,2))
+legend(<span style="color: #fa8072;">"topleft"</span>, c(<span style="color: #fa8072;">"Actual"</span>, <span style="color: #fa8072;">"Forecast"</span>, <span style="color: #fa8072;">"Error Bounds (95% Confidence)"</span>), col=c(1,2,4), lty=c(1,1,2))
+</pre>
+</div>
+
+
+<div id="orge3eaf2c" class="figure">
+<p><img src="figures/timeSeries/fore-ts.png" alt="fore-ts.png" />  
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge4cae5c" class="outline-2">
+<h2 id="orge4cae5c"><span class="section-number-2">5</span> Smoothing</h2>
+</div>
+
+<div id="outline-container-org48d53f1" class="outline-2">
+<h2 id="org48d53f1"><span class="section-number-2">6</span> Use lowess to smooth</h2>
+<div class="outline-text-2" id="text-6">
+<div class="org-src-container">
+<pre class="src src-R">smoothedData <span style="color: #8470ff; font-weight: bold;">&lt;-</span> lowess(daData$idate, daData$val, f=.3)
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org51af208" class="outline-3">
+<h3 id="org51af208"><span class="section-number-3">6.1</span> Put everything in a data.frame for ggplot</h3>
+<div class="outline-text-3" id="text-6-1">
+<p>
+Notice that we convert the integers we got from lowess at the same time.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">allDat <span style="color: #8470ff; font-weight: bold;">&lt;-</span> bind_rows(mutate(select(daData, date, val), 
+                           smoother=<span style="color: #fa8072;">'actual'</span>), 
+                    mutate(data.frame(date=as.POSIXct(smoothedData$x, origin=<span style="color: #fa8072;">'1970-01-01 00:00:00 UTC'</span>), 
+                                      val=smoothedData$y), 
+                           smoother=<span style="color: #fa8072;">'lowess'</span>))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org965612b" class="outline-3">
+<h3 id="org965612b"><span class="section-number-3">6.2</span> Plot it</h3>
+<div class="outline-text-3" id="text-6-2">
+<div class="org-src-container">
+<pre class="src src-R">ggplot(allDat, aes(x=date, y=val, col=smoother)) +
+  geom_line() +
+  labs(title=<span style="color: #fa8072;">'Smoothing Time Series With A Generic Smoother'</span>)
+</pre>
+</div>
+
+
+<div id="org86d1f66" class="figure">
+<p><img src="figures/timeSeries/smooth.png" alt="smooth.png" />  
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+Created by Mitch Richling <<a href="mailto:http://www.mitchr.me/">http://www.mitchr.me/</a>>.  Rendered on 2021-05-04 Tue 13:18 via <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.4.5)
+</div>
+</body>
+</html>

@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2021-05-04 Tue 13:18 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Inline C++ Example</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Mitch Richling" />
+<meta name="description" content="Inline C++ Example"
+ />
+<meta name="keywords" content="Inline C++ Example" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<style>body { width: 95%; margin: 2% auto; font-size: 18px; line-height: 1.4em; font-family: Georgia, serif; color: black; background-color: white; }</style>
+<style>body { min-width: 820px; max-width: 1024px; }</style>
+<style>h1,h2,h3,h4,h5,h6 { color: #A5573E; line-height: 1em; font-family: Helvetica, sans-serif; }</style>
+<style>h1,h2,h3 { line-height: 1.4em; }</style>
+<style>h1.title { font-size: 3em; }</style>
+<style>h4,h5,h6 { font-size: 1em; }</style>
+<style>.org-src-container { border: 1px solid #ccc; box-shadow: 3px 3px 3px #eee; font-family: Lucida Console, monospace; font-size: 80%; margin: 0px; padding: 0px 0px; position: relative; }</style>
+<style>.org-src-container>pre { line-height: 1.2em; padding-top: 1.5em; margin: 0.5em; background-color: #404040; color: white; overflow: auto; }</style>
+<style>.org-src-container>pre:before { display: block; position: absolute; background-color: #b3b3b3; top: 0; right: 0; padding: 0 0.2em 0 0.4em; border-bottom-left-radius: 8px; border: 0; color: white; font-size: 100%; font-family: Helvetica, sans-serif;}</style>
+<style>pre.example { white-space: pre-wrap; white-space: -moz-pre-wrap; white-space: -o-pre-wrap; font-family: Lucida Console, monospace; font-size: 80%; background: #404040; color: white; display: block; padding: 0em; border: 2px solid black; }</style>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="https://richmit.github.io/ex-R/"> UP </a>
+ |
+ <a accesskey="H" href="https://www.mitchr.me/"> HOME </a>
+</div><div id="content">
+<h1 class="title">Inline C++ Example</h1>
+<table border="2 solid #ccc" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" align="center">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-right"><b>Author:</b></td>
+<td class="org-left"><i>Mitch Richling</i></td>
+</tr>
+
+<tr>
+<td class="org-right"><b>Updated:</b></td>
+<td class="org-left"><i>2021-05-04</i></td>
+</tr>
+</tbody>
+</table>
+<p align="center">
+Copyright 2020 Mitch Richling. All rights reserved.
+</p>
+
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org4cd5a63">1. Source Code and Files</a></li>
+<li><a href="#orgef7ae98">2. Load the library</a></li>
+<li><a href="#org6476b08">3. External C++ Code</a>
+<ul>
+<li><a href="#org0fd9682">3.1. The External Code File</a></li>
+<li><a href="#org7bdfe9f">3.2. Telling R about our external code</a></li>
+</ul>
+</li>
+<li><a href="#orgd911a64">4. Inline C++ Code</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orga1c2ac5">4.0.1. Function returning a number</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org83486ee">5. Calling our functions</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org4cd5a63" class="outline-2">
+<h2 id="org4cd5a63"><span class="section-number-2">1</span> Source Code and Files</h2>
+<div class="outline-text-2" id="text-1">
+<ul class="org-ul">
+<li><a href="cppInR.org">cppInR.org</a></li>
+<li><a href="cppInR.R">cppInR.R</a></li>
+<li><a href="cppInR.cpp">cppInR.cpp</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgef7ae98" class="outline-2">
+<h2 id="orgef7ae98"><span class="section-number-2">2</span> Load the library</h2>
+<div class="outline-text-2" id="text-2">
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #8470ff; font-weight: bold;">library</span>(Rcpp)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6476b08" class="outline-2">
+<h2 id="org6476b08"><span class="section-number-2">3</span> External C++ Code</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+We can put our code in an external file, and tell R where to find it.
+</p>
+</div>
+
+<div id="outline-container-org0fd9682" class="outline-3">
+<h3 id="org0fd9682"><span class="section-number-3">3.1</span> The External Code File</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+In the code below we define two functions.  The first concatinates two R vecotrs, and the second computes the sum of an R vector.  We place the code into a file called <code>cppInR.cpp</code>.  Note the export direcives in the comments!
+</p>
+
+<div class="org-src-container">
+<pre class="src src-c++"><span style="color: #ffa500;">///////////////////////////////////////////////////////////</span>
+<span style="color: #6495ed;">#include</span> <span style="color: #fa8072;">&lt;Rcpp.h&gt;</span>
+
+<span style="color: #ffa500;">///////////////////////////////////////////////////////////</span>
+<span style="color: #00ffff;">using</span> <span style="color: #00ffff;">namespace</span> <span style="color: #8470ff; font-weight: bold;">Rcpp</span>;
+
+<span style="color: #ffa500;">///////////////////////////////////////////////////////////</span>
+<span style="color: #ffa500;">// </span><span style="color: #ff7f24;">[[Rcpp::export]]</span>
+<span style="color: #63b8ff;">NumericVector</span> <span style="color: #00fa9a; font-weight: bold;">cppExtCat</span>(<span style="color: #63b8ff;">NumericVector</span> <span style="color: #7fffd4;">a</span>, <span style="color: #63b8ff;">NumericVector</span> <span style="color: #7fffd4;">b</span>) {
+  <span style="color: #8470ff; font-weight: bold;">Rcpp</span>::<span style="color: #63b8ff;">NumericVector</span> <span style="color: #7fffd4;">c</span>(a.size() + b.size());
+  <span style="color: #63b8ff;">int</span> <span style="color: #7fffd4;">j</span>=0;
+  <span style="color: #00ffff;">for</span> (<span style="color: #63b8ff;">int</span> <span style="color: #7fffd4;">i</span>=0; i&lt;a.size(); i++)
+    c[j++] += a[i];
+  <span style="color: #00ffff;">for</span> (<span style="color: #63b8ff;">int</span> <span style="color: #7fffd4;">i</span>=0; i&lt;b.size(); i++)
+    c[j++] += b[i];
+  <span style="color: #00ffff;">return</span> c;
+}
+
+<span style="color: #ffa500;">///////////////////////////////////////////////////////////</span>
+<span style="color: #ffa500;">// </span><span style="color: #ff7f24;">[[Rcpp::export]]</span>
+<span style="color: #63b8ff;">double</span> <span style="color: #00fa9a; font-weight: bold;">cppExtSum</span>(<span style="color: #63b8ff;">NumericVector</span> <span style="color: #7fffd4;">x</span>) {
+  <span style="color: #63b8ff;">double</span> <span style="color: #7fffd4;">total</span> = 0;
+  <span style="color: #00ffff;">for</span>(<span style="color: #63b8ff;">int</span> <span style="color: #7fffd4;">i</span>=0; i&lt;x.size(); ++i) {
+    total += x[i];
+  }
+  <span style="color: #00ffff;">return</span> total;
+}
+
+<span style="color: #ffa500;">///////////////////////////////////////////////////////////</span>
+<span style="color: #f08080;">/*** R</span>
+<span style="color: #f08080;">print('HI -- I am some code in cppRcppOutOfLine.cpp')</span>
+<span style="color: #f08080;">*/</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7bdfe9f" class="outline-3">
+<h3 id="org7bdfe9f"><span class="section-number-3">3.2</span> Telling R about our external code</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+We must tell R where to find our enxternal code.  We do that with the <code>sourceCpp</code> function &#x2013; it will compile the code and create R wrappers to call the
+functions.  Note that little bit of R code in the comment at the bottom of <code>cppInR.cpp</code> is exicuted when we run <code>sourceCpp</code>!
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">Rcpp::sourceCpp(<span style="color: #fa8072;">'cppInR.cpp'</span>)
+</pre>
+</div>
+
+<pre class="example" id="orgf74859c">
+
+print('HI -- I am some code in cppRcppOutOfLine.cpp')
+[1] "HI -- I am some code in cppRcppOutOfLine.cpp"
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd911a64" class="outline-2">
+<h2 id="orgd911a64"><span class="section-number-2">4</span> Inline C++ Code</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+We define the same two functions, but we put them directly in our R code as strings.  Instead of using <code>sourceCpp</code>, we use <code>cppFunction</code>.  <code>cppFunction</code> takes care of several things for us:
+</p>
+<ul class="org-ul">
+<li>Define the function</li>
+<li>Compile the C++ code</li>
+<li>Create an R wrapper for a C++ function</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-R">Rcpp::cppFunction(<span style="color: #fa8072;">'NumericVector cppIntCat(NumericVector a, NumericVector b) {</span>
+<span style="color: #fa8072;">  Rcpp::NumericVector c(a.size() + b.size());</span>
+<span style="color: #fa8072;">  int j=0;</span>
+<span style="color: #fa8072;">  for (int i=0; i&lt;a.size(); i++)</span>
+<span style="color: #fa8072;">    c[j++] += a[i];</span>
+<span style="color: #fa8072;">  for (int i=0; i&lt;b.size(); i++)</span>
+<span style="color: #fa8072;">    c[j++] += b[i];</span>
+<span style="color: #fa8072;">  return c;</span>
+<span style="color: #fa8072;">}'</span>)
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orga1c2ac5" class="outline-4">
+<h4 id="orga1c2ac5"><span class="section-number-4">4.0.1</span> Function returning a number</h4>
+<div class="outline-text-4" id="text-4-0-1">
+<div class="org-src-container">
+<pre class="src src-R">Rcpp::cppFunction(<span style="color: #fa8072;">'double cppIntSum(NumericVector x) {</span>
+<span style="color: #fa8072;">  double total = 0;</span>
+<span style="color: #fa8072;">  for(int i=0; i&lt;x.size(); ++i) {</span>
+<span style="color: #fa8072;">    total += x[i];</span>
+<span style="color: #fa8072;">  }</span>
+<span style="color: #fa8072;">  return total;</span>
+<span style="color: #fa8072;">}'</span>)
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org83486ee" class="outline-2">
+<h2 id="org83486ee"><span class="section-number-2">5</span> Calling our functions</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+Here we call our concatination functions (the internal one and external one):
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">cppIntCat(1:10, 2:11)
+</pre>
+</div>
+
+<pre class="example" id="org074cc3e">
+[1]  1  2  3  4  5  6  7  8  9 10  2  3  4  5  6  7  8  9 10 11
+</pre>
+
+<div class="org-src-container">
+<pre class="src src-R">cppExtCat(1:10, 2:11)
+</pre>
+</div>
+
+<pre class="example" id="org3b63ed1">
+[1]  1  2  3  4  5  6  7  8  9 10  2  3  4  5  6  7  8  9 10 11
+</pre>
+
+<p>
+Here we call our sum functions (the internal one and external one):
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">cppIntSum(1:10)
+</pre>
+</div>
+
+<pre class="example" id="org10d8faf">
+[1] 55
+</pre>
+
+<div class="org-src-container">
+<pre class="src src-R">cppExtSum(1:10)
+</pre>
+</div>
+
+<pre class="example" id="org2f6a074">
+[1] 55
+</pre>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+Created by Mitch Richling <<a href="mailto:http://www.mitchr.me/">http://www.mitchr.me/</a>>.  Rendered on 2021-05-04 Tue 13:18 via <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.4.5)
+</div>
+</body>
+</html>

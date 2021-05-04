@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2021-05-04 Tue 13:18 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Data Smoothing</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Mitch Richling" />
+<meta name="description" content="Data Smoothing@EOL"
+ />
+<meta name="keywords" content="Data Smoothing" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<style>body { width: 95%; margin: 2% auto; font-size: 18px; line-height: 1.4em; font-family: Georgia, serif; color: black; background-color: white; }</style>
+<style>body { min-width: 820px; max-width: 1024px; }</style>
+<style>h1,h2,h3,h4,h5,h6 { color: #A5573E; line-height: 1em; font-family: Helvetica, sans-serif; }</style>
+<style>h1,h2,h3 { line-height: 1.4em; }</style>
+<style>h1.title { font-size: 3em; }</style>
+<style>h4,h5,h6 { font-size: 1em; }</style>
+<style>.org-src-container { border: 1px solid #ccc; box-shadow: 3px 3px 3px #eee; font-family: Lucida Console, monospace; font-size: 80%; margin: 0px; padding: 0px 0px; position: relative; }</style>
+<style>.org-src-container>pre { line-height: 1.2em; padding-top: 1.5em; margin: 0.5em; background-color: #404040; color: white; overflow: auto; }</style>
+<style>.org-src-container>pre:before { display: block; position: absolute; background-color: #b3b3b3; top: 0; right: 0; padding: 0 0.2em 0 0.4em; border-bottom-left-radius: 8px; border: 0; color: white; font-size: 100%; font-family: Helvetica, sans-serif;}</style>
+<style>pre.example { white-space: pre-wrap; white-space: -moz-pre-wrap; white-space: -o-pre-wrap; font-family: Lucida Console, monospace; font-size: 80%; background: #404040; color: white; display: block; padding: 0em; border: 2px solid black; }</style>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="https://www.mitchr.me/SS/exampleR/index.html"> UP </a>
+ |
+ <a accesskey="H" href="https://www.mitchr.me/"> HOME </a>
+</div><div id="content">
+<h1 class="title">Data Smoothing</h1>
+<table border="2 solid #ccc" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" align="center">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-right"><b>Author:</b></td>
+<td class="org-left"><i>Mitch Richling</i></td>
+</tr>
+
+<tr>
+<td class="org-right"><b>Updated:</b></td>
+<td class="org-left"><i>2021-05-04</i></td>
+</tr>
+</tbody>
+</table>
+<p align="center">
+Copyright 2020 Mitch Richling. All rights reserved.
+</p>
+
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org46d6d1e">1. Source Code and Files</a></li>
+<li><a href="#org38c299d">2. Example Data</a></li>
+<li><a href="#org325d4e4">3. Various Smoothers</a>
+<ul>
+<li><a href="#org91d7add">3.1. Compute various smoothed data sets</a></li>
+<li><a href="#org395a6e9">3.2. Put it all in a data.frame for ggplot</a></li>
+<li><a href="#org11c8d16">3.3. Plot them all</a></li>
+</ul>
+</li>
+<li><a href="#orgaf67014">4. Lowess f values</a>
+<ul>
+<li><a href="#org91b0910">4.1. Compute three lowess smoothings with different f values</a></li>
+<li><a href="#orgd73a561">4.2. Put all of our lowess curves into a data.frame with the original data so we can plot it all with ggplot</a></li>
+<li><a href="#org232fa66">4.3. Plot them all</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org46d6d1e" class="outline-2">
+<h2 id="org46d6d1e"><span class="section-number-2">1</span> Source Code and Files</h2>
+<div class="outline-text-2" id="text-1">
+<ul class="org-ul">
+<li><a href="smoothing.org">smoothing.org</a></li>
+<li><a href="smoothing.R">smoothing.R</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org38c299d" class="outline-2">
+<h2 id="org38c299d"><span class="section-number-2">2</span> Example Data</h2>
+<div class="outline-text-2" id="text-2">
+<div class="org-src-container">
+<pre class="src src-R">nPts <span style="color: #8470ff; font-weight: bold;">&lt;-</span> 150
+xDat <span style="color: #8470ff; font-weight: bold;">&lt;-</span> 1:nPts
+yDat <span style="color: #8470ff; font-weight: bold;">&lt;-</span> rnorm(nPts, mean=0, sd=10)+xDat*.2
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org325d4e4" class="outline-2">
+<h2 id="org325d4e4"><span class="section-number-2">3</span> Various Smoothers</h2>
+<div class="outline-text-2" id="text-3">
+</div>
+<div id="outline-container-org91d7add" class="outline-3">
+<h3 id="org91d7add"><span class="section-number-3">3.1</span> Compute various smoothed data sets</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+Some methods produce objects with new X data while others just produce new Y data.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">smDatRunMed     <span style="color: #8470ff; font-weight: bold;">&lt;-</span> runmed(yDat, 15)                      <span style="color: #ffa500;"># </span><span style="color: #ff7f24;">Running Median</span>
+smDatRunAvg2    <span style="color: #8470ff; font-weight: bold;">&lt;-</span> stats::filter(yDat,                   <span style="color: #ffa500;"># </span><span style="color: #ff7f24;">Two sided, running average</span>
+                                 rep(1/15,15), 
+                                 method=<span style="color: #fa8072;">'convolution'</span>, 
+                                 sides=2)
+smDatRunAvg1    <span style="color: #8470ff; font-weight: bold;">&lt;-</span> stats::filter(yDat,                   <span style="color: #ffa500;"># </span><span style="color: #ff7f24;">One sided, running average </span>
+                                 rep(1/7,7), 
+                                 method=<span style="color: #fa8072;">'convolution'</span>, 
+                                 sides=1)
+smDatTuk3RS3R   <span style="color: #8470ff; font-weight: bold;">&lt;-</span> smooth(yDat, kind = <span style="color: #fa8072;">"3RS3R"</span>)          <span style="color: #ffa500;"># </span><span style="color: #ff7f24;">Tukey Smoother</span>
+smDatLowess0d10 <span style="color: #8470ff; font-weight: bold;">&lt;-</span> lowess(xDat, yDat, f=.1)              <span style="color: #ffa500;"># </span><span style="color: #ff7f24;">Cleveland lowess smoother</span>
+smDatSupSmu     <span style="color: #8470ff; font-weight: bold;">&lt;-</span> supsmu(xDat, yDat, span=.1)           <span style="color: #ffa500;"># </span><span style="color: #ff7f24;">Friedman's SuperSmoother</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org395a6e9" class="outline-3">
+<h3 id="org395a6e9"><span class="section-number-3">3.2</span> Put it all in a data.frame for ggplot</h3>
+<div class="outline-text-3" id="text-3-2">
+<div class="org-src-container">
+<pre class="src src-R">allDat <span style="color: #8470ff; font-weight: bold;">&lt;-</span> rbind(data.frame(smoother=rep(<span style="color: #fa8072;">'actual'</span>,   nPts), x=xDat,           y=yDat),
+                data.frame(smoother=rep(<span style="color: #fa8072;">'runMed'</span>,   nPts), x=xDat,           y=smDatRunMed),
+                data.frame(smoother=rep(<span style="color: #fa8072;">'runAvg2'</span>,  nPts), x=xDat,           y=smDatRunAvg2),
+                data.frame(smoother=rep(<span style="color: #fa8072;">'runAvg1'</span>,  nPts), x=xDat,           y=smDatRunAvg1),
+                data.frame(smoother=rep(<span style="color: #fa8072;">'tuk3RS3R'</span>, nPts), x=xDat,           y=as.vector(smDatTuk3RS3R)),
+                data.frame(smoother=rep(<span style="color: #fa8072;">'lowess'</span>,   nPts), x=smDatLowess0d10$x, y=smDatLowess0d10$y),
+                data.frame(smoother=rep(<span style="color: #fa8072;">'supsmu'</span>,   nPts), x=smDatSupSmu$x,     y=smDatSupSmu$y)
+                )
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org11c8d16" class="outline-3">
+<h3 id="org11c8d16"><span class="section-number-3">3.3</span> Plot them all</h3>
+<div class="outline-text-3" id="text-3-3">
+<div class="org-src-container">
+<pre class="src src-R">ggplot(allDat, aes(x=x, y=y, col=smoother)) +
+  geom_line(data=subset(allDat,  smoother!=<span style="color: #fa8072;">'actual'</span>)) +
+  geom_point(data=subset(allDat, smoother==<span style="color: #fa8072;">'actual'</span>))
+</pre>
+</div>
+
+
+<div id="org3414b3e" class="figure">
+<p><img src="figures/smoothing/dif.png" alt="dif.png" />  
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgaf67014" class="outline-2">
+<h2 id="orgaf67014"><span class="section-number-2">4</span> Lowess f values</h2>
+<div class="outline-text-2" id="text-4">
+</div>
+<div id="outline-container-org91b0910" class="outline-3">
+<h3 id="org91b0910"><span class="section-number-3">4.1</span> Compute three lowess smoothings with different f values</h3>
+<div class="outline-text-3" id="text-4-1">
+<div class="org-src-container">
+<pre class="src src-R">smDatLowess0d05   <span style="color: #8470ff; font-weight: bold;">&lt;-</span> lowess(xDat, yDat, f=.05)
+smDatLowess0d20   <span style="color: #8470ff; font-weight: bold;">&lt;-</span> lowess(xDat, yDat, f=.20)
+smDatLowess0d50   <span style="color: #8470ff; font-weight: bold;">&lt;-</span> lowess(xDat, yDat, f=.50)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd73a561" class="outline-3">
+<h3 id="orgd73a561"><span class="section-number-3">4.2</span> Put all of our lowess curves into a data.frame with the original data so we can plot it all with ggplot</h3>
+<div class="outline-text-3" id="text-4-2">
+<div class="org-src-container">
+<pre class="src src-R">allDat <span style="color: #8470ff; font-weight: bold;">&lt;-</span> rbind(data.frame(smoother=rep(<span style="color: #fa8072;">'actual'</span>,       nPts), x=xDat,           y=yDat),
+                data.frame(smoother=rep(<span style="color: #fa8072;">'lowess0d05'</span>,   nPts), x=smDatLowess0d05$x, y=smDatLowess0d05$y),
+                data.frame(smoother=rep(<span style="color: #fa8072;">'lowess0d10'</span>,   nPts), x=smDatLowess0d10$x, y=smDatLowess0d10$y),
+                data.frame(smoother=rep(<span style="color: #fa8072;">'lowess0d20'</span>,   nPts), x=smDatLowess0d20$x, y=smDatLowess0d20$y),
+                data.frame(smoother=rep(<span style="color: #fa8072;">'lowess0d50'</span>,   nPts), x=smDatLowess0d50$x, y=smDatLowess0d50$y)
+                )
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org232fa66" class="outline-3">
+<h3 id="org232fa66"><span class="section-number-3">4.3</span> Plot them all</h3>
+<div class="outline-text-3" id="text-4-3">
+<div class="org-src-container">
+<pre class="src src-R">ggplot(allDat, aes(x=x, y=y, col=smoother)) +
+  geom_line(data=subset(allDat,  smoother!=<span style="color: #fa8072;">'actual'</span>)) +
+  geom_point(data=subset(allDat, smoother==<span style="color: #fa8072;">'actual'</span>)) +
+  labs(title=<span style="color: #fa8072;">'Lowess At Various f Values'</span>)
+</pre>
+</div>
+
+
+<div id="org1f05974" class="figure">
+<p><img src="figures/smoothing/low.png" alt="low.png" />  
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+Created by Mitch Richling <<a href="mailto:http://www.mitchr.me/">http://www.mitchr.me/</a>>.  Rendered on 2021-05-04 Tue 13:18 via <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.4.5)
+</div>
+</body>
+</html>

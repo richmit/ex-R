@@ -1,0 +1,1040 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2021-05-04 Tue 13:24 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>data.table Examples</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Mitch Richling" />
+<meta name="description" content="data.table features.@EOL"
+ />
+<meta name="keywords" content="package cran data.table R" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<style>body { width: 95%; margin: 2% auto; font-size: 18px; line-height: 1.4em; font-family: Georgia, serif; color: black; background-color: white; }</style>
+<style>body { min-width: 820px; max-width: 1024px; }</style>
+<style>h1,h2,h3,h4,h5,h6 { color: #A5573E; line-height: 1em; font-family: Helvetica, sans-serif; }</style>
+<style>h1,h2,h3 { line-height: 1.4em; }</style>
+<style>h1.title { font-size: 3em; }</style>
+<style>h4,h5,h6 { font-size: 1em; }</style>
+<style>.org-src-container { border: 1px solid #ccc; box-shadow: 3px 3px 3px #eee; font-family: Lucida Console, monospace; font-size: 80%; margin: 0px; padding: 0px 0px; position: relative; }</style>
+<style>.org-src-container>pre { line-height: 1.2em; padding-top: 1.5em; margin: 0.5em; background-color: #404040; color: white; overflow: auto; }</style>
+<style>.org-src-container>pre:before { display: block; position: absolute; background-color: #b3b3b3; top: 0; right: 0; padding: 0 0.2em 0 0.4em; border-bottom-left-radius: 8px; border: 0; color: white; font-size: 100%; font-family: Helvetica, sans-serif;}</style>
+<style>pre.example { white-space: pre-wrap; white-space: -moz-pre-wrap; white-space: -o-pre-wrap; font-family: Lucida Console, monospace; font-size: 80%; background: #404040; color: white; display: block; padding: 0em; border: 2px solid black; }</style>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="https://richmit.github.io/ex-R/"> UP </a>
+ |
+ <a accesskey="H" href="https://www.mitchr.me/"> HOME </a>
+</div><div id="content">
+<h1 class="title">data.table Examples</h1>
+<table border="2 solid #ccc" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" align="center">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-right"><b>Author:</b></td>
+<td class="org-left"><i>Mitch Richling</i></td>
+</tr>
+
+<tr>
+<td class="org-right"><b>Updated:</b></td>
+<td class="org-left"><i>2021-05-04</i></td>
+</tr>
+</tbody>
+</table>
+<p align="center">
+Copyright 2020 Mitch Richling. All rights reserved.
+</p>
+
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org2ed56d1">1. Source Code and Files</a></li>
+<li><a href="#orgf98eca0">2. Load the library</a></li>
+<li><a href="#org98fd6bb">3. Example Data</a></li>
+<li><a href="#orgd9a160d">4. data.frame to data.table</a></li>
+<li><a href="#org32c4cda">5. Indexing</a></li>
+<li><a href="#org7d117fd">6. Indexing: First Argument</a>
+<ul>
+<li><a href="#org46ec113">6.1. An integer (row number)</a></li>
+<li><a href="#org735ea03">6.2. Numeric Range (row numbers)</a></li>
+<li><a href="#orgebe07cf">6.3. Boolean (select matching rows)</a></li>
+<li><a href="#orgaa2db55">6.4. Strings</a>
+<ul>
+<li><a href="#org66d7a59">6.4.1. Key column Indexing</a></li>
+<li><a href="#orge5dcb11">6.4.2. Key column need not be unique</a></li>
+<li><a href="#orgbc6d2e8">6.4.3. Get just one match</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgc712659">7. Indexing: The Second Argument</a>
+<ul>
+<li><a href="#orgf7f8094">7.1. The data.frame way</a></li>
+<li><a href="#org682cef6">7.2. Column Name Expression</a></li>
+<li><a href="#orgd5cb1bc">7.3. Assignment</a></li>
+<li><a href="#org70abd28">7.4. List</a></li>
+<li><a href="#orgf5937cc">7.5. Aggregation</a></li>
+</ul>
+</li>
+<li><a href="#orgf33b251">8. Indexing: The third argument</a>
+<ul>
+<li><a href="#org76ed527">8.1. Aggregation by factors</a></li>
+<li><a href="#org769fab1">8.2. Aggregation and new columns</a></li>
+</ul>
+</li>
+<li><a href="#org5b3d8be">9. Joining</a></li>
+<li><a href="#orgc34b7dc">10. Reading data from the outside world</a>
+<ul>
+<li><a href="#orgde5f58e">10.1. Read a CSV or TSV file</a></li>
+<li><a href="#org8fd090c">10.2. Compressed files are decompressed automatically</a></li>
+<li><a href="#org600fbe8">10.3. Reading data from a URL</a></li>
+<li><a href="#org38eee10">10.4. Read output from a command (in this case compressing with gunzip and filtering with awk)</a></li>
+<li><a href="#org6a43862">10.5. Read a colon (:) separated file with extra whitespace and no column names</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org2ed56d1" class="outline-2">
+<h2 id="org2ed56d1"><span class="section-number-2">1</span> Source Code and Files</h2>
+<div class="outline-text-2" id="text-1">
+<ul class="org-ul">
+<li><a href="dataTable.org">dataTable.org</a></li>
+<li><a href="dataTable.R">dataTable.R</a></li>
+<li><a href="../data/dataTable_f1.csv">../data/dataTable_f1.csv</a></li>
+<li><a href="dataTable_f2.csv.gz">dataTable_f2.csv.gz</a></li>
+<li><a href="dataTable_f3.txt">dataTable_f3.txt</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgf98eca0" class="outline-2">
+<h2 id="orgf98eca0"><span class="section-number-2">2</span> Load the library</h2>
+<div class="outline-text-2" id="text-2">
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #8470ff; font-weight: bold;">library</span>(data.table)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org98fd6bb" class="outline-2">
+<h2 id="org98fd6bb"><span class="section-number-2">3</span> Example Data</h2>
+<div class="outline-text-2" id="text-3">
+<div class="org-src-container">
+<pre class="src src-R">mtcars
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-text">                     mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+Mazda RX4           21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
+Mazda RX4 Wag       21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
+Datsun 710          22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1
+Hornet 4 Drive      21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1
+Hornet Sportabout   18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2
+Valiant             18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1
+Duster 360          14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4
+Merc 240D           24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2
+Merc 230            22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2
+Merc 280            19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4
+Merc 280C           17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4
+Merc 450SE          16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3
+Merc 450SL          17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3
+Merc 450SLC         15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3
+Cadillac Fleetwood  10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
+Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4
+Chrysler Imperial   14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4
+Fiat 128            32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1
+Honda Civic         30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2
+Toyota Corolla      33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1
+Toyota Corona       21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1
+Dodge Challenger    15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2
+AMC Javelin         15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2
+Camaro Z28          13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4
+Pontiac Firebird    19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2
+Fiat X1-9           27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1
+Porsche 914-2       26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2
+Lotus Europa        30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2
+Ford Pantera L      15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4
+Ferrari Dino        19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6
+Maserati Bora       15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8
+Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd9a160d" class="outline-2">
+<h2 id="orgd9a160d"><span class="section-number-2">4</span> data.frame to data.table</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+One can directly coerce a data.frame into a data.table; however, row names will be lost.  We can do something like this to keep them:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">mtcarsDT <span style="color: #8470ff; font-weight: bold;">&lt;-</span> data.table(mtcars, names=rownames(mtcars))
+mtcarsDT
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-text">     mpg cyl  disp  hp drat    wt  qsec vs am gear carb               names
+ 1: 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4           Mazda RX4
+ 2: 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4       Mazda RX4 Wag
+ 3: 22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1          Datsun 710
+ 4: 21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1      Hornet 4 Drive
+ 5: 18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2   Hornet Sportabout
+ 6: 18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1             Valiant
+ 7: 14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4          Duster 360
+ 8: 24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2           Merc 240D
+ 9: 22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2            Merc 230
+10: 19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4            Merc 280
+11: 17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4           Merc 280C
+12: 16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3          Merc 450SE
+13: 17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3          Merc 450SL
+14: 15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3         Merc 450SLC
+15: 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4  Cadillac Fleetwood
+16: 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4 Lincoln Continental
+17: 14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4   Chrysler Imperial
+18: 32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1            Fiat 128
+19: 30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2         Honda Civic
+20: 33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1      Toyota Corolla
+21: 21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1       Toyota Corona
+22: 15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2    Dodge Challenger
+23: 15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2         AMC Javelin
+24: 13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4          Camaro Z28
+25: 19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2    Pontiac Firebird
+26: 27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1           Fiat X1-9
+27: 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2       Porsche 914-2
+28: 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2        Lotus Europa
+29: 15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4      Ford Pantera L
+30: 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6        Ferrari Dino
+31: 15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8       Maserati Bora
+32: 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2          Volvo 142E
+     mpg cyl  disp  hp drat    wt  qsec vs am gear carb               names
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org32c4cda" class="outline-2">
+<h2 id="org32c4cda"><span class="section-number-2">5</span> Indexing</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+data.tables are indexed with three arguments (as in: <code>a[1,2,3]</code>).
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7d117fd" class="outline-2">
+<h2 id="org7d117fd"><span class="section-number-2">6</span> Indexing: First Argument</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+In general the first index argument is used to select rows.
+</p>
+</div>
+
+<div id="outline-container-org46ec113" class="outline-3">
+<h3 id="org46ec113"><span class="section-number-3">6.1</span> An integer (row number)</h3>
+<div class="outline-text-3" id="text-6-1">
+<div class="org-src-container">
+<pre class="src src-R">mtcarsDT[2,]
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-text">   mpg cyl disp  hp drat    wt  qsec vs am gear carb         names
+1:  21   6  160 110  3.9 2.875 17.02  0  1    4    4 Mazda RX4 Wag
+</pre>
+</div>
+
+<p>
+Note that when we only have one index, we don't need the comma!!
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">mtcarsDT[2]
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-text">   mpg cyl disp  hp drat    wt  qsec vs am gear carb         names
+1:  21   6  160 110  3.9 2.875 17.02  0  1    4    4 Mazda RX4 Wag
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org735ea03" class="outline-3">
+<h3 id="org735ea03"><span class="section-number-3">6.2</span> Numeric Range (row numbers)</h3>
+<div class="outline-text-3" id="text-6-2">
+<p>
+Get rows 2 through 5
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">mtcarsDT[2:5]
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-text">    mpg cyl disp  hp drat    wt  qsec vs am gear carb             names
+1: 21.0   6  160 110 3.90 2.875 17.02  0  1    4    4     Mazda RX4 Wag
+2: 22.8   4  108  93 3.85 2.320 18.61  1  1    4    1        Datsun 710
+3: 21.4   6  258 110 3.08 3.215 19.44  1  0    3    1    Hornet 4 Drive
+4: 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2 Hornet Sportabout
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgebe07cf" class="outline-3">
+<h3 id="orgebe07cf"><span class="section-number-3">6.3</span> Boolean (select matching rows)</h3>
+<div class="outline-text-3" id="text-6-3">
+<p>
+Get rows where cyl is equal to 6
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">mtcarsDT[cyl==6]
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-text">    mpg cyl  disp  hp drat    wt  qsec vs am gear carb          names
+1: 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4      Mazda RX4
+2: 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4  Mazda RX4 Wag
+3: 21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1 Hornet 4 Drive
+4: 18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1        Valiant
+5: 19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4       Merc 280
+6: 17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4      Merc 280C
+7: 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6   Ferrari Dino
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgaa2db55" class="outline-3">
+<h3 id="orgaa2db55"><span class="section-number-3">6.4</span> Strings</h3>
+<div class="outline-text-3" id="text-6-4">
+</div>
+<div id="outline-container-org66d7a59" class="outline-4">
+<h4 id="org66d7a59"><span class="section-number-4">6.4.1</span> Key column Indexing</h4>
+<div class="outline-text-4" id="text-6-4-1">
+<p>
+If you have a "key column" set, you can index with strings &#x2013; note that this will change the order of the table to store on the key.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">setkey(mtcarsDT,names)
+mtcarsDT[<span style="color: #fa8072;">"Valiant"</span>]
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-text">    mpg cyl disp  hp drat   wt  qsec vs am gear carb   names
+1: 18.1   6  225 105 2.76 3.46 20.22  1  0    3    1 Valiant
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge5dcb11" class="outline-4">
+<h4 id="orge5dcb11"><span class="section-number-4">6.4.2</span> Key column need not be unique</h4>
+<div class="outline-text-4" id="text-6-4-2">
+<div class="org-src-container">
+<pre class="src src-R">mtcarsDT$cylNames <span style="color: #8470ff; font-weight: bold;">&lt;-</span> paste(<span style="color: #fa8072;">"cyl"</span>, mtcarsDT$cyl, sep=<span style="color: #fa8072;">'='</span>)
+setkey(mtcarsDT,cylNames)
+mtcarsDT[<span style="color: #fa8072;">"cyl=6"</span>]
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-text">    mpg cyl  disp  hp drat    wt  qsec vs am gear carb          names cylNames
+1: 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6   Ferrari Dino    cyl=6
+2: 21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1 Hornet 4 Drive    cyl=6
+3: 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4      Mazda RX4    cyl=6
+4: 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4  Mazda RX4 Wag    cyl=6
+5: 19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4       Merc 280    cyl=6
+6: 17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4      Merc 280C    cyl=6
+7: 18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1        Valiant    cyl=6
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgbc6d2e8" class="outline-4">
+<h4 id="orgbc6d2e8"><span class="section-number-4">6.4.3</span> Get just one match</h4>
+<div class="outline-text-4" id="text-6-4-3">
+<div class="org-src-container">
+<pre class="src src-R">mtcarsDT[<span style="color: #fa8072;">"cyl=6"</span>,mult=<span style="color: #fa8072;">"first"</span>]
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-text">    mpg cyl disp  hp drat   wt qsec vs am gear carb        names cylNames
+1: 19.7   6  145 175 3.62 2.77 15.5  0  1    5    6 Ferrari Dino    cyl=6
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc712659" class="outline-2">
+<h2 id="orgc712659"><span class="section-number-2">7</span> Indexing: The Second Argument</h2>
+<div class="outline-text-2" id="text-7">
+</div>
+<div id="outline-container-orgf7f8094" class="outline-3">
+<h3 id="orgf7f8094"><span class="section-number-3">7.1</span> The data.frame way</h3>
+<div class="outline-text-3" id="text-7-1">
+<p>
+Grab column "cyl" the data.frame way. 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">mtcarsDT$cyl
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-text">[1] 4 4 4 4 4 4 4 4 4 4 4 6 6 6 6 6 6 6 8 8 8 8 8 8 8 8 8 8 8 8 8 8
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org682cef6" class="outline-3">
+<h3 id="org682cef6"><span class="section-number-3">7.2</span> Column Name Expression</h3>
+<div class="outline-text-3" id="text-7-2">
+<p>
+The second index of a data.table is an expression on the rows selected by the first index.  
+</p>
+
+<p>
+Here we just have an expresion with a single column name.  As this will evaluate to the cyl column, that is what is returned.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">mtcarsDT[,cyl]
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-text">[1] 4 4 4 4 4 4 4 4 4 4 4 6 6 6 6 6 6 6 8 8 8 8 8 8 8 8 8 8 8 8 8 8
+</pre>
+</div>
+
+<p>
+Here we just have an arithmatic expresion in two column names.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">mtcarsDT[,disp/cyl]
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-text"> [1] 27.00000 19.67500 19.75000 18.92500 23.77500 35.20000 36.67500 30.07500 17.77500 30.02500 30.25000 24.16667 43.00000 26.66667 26.66667 27.93333 27.93333 37.50000 38.00000 59.00000 43.75000
+[22] 55.00000 39.75000 45.00000 43.87500 45.00000 57.50000 37.62500 34.47500 34.47500 34.47500 50.00000
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd5cb1bc" class="outline-3">
+<h3 id="orgd5cb1bc"><span class="section-number-3">7.3</span> Assignment</h3>
+<div class="outline-text-3" id="text-7-3">
+<p>
+We can create new columns by assigning an expression in the second argument to a new name.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">mtcarsDT[,cylTimesGear:=cyl*gear]
+mtcarsDT
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-text">     mpg cyl  disp  hp drat    wt  qsec vs am gear carb               names cylNames cylTimesGear
+ 1: 22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1          Datsun 710    cyl=4           16
+ 2: 32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1            Fiat 128    cyl=4           16
+ 3: 27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1           Fiat X1-9    cyl=4           16
+ 4: 30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2         Honda Civic    cyl=4           16
+ 5: 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2        Lotus Europa    cyl=4           20
+ 6: 22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2            Merc 230    cyl=4           16
+ 7: 24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2           Merc 240D    cyl=4           16
+ 8: 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2       Porsche 914-2    cyl=4           20
+ 9: 33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1      Toyota Corolla    cyl=4           16
+10: 21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1       Toyota Corona    cyl=4           12
+11: 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2          Volvo 142E    cyl=4           16
+12: 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6        Ferrari Dino    cyl=6           30
+13: 21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1      Hornet 4 Drive    cyl=6           18
+14: 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4           Mazda RX4    cyl=6           24
+15: 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4       Mazda RX4 Wag    cyl=6           24
+16: 19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4            Merc 280    cyl=6           24
+17: 17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4           Merc 280C    cyl=6           24
+18: 18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1             Valiant    cyl=6           18
+19: 15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2         AMC Javelin    cyl=8           24
+20: 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4  Cadillac Fleetwood    cyl=8           24
+21: 13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4          Camaro Z28    cyl=8           24
+22: 14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4   Chrysler Imperial    cyl=8           24
+23: 15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2    Dodge Challenger    cyl=8           24
+24: 14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4          Duster 360    cyl=8           24
+25: 15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4      Ford Pantera L    cyl=8           40
+26: 18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2   Hornet Sportabout    cyl=8           24
+27: 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4 Lincoln Continental    cyl=8           24
+28: 15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8       Maserati Bora    cyl=8           40
+29: 16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3          Merc 450SE    cyl=8           24
+30: 17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3          Merc 450SL    cyl=8           24
+31: 15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3         Merc 450SLC    cyl=8           24
+32: 19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2    Pontiac Firebird    cyl=8           24
+     mpg cyl  disp  hp drat    wt  qsec vs am gear carb               names cylNames cylTimesGear
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org70abd28" class="outline-3">
+<h3 id="org70abd28"><span class="section-number-3">7.4</span> List</h3>
+<div class="outline-text-3" id="text-7-4">
+<p>
+When the second index is a list, then a new data.table will be returned instead of a simple vector. For example we can extract a new data.table with three
+columns (two of which we rename)
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">mtcarsDT[,list(cylinder=cyl, weight=wt, gear)]
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-text">    cylinder weight gear
+ 1:        4  2.320    4
+ 2:        4  2.200    4
+ 3:        4  1.935    4
+ 4:        4  1.615    4
+ 5:        4  1.513    5
+ 6:        4  3.150    4
+ 7:        4  3.190    4
+ 8:        4  2.140    5
+ 9:        4  1.835    4
+10:        4  2.465    3
+11:        4  2.780    4
+12:        6  2.770    5
+13:        6  3.215    3
+14:        6  2.620    4
+15:        6  2.875    4
+16:        6  3.440    4
+17:        6  3.440    4
+18:        6  3.460    3
+19:        8  3.435    3
+20:        8  5.250    3
+21:        8  3.840    3
+22:        8  5.345    3
+23:        8  3.520    3
+24:        8  3.570    3
+25:        8  3.170    5
+26:        8  3.440    3
+27:        8  5.424    3
+28:        8  3.570    5
+29:        8  4.070    3
+30:        8  3.730    3
+31:        8  3.780    3
+32:        8  3.845    3
+    cylinder weight gear
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf5937cc" class="outline-3">
+<h3 id="orgf5937cc"><span class="section-number-3">7.5</span> Aggregation</h3>
+<div class="outline-text-3" id="text-7-5">
+<p>
+That second expression can do more than transform columns into new columns; it aggregate things.  
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">mtcarsDT[,sum(wt)]
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-text">[1] 102.952
+</pre>
+</div>
+
+<p>
+As before, if the second expression is a list we get a new data.table.  If the second expression computes aggregates, then we get more than one
+aggregation. 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">mtcarsDT[,list(daSum=sum(wt), daSd=sd(wt))]
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-text">     daSum      daSd
+1: 102.952 0.9784574
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf33b251" class="outline-2">
+<h2 id="orgf33b251"><span class="section-number-2">8</span> Indexing: The third argument</h2>
+<div class="outline-text-2" id="text-8">
+</div>
+<div id="outline-container-org76ed527" class="outline-3">
+<h3 id="org76ed527"><span class="section-number-3">8.1</span> Aggregation by factors</h3>
+<div class="outline-text-3" id="text-8-1">
+<p>
+The third argument is used to group data.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">mtcarsDT[,sum(wt),cyl]
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-text">   cyl     V1
+1:   4 25.143
+2:   6 21.820
+3:   8 55.989
+</pre>
+</div>
+
+<p>
+The groups can contain more than one factor if we use a list.  We can also name the aggregate column if we put that in a list.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">mtcarsDT[,list(sumWt=sum(wt)),list(cyl, gear)]
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-text">   cyl gear  sumWt
+1:   4    4 19.025
+2:   4    5  3.653
+3:   4    3  2.465
+4:   6    5  2.770
+5:   6    3  6.675
+6:   6    4 12.375
+7:   8    3 49.249
+8:   8    5  6.740
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org769fab1" class="outline-3">
+<h3 id="org769fab1"><span class="section-number-3">8.2</span> Aggregation and new columns</h3>
+<div class="outline-text-3" id="text-8-2">
+<p>
+We can aggregate by groups and put it back into the data.table!!
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">mtcarsDT[,sumWtByCyl:=sum(wt),cyl]
+mtcarsDT
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-text">     mpg cyl  disp  hp drat    wt  qsec vs am gear carb               names cylNames cylTimesGear sumWtByCyl
+ 1: 22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1          Datsun 710    cyl=4           16     25.143
+ 2: 32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1            Fiat 128    cyl=4           16     25.143
+ 3: 27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1           Fiat X1-9    cyl=4           16     25.143
+ 4: 30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2         Honda Civic    cyl=4           16     25.143
+ 5: 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2        Lotus Europa    cyl=4           20     25.143
+ 6: 22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2            Merc 230    cyl=4           16     25.143
+ 7: 24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2           Merc 240D    cyl=4           16     25.143
+ 8: 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2       Porsche 914-2    cyl=4           20     25.143
+ 9: 33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1      Toyota Corolla    cyl=4           16     25.143
+10: 21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1       Toyota Corona    cyl=4           12     25.143
+11: 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2          Volvo 142E    cyl=4           16     25.143
+12: 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6        Ferrari Dino    cyl=6           30     21.820
+13: 21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1      Hornet 4 Drive    cyl=6           18     21.820
+14: 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4           Mazda RX4    cyl=6           24     21.820
+15: 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4       Mazda RX4 Wag    cyl=6           24     21.820
+16: 19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4            Merc 280    cyl=6           24     21.820
+17: 17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4           Merc 280C    cyl=6           24     21.820
+18: 18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1             Valiant    cyl=6           18     21.820
+19: 15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2         AMC Javelin    cyl=8           24     55.989
+20: 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4  Cadillac Fleetwood    cyl=8           24     55.989
+21: 13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4          Camaro Z28    cyl=8           24     55.989
+22: 14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4   Chrysler Imperial    cyl=8           24     55.989
+23: 15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2    Dodge Challenger    cyl=8           24     55.989
+24: 14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4          Duster 360    cyl=8           24     55.989
+25: 15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4      Ford Pantera L    cyl=8           40     55.989
+26: 18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2   Hornet Sportabout    cyl=8           24     55.989
+27: 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4 Lincoln Continental    cyl=8           24     55.989
+28: 15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8       Maserati Bora    cyl=8           40     55.989
+29: 16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3          Merc 450SE    cyl=8           24     55.989
+30: 17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3          Merc 450SL    cyl=8           24     55.989
+31: 15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3         Merc 450SLC    cyl=8           24     55.989
+32: 19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2    Pontiac Firebird    cyl=8           24     55.989
+     mpg cyl  disp  hp drat    wt  qsec vs am gear carb               names cylNames cylTimesGear sumWtByCyl
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5b3d8be" class="outline-2">
+<h2 id="org5b3d8be"><span class="section-number-2">9</span> Joining</h2>
+<div class="outline-text-2" id="text-9">
+<p>
+Merge is much like with data.frames.  One nice feature is that key columns will be used for a merge automatically if they are set.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">crbn <span style="color: #8470ff; font-weight: bold;">&lt;-</span> data.table(carb=c(1,2,3), carbs=c(<span style="color: #fa8072;">"one"</span>, <span style="color: #fa8072;">"two"</span>, <span style="color: #fa8072;">"three"</span>))
+setkey(mtcarsDT, carb)
+setkey(crbn, carb)
+merge(mtcarsDT, crbn, all.x=<span style="color: #63b8ff;">TRUE</span>)
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-text">    carb  mpg cyl  disp  hp drat    wt  qsec vs am gear               names cylNames cylTimesGear sumWtByCyl carbs
+ 1:    1 22.8   4 108.0  93 3.85 2.320 18.61  1  1    4          Datsun 710    cyl=4           16     25.143   one
+ 2:    1 32.4   4  78.7  66 4.08 2.200 19.47  1  1    4            Fiat 128    cyl=4           16     25.143   one
+ 3:    1 27.3   4  79.0  66 4.08 1.935 18.90  1  1    4           Fiat X1-9    cyl=4           16     25.143   one
+ 4:    1 33.9   4  71.1  65 4.22 1.835 19.90  1  1    4      Toyota Corolla    cyl=4           16     25.143   one
+ 5:    1 21.5   4 120.1  97 3.70 2.465 20.01  1  0    3       Toyota Corona    cyl=4           12     25.143   one
+ 6:    1 21.4   6 258.0 110 3.08 3.215 19.44  1  0    3      Hornet 4 Drive    cyl=6           18     21.820   one
+ 7:    1 18.1   6 225.0 105 2.76 3.460 20.22  1  0    3             Valiant    cyl=6           18     21.820   one
+ 8:    2 30.4   4  75.7  52 4.93 1.615 18.52  1  1    4         Honda Civic    cyl=4           16     25.143   two
+ 9:    2 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5        Lotus Europa    cyl=4           20     25.143   two
+10:    2 22.8   4 140.8  95 3.92 3.150 22.90  1  0    4            Merc 230    cyl=4           16     25.143   two
+11:    2 24.4   4 146.7  62 3.69 3.190 20.00  1  0    4           Merc 240D    cyl=4           16     25.143   two
+12:    2 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5       Porsche 914-2    cyl=4           20     25.143   two
+13:    2 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4          Volvo 142E    cyl=4           16     25.143   two
+14:    2 15.2   8 304.0 150 3.15 3.435 17.30  0  0    3         AMC Javelin    cyl=8           24     55.989   two
+15:    2 15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    Dodge Challenger    cyl=8           24     55.989   two
+16:    2 18.7   8 360.0 175 3.15 3.440 17.02  0  0    3   Hornet Sportabout    cyl=8           24     55.989   two
+17:    2 19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    Pontiac Firebird    cyl=8           24     55.989   two
+18:    3 16.4   8 275.8 180 3.07 4.070 17.40  0  0    3          Merc 450SE    cyl=8           24     55.989 three
+19:    3 17.3   8 275.8 180 3.07 3.730 17.60  0  0    3          Merc 450SL    cyl=8           24     55.989 three
+20:    3 15.2   8 275.8 180 3.07 3.780 18.00  0  0    3         Merc 450SLC    cyl=8           24     55.989 three
+21:    4 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4           Mazda RX4    cyl=6           24     21.820  &lt;NA&gt;
+22:    4 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4       Mazda RX4 Wag    cyl=6           24     21.820  &lt;NA&gt;
+23:    4 19.2   6 167.6 123 3.92 3.440 18.30  1  0    4            Merc 280    cyl=6           24     21.820  &lt;NA&gt;
+24:    4 17.8   6 167.6 123 3.92 3.440 18.90  1  0    4           Merc 280C    cyl=6           24     21.820  &lt;NA&gt;
+25:    4 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3  Cadillac Fleetwood    cyl=8           24     55.989  &lt;NA&gt;
+26:    4 13.3   8 350.0 245 3.73 3.840 15.41  0  0    3          Camaro Z28    cyl=8           24     55.989  &lt;NA&gt;
+27:    4 14.7   8 440.0 230 3.23 5.345 17.42  0  0    3   Chrysler Imperial    cyl=8           24     55.989  &lt;NA&gt;
+28:    4 14.3   8 360.0 245 3.21 3.570 15.84  0  0    3          Duster 360    cyl=8           24     55.989  &lt;NA&gt;
+29:    4 15.8   8 351.0 264 4.22 3.170 14.50  0  1    5      Ford Pantera L    cyl=8           40     55.989  &lt;NA&gt;
+30:    4 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3 Lincoln Continental    cyl=8           24     55.989  &lt;NA&gt;
+31:    6 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5        Ferrari Dino    cyl=6           30     21.820  &lt;NA&gt;
+32:    8 15.0   8 301.0 335 3.54 3.570 14.60  0  1    5       Maserati Bora    cyl=8           40     55.989  &lt;NA&gt;
+    carb  mpg cyl  disp  hp drat    wt  qsec vs am gear               names cylNames cylTimesGear sumWtByCyl carbs
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc34b7dc" class="outline-2">
+<h2 id="orgc34b7dc"><span class="section-number-2">10</span> Reading data from the outside world</h2>
+<div class="outline-text-2" id="text-10">
+</div>
+<div id="outline-container-orgde5f58e" class="outline-3">
+<h3 id="orgde5f58e"><span class="section-number-3">10.1</span> Read a CSV or TSV file</h3>
+<div class="outline-text-3" id="text-10-1">
+<p>
+Note this is <b>much</b> faster than <code>read.csv</code> and <code>read.table</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">df1 <span style="color: #8470ff; font-weight: bold;">&lt;-</span> fread(<span style="color: #fa8072;">"../data/dataTable_f1.csv"</span>)
+df1
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-text">     name age weight
+1:  babar  25    900
+2: grumpy   2      3
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8fd090c" class="outline-3">
+<h3 id="org8fd090c"><span class="section-number-3">10.2</span> Compressed files are decompressed automatically</h3>
+<div class="outline-text-3" id="text-10-2">
+<div class="org-src-container">
+<pre class="src src-R">df2 <span style="color: #8470ff; font-weight: bold;">&lt;-</span> fread(<span style="color: #fa8072;">"../data/dataTable_f2.csv.gz"</span>)
+df2
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-text">     name age weight
+1:   kong  12    700
+2: george   7     15
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org600fbe8" class="outline-3">
+<h3 id="org600fbe8"><span class="section-number-3">10.3</span> Reading data from a URL</h3>
+<div class="outline-text-3" id="text-10-3">
+<div class="org-src-container">
+<pre class="src src-R">df1u <span style="color: #8470ff; font-weight: bold;">&lt;-</span> fread(https://raw.githubusercontent.com/richmit/ex-R/data/dataTable_f1.csv<span style="color: #fa8072;">')</span>
+<span style="color: #fa8072;">df1u</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-text">Error: unexpected '/' in "df1u &lt;- fread(https:/"
+Error: object 'df1u' not found
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org38eee10" class="outline-3">
+<h3 id="org38eee10"><span class="section-number-3">10.4</span> Read output from a command (in this case compressing with gunzip and filtering with awk)</h3>
+<div class="outline-text-3" id="text-10-4">
+<div class="org-src-container">
+<pre class="src src-R">df2 <span style="color: #8470ff; font-weight: bold;">&lt;-</span> fread(<span style="color: #fa8072;">"gunzip &lt; ../data/dataTable_f2.csv.gz | awk -F, 'NR==1 || $3&lt;100 { print $0 }'"</span>)
+df2
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-text">Empty data.table (0 rows and 3 cols): name,age,weight
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6a43862" class="outline-3">
+<h3 id="org6a43862"><span class="section-number-3">10.5</span> Read a colon (:) separated file with extra whitespace and no column names</h3>
+<div class="outline-text-3" id="text-10-5">
+<div class="org-src-container">
+<pre class="src src-R">df3 <span style="color: #8470ff; font-weight: bold;">&lt;-</span> fread(<span style="color: #fa8072;">'dataTable_f3.txt'</span>, sep=<span style="color: #fa8072;">':'</span>, header=<span style="color: #63b8ff;">FALSE</span>, strip.white=<span style="color: #63b8ff;">TRUE</span>, col.names=c(<span style="color: #fa8072;">'name'</span>, <span style="color: #fa8072;">'age'</span>, <span style="color: #fa8072;">'weight'</span>))
+df3
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-text">Error in fread("dataTable_f3.txt", sep = ":", header = FALSE, strip.white = TRUE,  : 
+  File 'dataTable_f3.txt' does not exist or is non-readable. getwd()=='c:/Users/richmit/Documents/world/my_prog/learn/R/src'
+Error: object 'df3' not found
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+Created by Mitch Richling <<a href="mailto:http://www.mitchr.me/">http://www.mitchr.me/</a>>.  Rendered on 2021-05-04 Tue 13:24 via <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.4.5)
+</div>
+</body>
+</html>

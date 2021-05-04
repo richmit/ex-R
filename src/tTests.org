@@ -1,0 +1,266 @@
+# -*- Mode:Org; Coding:utf-8; fill-column:158 org-html-link-org-files-as-html:nil -*-
+#+TITLE:       T Tests
+#+AUTHOR:      Mitch Richling
+#+EMAIL:       http://www.mitchr.me/
+#+DATE:        2020-01-25
+#+DESCRIPTION: T Tests.@EOL
+#+KEYWORDS:    T Tests
+#+LANGUAGE:    en
+#+OPTIONS:     num:t toc:nil \n:nil @:t ::t |:t ^:nil -:t f:t *:t <:t skip:nil d:nil todo:t pri:nil H:5 p:t author:t html-scripts:nil 
+#+SEQ_TODO:    TODO:NEW(t)                         TODO:WORK(w)    TODO:HOLD(h)    | TODO:FUTURE(f)   TODO:DONE(d)    TODO:CANCELED(c)
+#+HTML_HEAD: <style>body { width: 95%; margin: 2% auto; font-size: 18px; line-height: 1.4em; font-family: Georgia, serif; color: black; background-color: white; }</style>
+#+HTML_HEAD: <style>body { min-width: 820px; max-width: 1024px; }</style>
+#+HTML_HEAD: <style>h1,h2,h3,h4,h5,h6 { color: #A5573E; line-height: 1em; font-family: Helvetica, sans-serif; }</style>
+#+HTML_HEAD: <style>h1,h2,h3 { line-height: 1.4em; }</style>
+#+HTML_HEAD: <style>h1.title { font-size: 3em; }</style>
+#+HTML_HEAD: <style>h4,h5,h6 { font-size: 1em; }</style>
+#+HTML_HEAD: <style>.org-src-container { border: 1px solid #ccc; box-shadow: 3px 3px 3px #eee; font-family: Lucida Console, monospace; font-size: 80%; margin: 0px; padding: 0px 0px; position: relative; }</style>
+#+HTML_HEAD: <style>.org-src-container>pre { line-height: 1.2em; padding-top: 1.5em; margin: 0.5em; background-color: #404040; color: white; overflow: auto; }</style>
+#+HTML_HEAD: <style>.org-src-container>pre:before { display: block; position: absolute; background-color: #b3b3b3; top: 0; right: 0; padding: 0 0.2em 0 0.4em; border-bottom-left-radius: 8px; border: 0; color: white; font-size: 100%; font-family: Helvetica, sans-serif;}</style>
+#+HTML_HEAD: <style>pre.example { white-space: pre-wrap; white-space: -moz-pre-wrap; white-space: -o-pre-wrap; font-family: Lucida Console, monospace; font-size: 80%; background: #404040; color: white; display: block; padding: 0em; border: 2px solid black; }</style>
+#+HTML_LINK_HOME: https://www.mitchr.me/
+#+HTML_LINK_UP: https://richmit.github.io/ex-R/
+#+EXPORT_FILE_NAME: ../docs/tTests
+
+#+ATTR_HTML: :border 2 solid #ccc :frame hsides :align center
+|        <r> | <l>                    |
+|  *Author:* | /{{{author}}}/         |
+| *Updated:* | /{{{time(%Y-%m-%d)}}}/ |
+#+ATTR_HTML: :align center
+Copyright 2020 Mitch Richling. All rights reserved.
+
+#+TOC: headlines 5
+
+#        #         #         #         #         #         #         #         #         #         #         #         #         #         #         #         #         #
+#   00   #    10   #    20   #    30   #    40   #    50   #    60   #    70   #    80   #    90   #   100   #   110   #   120   #   130   #   140   #   150   #   160   #
+# 234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+#        #         #         #         #         #         #         #         #         #         #         #         #         #         #         #         #         #
+#        #         #         #         #         #         #         #         #         #         #         #         #         #         #         #         #         #
+
+* Source Code and Files
+
+  - file:tTests.org
+  - file:tTests.R
+
+* Some Data
+
+#+BEGIN_SRC R :session :results silent :exports code :tangle "../tangled/tTests.R"
+popsz  <- 1000
+mean1  <- 1
+mean2  <- mean1
+mean3  <- -1
+group1 <- rnorm(popsz, mean=mean1)
+group2 <- rnorm(popsz, mean=mean2)
+group3 <- rnorm(popsz, mean=mean3)
+allDat <- stack(list(group1=group1, group2=group2, group3=group3))
+names(allDat) <- c('v', 'group')
+#+END_SRC
+
+#+BEGIN_SRC R :session :file ../docs/figures/tTests/tt-data.png :width 800 :height 600 :results graphics :exports code :tangle "../tangled/tTests.R"
+ggplot(data=allDat, aes(x=v, col=group)) + geom_density()
+#+END_SRC
+
+#+RESULTS:
+
+file:figures/tTests/tt-data.png
+
+* Welch Two Sample t-test
+
+Use when you don't know the variance of the two populations is equal
+
+#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/tTests.R"
+t.test(group1, group2)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+null device 
+          1
+null device 
+          1
+null device 
+          1
+
+	Welch Two Sample t-test
+
+data:  group1 and group2
+t = 0.644, df = 1997, p-value = 0.5196
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -0.05877594  0.11625098
+sample estimates:
+mean of x mean of y 
+ 1.031484  1.002746
+#+end_example
+
+* Two Sample t-test
+
+Use when you DO know the variance of the two populations is equal
+
+#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/tTests.R"
+t.test(group1, group2, var.equal=TRUE)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+
+	Two Sample t-test
+
+data:  group1 and group2
+t = 0.644, df = 1998, p-value = 0.5196
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -0.05877592  0.11625095
+sample estimates:
+mean of x mean of y 
+ 1.031484  1.002746
+#+end_example
+
+* Paired t-test
+
+Use when the measurements in each group are related pairwise.  
+
+For example, the data could be temperature measurements taken with two thermometers each hour.
+
+#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/tTests.R"
+t.test(group1, group2, paired=TRUE)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+
+	Paired t-test
+
+data:  group1 and group2
+t = 0.62555, df = 999, p-value = 0.5318
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -0.06141232  0.11888736
+sample estimates:
+mean of the differences 
+             0.02873752
+#+end_example
+
+* One Sample t-test (not equal)
+
+Use when you want to know if the sample mean is equal to a hypothesized population mean
+
+#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/tTests.R"
+t.test(group1, mu=mean1)
+t.test(group2, mu=mean2)
+t.test(group3, mu=mean1)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+
+	One Sample t-test
+
+data:  group1
+t = 0.98655, df = 999, p-value = 0.3241
+alternative hypothesis: true mean is not equal to 1
+95 percent confidence interval:
+ 0.9688595 1.0941084
+sample estimates:
+mean of x 
+ 1.031484
+
+	One Sample t-test
+
+data:  group2
+t = 0.088054, df = 999, p-value = 0.9299
+alternative hypothesis: true mean is not equal to 1
+95 percent confidence interval:
+ 0.9415412 1.0639516
+sample estimates:
+mean of x 
+ 1.002746
+
+	One Sample t-test
+
+data:  group3
+t = -63.478, df = 999, p-value < 2.2e-16
+alternative hypothesis: true mean is not equal to 1
+95 percent confidence interval:
+ -1.070877 -0.946679
+sample estimates:
+mean of x 
+-1.008778
+#+end_example
+
+* One Sample t-test (greater than)
+
+Use when you want to know if the sample mean is less than a hypothesized population mean
+
+#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/tTests.R"
+t.test(group3, mu=mean1, alternative="greater")
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+
+	One Sample t-test
+
+data:  group3
+t = -63.478, df = 999, p-value = 1
+alternative hypothesis: true mean is greater than 1
+95 percent confidence interval:
+ -1.060878       Inf
+sample estimates:
+mean of x 
+-1.008778
+#+end_example
+
+* Wilcoxon signed rank test with continuity correction
+
+Use when you want to know if the sample mean is equal to a hypothesized population mean
+
+#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/tTests.R"
+wilcox.test(group1, mu=mean1)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+
+	Wilcoxon signed rank test with continuity correction
+
+data:  group1
+V = 259317, p-value = 0.321
+alternative hypothesis: true location is not equal to 1
+#+end_example
+
+* Wilcoxon rank sum test with continuity correction
+
+Use when the measurements in each group are related pairwise.  This test is also known as the "independent 2-group Mann-Whitney U Test".  T-test above.
+
+#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/tTests.R"
+wilcox.test(group1, group2)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+
+	Wilcoxon rank sum test with continuity correction
+
+data:  group1 and group2
+W = 513914, p-value = 0.2813
+alternative hypothesis: true location shift is not equal to 0
+#+end_example
+
+* Wilcoxon signed rank test with continuity correction
+
+Use when the measurements in each group are related pairwise.  See the paired T-test above.
+
+#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/tTests.R"
+wilcox.test(group1, group2, paired=TRUE)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+
+	Wilcoxon signed rank test with continuity correction
+
+data:  group1 and group2
+V = 257264, p-value = 0.4427
+alternative hypothesis: true location shift is not equal to 0
+#+end_example
