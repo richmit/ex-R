@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-05-04 Tue 13:24 -->
+<!-- 2021-05-04 Tue 18:27 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>data.table Examples</title>
@@ -230,68 +230,68 @@
 
 <tr>
 <td class="org-right"><b>Updated:</b></td>
-<td class="org-left"><i>2021-05-04</i></td>
+<td class="org-left"><i>2021-05-04 17:56:55</i></td>
 </tr>
 </tbody>
 </table>
 <p align="center">
-Copyright 2020 Mitch Richling. All rights reserved.
+Copyright 2020-2021 Mitch Richling. All rights reserved.
 </p>
 
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org2ed56d1">1. Source Code and Files</a></li>
-<li><a href="#orgf98eca0">2. Load the library</a></li>
-<li><a href="#org98fd6bb">3. Example Data</a></li>
-<li><a href="#orgd9a160d">4. data.frame to data.table</a></li>
-<li><a href="#org32c4cda">5. Indexing</a></li>
-<li><a href="#org7d117fd">6. Indexing: First Argument</a>
+<li><a href="#orgeb38e7e">1. Source Code and Files</a></li>
+<li><a href="#org0800afe">2. Load the library</a></li>
+<li><a href="#org1e0c3ea">3. Example Data</a></li>
+<li><a href="#orge2fbd26">4. data.frame to data.table</a></li>
+<li><a href="#orgcb7d42a">5. Indexing</a></li>
+<li><a href="#orgb6a363c">6. Indexing: First Argument</a>
 <ul>
-<li><a href="#org46ec113">6.1. An integer (row number)</a></li>
-<li><a href="#org735ea03">6.2. Numeric Range (row numbers)</a></li>
-<li><a href="#orgebe07cf">6.3. Boolean (select matching rows)</a></li>
-<li><a href="#orgaa2db55">6.4. Strings</a>
+<li><a href="#org3dd5a4f">6.1. An integer (row number)</a></li>
+<li><a href="#org85113a8">6.2. Numeric Range (row numbers)</a></li>
+<li><a href="#org11c6d40">6.3. Boolean (select matching rows)</a></li>
+<li><a href="#org30bcb8e">6.4. Strings</a>
 <ul>
-<li><a href="#org66d7a59">6.4.1. Key column Indexing</a></li>
-<li><a href="#orge5dcb11">6.4.2. Key column need not be unique</a></li>
-<li><a href="#orgbc6d2e8">6.4.3. Get just one match</a></li>
+<li><a href="#org10f216d">6.4.1. Key column Indexing</a></li>
+<li><a href="#orgaced638">6.4.2. Key column need not be unique</a></li>
+<li><a href="#org9324ef2">6.4.3. Get just one match</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#orgc712659">7. Indexing: The Second Argument</a>
+<li><a href="#org623fdce">7. Indexing: The Second Argument</a>
 <ul>
-<li><a href="#orgf7f8094">7.1. The data.frame way</a></li>
-<li><a href="#org682cef6">7.2. Column Name Expression</a></li>
-<li><a href="#orgd5cb1bc">7.3. Assignment</a></li>
-<li><a href="#org70abd28">7.4. List</a></li>
-<li><a href="#orgf5937cc">7.5. Aggregation</a></li>
+<li><a href="#org4691064">7.1. The data.frame way</a></li>
+<li><a href="#org5370a8c">7.2. Column Name Expression</a></li>
+<li><a href="#org3455b72">7.3. Assignment</a></li>
+<li><a href="#org7655ef3">7.4. List</a></li>
+<li><a href="#org16d6342">7.5. Aggregation</a></li>
 </ul>
 </li>
-<li><a href="#orgf33b251">8. Indexing: The third argument</a>
+<li><a href="#org291f9b9">8. Indexing: The third argument</a>
 <ul>
-<li><a href="#org76ed527">8.1. Aggregation by factors</a></li>
-<li><a href="#org769fab1">8.2. Aggregation and new columns</a></li>
+<li><a href="#org3538333">8.1. Aggregation by factors</a></li>
+<li><a href="#org1689959">8.2. Aggregation and new columns</a></li>
 </ul>
 </li>
-<li><a href="#org5b3d8be">9. Joining</a></li>
-<li><a href="#orgc34b7dc">10. Reading data from the outside world</a>
+<li><a href="#orgc317b8a">9. Joining</a></li>
+<li><a href="#orgbba854d">10. Reading data from the outside world</a>
 <ul>
-<li><a href="#orgde5f58e">10.1. Read a CSV or TSV file</a></li>
-<li><a href="#org8fd090c">10.2. Compressed files are decompressed automatically</a></li>
-<li><a href="#org600fbe8">10.3. Reading data from a URL</a></li>
-<li><a href="#org38eee10">10.4. Read output from a command (in this case compressing with gunzip and filtering with awk)</a></li>
-<li><a href="#org6a43862">10.5. Read a colon (:) separated file with extra whitespace and no column names</a></li>
+<li><a href="#org02730aa">10.1. Read a CSV or TSV file</a></li>
+<li><a href="#org4446d3c">10.2. Compressed files are decompressed automatically</a></li>
+<li><a href="#org1b070c3">10.3. Reading data from a URL</a></li>
+<li><a href="#orga539089">10.4. Read output from a command (in this case compressing with gunzip and filtering with awk)</a></li>
+<li><a href="#orgca18f03">10.5. Read a colon (:) separated file with extra whitespace and no column names</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org2ed56d1" class="outline-2">
-<h2 id="org2ed56d1"><span class="section-number-2">1</span> Source Code and Files</h2>
+<div id="outline-container-orgeb38e7e" class="outline-2">
+<h2 id="orgeb38e7e"><span class="section-number-2">1</span> Source Code and Files</h2>
 <div class="outline-text-2" id="text-1">
 <ul class="org-ul">
 <li><a href="dataTable.org">dataTable.org</a></li>
@@ -303,8 +303,8 @@ Copyright 2020 Mitch Richling. All rights reserved.
 </div>
 </div>
 
-<div id="outline-container-orgf98eca0" class="outline-2">
-<h2 id="orgf98eca0"><span class="section-number-2">2</span> Load the library</h2>
+<div id="outline-container-org0800afe" class="outline-2">
+<h2 id="org0800afe"><span class="section-number-2">2</span> Load the library</h2>
 <div class="outline-text-2" id="text-2">
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #8470ff; font-weight: bold;">library</span>(data.table)
@@ -313,8 +313,8 @@ Copyright 2020 Mitch Richling. All rights reserved.
 </div>
 </div>
 
-<div id="outline-container-org98fd6bb" class="outline-2">
-<h2 id="org98fd6bb"><span class="section-number-2">3</span> Example Data</h2>
+<div id="outline-container-org1e0c3ea" class="outline-2">
+<h2 id="org1e0c3ea"><span class="section-number-2">3</span> Example Data</h2>
 <div class="outline-text-2" id="text-3">
 <div class="org-src-container">
 <pre class="src src-R">mtcars
@@ -360,8 +360,8 @@ Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2
 </div>
 </div>
 
-<div id="outline-container-orgd9a160d" class="outline-2">
-<h2 id="orgd9a160d"><span class="section-number-2">4</span> data.frame to data.table</h2>
+<div id="outline-container-orge2fbd26" class="outline-2">
+<h2 id="orge2fbd26"><span class="section-number-2">4</span> data.frame to data.table</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 One can directly coerce a data.frame into a data.table; however, row names will be lost.  We can do something like this to keep them:
@@ -413,8 +413,8 @@ mtcarsDT
 </div>
 </div>
 
-<div id="outline-container-org32c4cda" class="outline-2">
-<h2 id="org32c4cda"><span class="section-number-2">5</span> Indexing</h2>
+<div id="outline-container-orgcb7d42a" class="outline-2">
+<h2 id="orgcb7d42a"><span class="section-number-2">5</span> Indexing</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 data.tables are indexed with three arguments (as in: <code>a[1,2,3]</code>).
@@ -422,16 +422,16 @@ data.tables are indexed with three arguments (as in: <code>a[1,2,3]</code>).
 </div>
 </div>
 
-<div id="outline-container-org7d117fd" class="outline-2">
-<h2 id="org7d117fd"><span class="section-number-2">6</span> Indexing: First Argument</h2>
+<div id="outline-container-orgb6a363c" class="outline-2">
+<h2 id="orgb6a363c"><span class="section-number-2">6</span> Indexing: First Argument</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 In general the first index argument is used to select rows.
 </p>
 </div>
 
-<div id="outline-container-org46ec113" class="outline-3">
-<h3 id="org46ec113"><span class="section-number-3">6.1</span> An integer (row number)</h3>
+<div id="outline-container-org3dd5a4f" class="outline-3">
+<h3 id="org3dd5a4f"><span class="section-number-3">6.1</span> An integer (row number)</h3>
 <div class="outline-text-3" id="text-6-1">
 <div class="org-src-container">
 <pre class="src src-R">mtcarsDT[2,]
@@ -461,8 +461,8 @@ Note that when we only have one index, we don't need the comma!!
 </div>
 </div>
 
-<div id="outline-container-org735ea03" class="outline-3">
-<h3 id="org735ea03"><span class="section-number-3">6.2</span> Numeric Range (row numbers)</h3>
+<div id="outline-container-org85113a8" class="outline-3">
+<h3 id="org85113a8"><span class="section-number-3">6.2</span> Numeric Range (row numbers)</h3>
 <div class="outline-text-3" id="text-6-2">
 <p>
 Get rows 2 through 5
@@ -484,8 +484,8 @@ Get rows 2 through 5
 </div>
 </div>
 
-<div id="outline-container-orgebe07cf" class="outline-3">
-<h3 id="orgebe07cf"><span class="section-number-3">6.3</span> Boolean (select matching rows)</h3>
+<div id="outline-container-org11c6d40" class="outline-3">
+<h3 id="org11c6d40"><span class="section-number-3">6.3</span> Boolean (select matching rows)</h3>
 <div class="outline-text-3" id="text-6-3">
 <p>
 Get rows where cyl is equal to 6
@@ -510,12 +510,12 @@ Get rows where cyl is equal to 6
 </div>
 </div>
 
-<div id="outline-container-orgaa2db55" class="outline-3">
-<h3 id="orgaa2db55"><span class="section-number-3">6.4</span> Strings</h3>
+<div id="outline-container-org30bcb8e" class="outline-3">
+<h3 id="org30bcb8e"><span class="section-number-3">6.4</span> Strings</h3>
 <div class="outline-text-3" id="text-6-4">
 </div>
-<div id="outline-container-org66d7a59" class="outline-4">
-<h4 id="org66d7a59"><span class="section-number-4">6.4.1</span> Key column Indexing</h4>
+<div id="outline-container-org10f216d" class="outline-4">
+<h4 id="org10f216d"><span class="section-number-4">6.4.1</span> Key column Indexing</h4>
 <div class="outline-text-4" id="text-6-4-1">
 <p>
 If you have a "key column" set, you can index with strings &#x2013; note that this will change the order of the table to store on the key.
@@ -535,8 +535,8 @@ mtcarsDT[<span style="color: #fa8072;">"Valiant"</span>]
 </div>
 </div>
 
-<div id="outline-container-orge5dcb11" class="outline-4">
-<h4 id="orge5dcb11"><span class="section-number-4">6.4.2</span> Key column need not be unique</h4>
+<div id="outline-container-orgaced638" class="outline-4">
+<h4 id="orgaced638"><span class="section-number-4">6.4.2</span> Key column need not be unique</h4>
 <div class="outline-text-4" id="text-6-4-2">
 <div class="org-src-container">
 <pre class="src src-R">mtcarsDT$cylNames <span style="color: #8470ff; font-weight: bold;">&lt;-</span> paste(<span style="color: #fa8072;">"cyl"</span>, mtcarsDT$cyl, sep=<span style="color: #fa8072;">'='</span>)
@@ -559,8 +559,8 @@ mtcarsDT[<span style="color: #fa8072;">"cyl=6"</span>]
 </div>
 </div>
 
-<div id="outline-container-orgbc6d2e8" class="outline-4">
-<h4 id="orgbc6d2e8"><span class="section-number-4">6.4.3</span> Get just one match</h4>
+<div id="outline-container-org9324ef2" class="outline-4">
+<h4 id="org9324ef2"><span class="section-number-4">6.4.3</span> Get just one match</h4>
 <div class="outline-text-4" id="text-6-4-3">
 <div class="org-src-container">
 <pre class="src src-R">mtcarsDT[<span style="color: #fa8072;">"cyl=6"</span>,mult=<span style="color: #fa8072;">"first"</span>]
@@ -577,12 +577,12 @@ mtcarsDT[<span style="color: #fa8072;">"cyl=6"</span>]
 </div>
 </div>
 
-<div id="outline-container-orgc712659" class="outline-2">
-<h2 id="orgc712659"><span class="section-number-2">7</span> Indexing: The Second Argument</h2>
+<div id="outline-container-org623fdce" class="outline-2">
+<h2 id="org623fdce"><span class="section-number-2">7</span> Indexing: The Second Argument</h2>
 <div class="outline-text-2" id="text-7">
 </div>
-<div id="outline-container-orgf7f8094" class="outline-3">
-<h3 id="orgf7f8094"><span class="section-number-3">7.1</span> The data.frame way</h3>
+<div id="outline-container-org4691064" class="outline-3">
+<h3 id="org4691064"><span class="section-number-3">7.1</span> The data.frame way</h3>
 <div class="outline-text-3" id="text-7-1">
 <p>
 Grab column "cyl" the data.frame way. 
@@ -600,8 +600,8 @@ Grab column "cyl" the data.frame way.
 </div>
 </div>
 
-<div id="outline-container-org682cef6" class="outline-3">
-<h3 id="org682cef6"><span class="section-number-3">7.2</span> Column Name Expression</h3>
+<div id="outline-container-org5370a8c" class="outline-3">
+<h3 id="org5370a8c"><span class="section-number-3">7.2</span> Column Name Expression</h3>
 <div class="outline-text-3" id="text-7-2">
 <p>
 The second index of a data.table is an expression on the rows selected by the first index.  
@@ -638,8 +638,8 @@ Here we just have an arithmatic expresion in two column names.
 </div>
 </div>
 
-<div id="outline-container-orgd5cb1bc" class="outline-3">
-<h3 id="orgd5cb1bc"><span class="section-number-3">7.3</span> Assignment</h3>
+<div id="outline-container-org3455b72" class="outline-3">
+<h3 id="org3455b72"><span class="section-number-3">7.3</span> Assignment</h3>
 <div class="outline-text-3" id="text-7-3">
 <p>
 We can create new columns by assigning an expression in the second argument to a new name.
@@ -691,8 +691,8 @@ mtcarsDT
 </div>
 </div>
 
-<div id="outline-container-org70abd28" class="outline-3">
-<h3 id="org70abd28"><span class="section-number-3">7.4</span> List</h3>
+<div id="outline-container-org7655ef3" class="outline-3">
+<h3 id="org7655ef3"><span class="section-number-3">7.4</span> List</h3>
 <div class="outline-text-3" id="text-7-4">
 <p>
 When the second index is a list, then a new data.table will be returned instead of a simple vector. For example we can extract a new data.table with three
@@ -744,8 +744,8 @@ columns (two of which we rename)
 </div>
 </div>
 
-<div id="outline-container-orgf5937cc" class="outline-3">
-<h3 id="orgf5937cc"><span class="section-number-3">7.5</span> Aggregation</h3>
+<div id="outline-container-org16d6342" class="outline-3">
+<h3 id="org16d6342"><span class="section-number-3">7.5</span> Aggregation</h3>
 <div class="outline-text-3" id="text-7-5">
 <p>
 That second expression can do more than transform columns into new columns; it aggregate things.  
@@ -780,12 +780,12 @@ aggregation.
 </div>
 </div>
 
-<div id="outline-container-orgf33b251" class="outline-2">
-<h2 id="orgf33b251"><span class="section-number-2">8</span> Indexing: The third argument</h2>
+<div id="outline-container-org291f9b9" class="outline-2">
+<h2 id="org291f9b9"><span class="section-number-2">8</span> Indexing: The third argument</h2>
 <div class="outline-text-2" id="text-8">
 </div>
-<div id="outline-container-org76ed527" class="outline-3">
-<h3 id="org76ed527"><span class="section-number-3">8.1</span> Aggregation by factors</h3>
+<div id="outline-container-org3538333" class="outline-3">
+<h3 id="org3538333"><span class="section-number-3">8.1</span> Aggregation by factors</h3>
 <div class="outline-text-3" id="text-8-1">
 <p>
 The third argument is used to group data.
@@ -828,8 +828,8 @@ The groups can contain more than one factor if we use a list.  We can also name 
 </div>
 </div>
 
-<div id="outline-container-org769fab1" class="outline-3">
-<h3 id="org769fab1"><span class="section-number-3">8.2</span> Aggregation and new columns</h3>
+<div id="outline-container-org1689959" class="outline-3">
+<h3 id="org1689959"><span class="section-number-3">8.2</span> Aggregation and new columns</h3>
 <div class="outline-text-3" id="text-8-2">
 <p>
 We can aggregate by groups and put it back into the data.table!!
@@ -882,8 +882,8 @@ mtcarsDT
 </div>
 </div>
 
-<div id="outline-container-org5b3d8be" class="outline-2">
-<h2 id="org5b3d8be"><span class="section-number-2">9</span> Joining</h2>
+<div id="outline-container-orgc317b8a" class="outline-2">
+<h2 id="orgc317b8a"><span class="section-number-2">9</span> Joining</h2>
 <div class="outline-text-2" id="text-9">
 <p>
 Merge is much like with data.frames.  One nice feature is that key columns will be used for a merge automatically if they are set.
@@ -937,12 +937,12 @@ merge(mtcarsDT, crbn, all.x=<span style="color: #63b8ff;">TRUE</span>)
 </div>
 </div>
 
-<div id="outline-container-orgc34b7dc" class="outline-2">
-<h2 id="orgc34b7dc"><span class="section-number-2">10</span> Reading data from the outside world</h2>
+<div id="outline-container-orgbba854d" class="outline-2">
+<h2 id="orgbba854d"><span class="section-number-2">10</span> Reading data from the outside world</h2>
 <div class="outline-text-2" id="text-10">
 </div>
-<div id="outline-container-orgde5f58e" class="outline-3">
-<h3 id="orgde5f58e"><span class="section-number-3">10.1</span> Read a CSV or TSV file</h3>
+<div id="outline-container-org02730aa" class="outline-3">
+<h3 id="org02730aa"><span class="section-number-3">10.1</span> Read a CSV or TSV file</h3>
 <div class="outline-text-3" id="text-10-1">
 <p>
 Note this is <b>much</b> faster than <code>read.csv</code> and <code>read.table</code>.
@@ -963,8 +963,8 @@ df1
 </div>
 </div>
 
-<div id="outline-container-org8fd090c" class="outline-3">
-<h3 id="org8fd090c"><span class="section-number-3">10.2</span> Compressed files are decompressed automatically</h3>
+<div id="outline-container-org4446d3c" class="outline-3">
+<h3 id="org4446d3c"><span class="section-number-3">10.2</span> Compressed files are decompressed automatically</h3>
 <div class="outline-text-3" id="text-10-2">
 <div class="org-src-container">
 <pre class="src src-R">df2 <span style="color: #8470ff; font-weight: bold;">&lt;-</span> fread(<span style="color: #fa8072;">"../data/dataTable_f2.csv.gz"</span>)
@@ -981,25 +981,26 @@ df2
 </div>
 </div>
 
-<div id="outline-container-org600fbe8" class="outline-3">
-<h3 id="org600fbe8"><span class="section-number-3">10.3</span> Reading data from a URL</h3>
+<div id="outline-container-org1b070c3" class="outline-3">
+<h3 id="org1b070c3"><span class="section-number-3">10.3</span> Reading data from a URL</h3>
 <div class="outline-text-3" id="text-10-3">
 <div class="org-src-container">
-<pre class="src src-R">df1u <span style="color: #8470ff; font-weight: bold;">&lt;-</span> fread(https://raw.githubusercontent.com/richmit/ex-R/data/dataTable_f1.csv<span style="color: #fa8072;">')</span>
-<span style="color: #fa8072;">df1u</span>
+<pre class="src src-R">df1u <span style="color: #8470ff; font-weight: bold;">&lt;-</span> fread(<span style="color: #fa8072;">'https://github.com/richmit/ex-R/raw/master/data/dataTable_f2.csv.gz'</span>)
+df1u
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-text">Error: unexpected '/' in "df1u &lt;- fread(https:/"
-Error: object 'df1u' not found
+<pre class="src src-text">     name age weight
+1:   kong  12    700
+2: george   7     15
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org38eee10" class="outline-3">
-<h3 id="org38eee10"><span class="section-number-3">10.4</span> Read output from a command (in this case compressing with gunzip and filtering with awk)</h3>
+<div id="outline-container-orga539089" class="outline-3">
+<h3 id="orga539089"><span class="section-number-3">10.4</span> Read output from a command (in this case compressing with gunzip and filtering with awk)</h3>
 <div class="outline-text-3" id="text-10-4">
 <div class="org-src-container">
 <pre class="src src-R">df2 <span style="color: #8470ff; font-weight: bold;">&lt;-</span> fread(<span style="color: #fa8072;">"gunzip &lt; ../data/dataTable_f2.csv.gz | awk -F, 'NR==1 || $3&lt;100 { print $0 }'"</span>)
@@ -1014,8 +1015,8 @@ df2
 </div>
 </div>
 
-<div id="outline-container-org6a43862" class="outline-3">
-<h3 id="org6a43862"><span class="section-number-3">10.5</span> Read a colon (:) separated file with extra whitespace and no column names</h3>
+<div id="outline-container-orgca18f03" class="outline-3">
+<h3 id="orgca18f03"><span class="section-number-3">10.5</span> Read a colon (:) separated file with extra whitespace and no column names</h3>
 <div class="outline-text-3" id="text-10-5">
 <div class="org-src-container">
 <pre class="src src-R">df3 <span style="color: #8470ff; font-weight: bold;">&lt;-</span> fread(<span style="color: #fa8072;">'dataTable_f3.txt'</span>, sep=<span style="color: #fa8072;">':'</span>, header=<span style="color: #63b8ff;">FALSE</span>, strip.white=<span style="color: #63b8ff;">TRUE</span>, col.names=c(<span style="color: #fa8072;">'name'</span>, <span style="color: #fa8072;">'age'</span>, <span style="color: #fa8072;">'weight'</span>))
@@ -1034,7 +1035,7 @@ Error: object 'df3' not found
 </div>
 </div>
 <div id="postamble" class="status">
-Created by Mitch Richling <<a href="mailto:http://www.mitchr.me/">http://www.mitchr.me/</a>>.  Rendered on 2021-05-04 Tue 13:24 via <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.4.5)
+Created by Mitch Richling <<a href="mailto:http://www.mitchr.me/">http://www.mitchr.me/</a>>.  Rendered on 2021-05-04 Tue 18:27 via <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.4.5)
 </div>
 </body>
 </html>

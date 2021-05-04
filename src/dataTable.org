@@ -2,7 +2,6 @@
 #+TITLE:       data.table Examples
 #+AUTHOR:      Mitch Richling
 #+EMAIL:       http://www.mitchr.me/
-#+DATE:        2020-01-25
 #+DESCRIPTION: data.table features.@EOL
 #+KEYWORDS:    package cran data.table R
 #+LANGUAGE:    en
@@ -23,11 +22,11 @@
 #+EXPORT_FILE_NAME: ../docs/dataTable
 
 #+ATTR_HTML: :border 2 solid #ccc :frame hsides :align center
-|        <r> | <l>                    |
-|  *Author:* | /{{{author}}}/         |
-| *Updated:* | /{{{time(%Y-%m-%d)}}}/ |
+|        <r> | <l>                                          |
+|  *Author:* | /{{{author}}}/                               |
+| *Updated:* | /{{{modification-time(%Y-%m-%d %H:%M:%S)}}}/ |
 #+ATTR_HTML: :align center
-Copyright 2020 Mitch Richling. All rights reserved.
+Copyright 2020-2021 Mitch Richling. All rights reserved.
 
 #+TOC: headlines 5
 
@@ -588,14 +587,15 @@ df2
 ** Reading data from a URL
 
 #+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/dataTable.R" :wrap "src text :eval never :tangle no"
-df1u <- fread(https://raw.githubusercontent.com/richmit/ex-R/data/dataTable_f1.csv')
+df1u <- fread('https://github.com/richmit/ex-R/raw/master/data/dataTable_f2.csv.gz')
 df1u
 #+END_SRC
 
 #+RESULTS:
 #+begin_src text :eval never :tangle no
-Error: unexpected '/' in "df1u <- fread(https:/"
-Error: object 'df1u' not found
+     name age weight
+1:   kong  12    700
+2: george   7     15
 #+end_src
 
 ** Read output from a command (in this case compressing with gunzip and filtering with awk)

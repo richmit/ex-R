@@ -2,7 +2,6 @@
 #+TITLE:       Regression Examples
 #+AUTHOR:      Mitch Richling
 #+EMAIL:       http://www.mitchr.me/
-#+DATE:        2020-01-25
 #+DESCRIPTION: Regression Examples
 #+KEYWORDS:    Regression Examples
 #+LANGUAGE:    en
@@ -23,11 +22,11 @@
 #+EXPORT_FILE_NAME: ../docs/regression
 
 #+ATTR_HTML: :border 2 solid #ccc :frame hsides :align center
-|        <r> | <l>                    |
-|  *Author:* | /{{{author}}}/         |
-| *Updated:* | /{{{time(%Y-%m-%d)}}}/ |
+|        <r> | <l>                                          |
+|  *Author:* | /{{{author}}}/                               |
+| *Updated:* | /{{{modification-time(%Y-%m-%d %H:%M:%S)}}}/ |
 #+ATTR_HTML: :align center
-Copyright 2020 Mitch Richling. All rights reserved.
+Copyright 2020-2021 Mitch Richling. All rights reserved.
 
 #+TOC: headlines 5
 
@@ -61,7 +60,7 @@ Copyright 2020 Mitch Richling. All rights reserved.
 
 ** Compute the linear model
 
-#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/regression.R"
+#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/regression.R" :wrap "src text :eval never :tangle no"
 # x is the independent variable and y being the dependent one.
 # data= simplifies the formula and makes future use of newdata= in 'predict' calls less painful.
 daFit <- lm(y ~ x, data=daDat)     
@@ -69,26 +68,26 @@ summary(daFit)
 #+END_SRC
 
 #+RESULTS:
-#+begin_example
+#+begin_src text :eval never :tangle no
 
 Call:
 lm(formula = y ~ x, data = daDat)
 
 Residuals:
     Min      1Q  Median      3Q     Max 
--32.792 -10.755  -0.535   8.261  59.349 
+-43.385 -11.517  -1.064  15.058  37.385 
 
 Coefficients:
             Estimate Std. Error t value Pr(>|t|)    
-(Intercept) 13.28700    3.82551   3.473 0.000886 ***
-x            1.42100    0.06505  21.846  < 2e-16 ***
+(Intercept) 18.59925    4.72646   3.935 0.000194 ***
+x            1.35089    0.08037  16.809  < 2e-16 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 16.04 on 70 degrees of freedom
-Multiple R-squared:  0.8721,	Adjusted R-squared:  0.8703 
-F-statistic: 477.2 on 1 and 70 DF,  p-value: < 2.2e-16
-#+end_example
+Residual standard error: 19.82 on 70 degrees of freedom
+Multiple R-squared:  0.8014,	Adjusted R-squared:  0.7986 
+F-statistic: 282.6 on 1 and 70 DF,  p-value: < 2.2e-16
+#+end_src
 
 ** Plot Model
 
@@ -112,22 +111,22 @@ file:figures/regression/lin-basic.png
 
 *** With the Shpiro-Wilk test
 
-#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/regression.R"
+#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/regression.R" :wrap "src text :eval never :tangle no"
 # If p-value<0.1, then we reject the hypothesis that the residuals are normally distributed.
 # NOTE: residuals(daFit) works on more "fit-like" objects than daFit$residuals
 shapiro.test(residuals(daFit))    
 #+END_SRC
 
 #+RESULTS:
-#+begin_example
+#+begin_src text :eval never :tangle no
 null device 
           1
 
 	Shapiro-Wilk normality test
 
 data:  residuals(daFit)
-W = 0.97108, p-value = 0.09585
-#+end_example
+W = 0.97823, p-value = 0.2458
+#+end_src
 
 *** With a Q-Q plot
 
@@ -246,7 +245,7 @@ if(TRUE) {
 
 ** Compute the polynomial models with progressively higher degree
 
-#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/regression.R"
+#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/regression.R" :wrap "src text :eval never :tangle no"
 maxFdeg <- 4                                            ######## TRY THIS: Value of 6 vs. 4
 if(maxFdeg == 4) {
   ## For illustrative purposes we demonstrate hand coded formulas for the maxFdeg==4 case
@@ -263,7 +262,7 @@ daFits
 #+END_SRC
 
 #+RESULTS:
-#+begin_example
+#+begin_src text :eval never :tangle no
 null device 
           1
 `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
@@ -309,7 +308,7 @@ lm(formula = y ~ poly(x, 4, raw = TRUE), data = daDat)
 Coefficients:
             (Intercept)  poly(x, 4, raw = TRUE)1  poly(x, 4, raw = TRUE)2  poly(x, 4, raw = TRUE)3  poly(x, 4, raw = TRUE)4  
                 -6.7171                  13.4953                  -5.9070                   0.2297                   0.1504
-#+end_example
+#+end_src
 
 ** Plot Models
 
@@ -336,13 +335,13 @@ file:figures/regression/poly-basic.png
 
 ** Which fit is best?
 
-#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/regression.R"
+#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/regression.R" :wrap "src text :eval never :tangle no"
 # Use ANOVA to determine which fit seems best
 do.call(anova, daFits)
 #+END_SRC
 
 #+RESULTS:
-#+begin_example
+#+begin_src text :eval never :tangle no
 null device 
           1
 Analysis of Variance Table
@@ -358,7 +357,7 @@ Model 4: y ~ poly(x, 4, raw = TRUE)
 4      5  4.349  1     0.567  0.6523 0.4559873    
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-#+end_example
+#+end_src
 
 ** Prediction intervals and confidence intervals
 
@@ -411,7 +410,7 @@ daDat$y  <- daDat$f + daDat$e             # y-data
 
 ** Compute non-linear model
 
-#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/regression.R"
+#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/regression.R" :wrap "src text :eval never :tangle no"
 # Compute the non-linear model
 # Independent variable of x, dependent variable of y, and function of a*sin(b*x+c)+d
 daFit   <- nls(y~a*sin(b*x+c)+d,           # Model formula
@@ -423,7 +422,7 @@ summary(daFit)
 #+END_SRC
 
 #+RESULTS:
-#+begin_example
+#+begin_src text :eval never :tangle no
 null device 
           1
 
@@ -431,18 +430,18 @@ Formula: y ~ a * sin(b * x + c) + d
 
 Parameters:
   Estimate Std. Error t value Pr(>|t|)    
-a 0.863418   0.073372  11.768   <2e-16 ***
-b 0.879969   0.053552  16.432   <2e-16 ***
-c 0.372156   0.199389   1.866    0.065 .  
-d 0.003063   0.053437   0.057    0.954    
+a  0.82561    0.06216  13.282   <2e-16 ***
+b  0.94955    0.04079  23.277   <2e-16 ***
+c  0.11286    0.15223   0.741    0.460    
+d  0.04486    0.04312   1.040    0.301    
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 0.5245 on 96 degrees of freedom
+Residual standard error: 0.4305 on 96 degrees of freedom
 
 Number of iterations to convergence: 4 
-Achieved convergence tolerance: 4.165e-06
-#+end_example
+Achieved convergence tolerance: 2.464e-06
+#+end_src
 
 ** Plot Model
 

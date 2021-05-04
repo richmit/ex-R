@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-05-04 Tue 13:18 -->
+<!-- 2021-05-04 Tue 18:27 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Inline C++ Example</title>
@@ -230,42 +230,42 @@
 
 <tr>
 <td class="org-right"><b>Updated:</b></td>
-<td class="org-left"><i>2021-05-04</i></td>
+<td class="org-left"><i>2021-05-04 18:03:52</i></td>
 </tr>
 </tbody>
 </table>
 <p align="center">
-Copyright 2020 Mitch Richling. All rights reserved.
+Copyright 2020-2021 Mitch Richling. All rights reserved.
 </p>
 
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org4cd5a63">1. Source Code and Files</a></li>
-<li><a href="#orgef7ae98">2. Load the library</a></li>
-<li><a href="#org6476b08">3. External C++ Code</a>
+<li><a href="#orgefc72c1">1. Source Code and Files</a></li>
+<li><a href="#org1dd8b0c">2. Load the library</a></li>
+<li><a href="#orgba957bb">3. External C++ Code</a>
 <ul>
-<li><a href="#org0fd9682">3.1. The External Code File</a></li>
-<li><a href="#org7bdfe9f">3.2. Telling R about our external code</a></li>
+<li><a href="#org115f345">3.1. The External Code File</a></li>
+<li><a href="#org6960567">3.2. Telling R about our external code</a></li>
 </ul>
 </li>
-<li><a href="#orgd911a64">4. Inline C++ Code</a>
+<li><a href="#org2107a65">4. Inline C++ Code</a>
 <ul>
 <li>
 <ul>
-<li><a href="#orga1c2ac5">4.0.1. Function returning a number</a></li>
+<li><a href="#org8bfefee">4.0.1. Function returning a number</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org83486ee">5. Calling our functions</a></li>
+<li><a href="#org0cfcee2">5. Calling our functions</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org4cd5a63" class="outline-2">
-<h2 id="org4cd5a63"><span class="section-number-2">1</span> Source Code and Files</h2>
+<div id="outline-container-orgefc72c1" class="outline-2">
+<h2 id="orgefc72c1"><span class="section-number-2">1</span> Source Code and Files</h2>
 <div class="outline-text-2" id="text-1">
 <ul class="org-ul">
 <li><a href="cppInR.org">cppInR.org</a></li>
@@ -275,8 +275,8 @@ Copyright 2020 Mitch Richling. All rights reserved.
 </div>
 </div>
 
-<div id="outline-container-orgef7ae98" class="outline-2">
-<h2 id="orgef7ae98"><span class="section-number-2">2</span> Load the library</h2>
+<div id="outline-container-org1dd8b0c" class="outline-2">
+<h2 id="org1dd8b0c"><span class="section-number-2">2</span> Load the library</h2>
 <div class="outline-text-2" id="text-2">
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #8470ff; font-weight: bold;">library</span>(Rcpp)
@@ -285,23 +285,24 @@ Copyright 2020 Mitch Richling. All rights reserved.
 </div>
 </div>
 
-<div id="outline-container-org6476b08" class="outline-2">
-<h2 id="org6476b08"><span class="section-number-2">3</span> External C++ Code</h2>
+<div id="outline-container-orgba957bb" class="outline-2">
+<h2 id="orgba957bb"><span class="section-number-2">3</span> External C++ Code</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 We can put our code in an external file, and tell R where to find it.
 </p>
 </div>
 
-<div id="outline-container-org0fd9682" class="outline-3">
-<h3 id="org0fd9682"><span class="section-number-3">3.1</span> The External Code File</h3>
+<div id="outline-container-org115f345" class="outline-3">
+<h3 id="org115f345"><span class="section-number-3">3.1</span> The External Code File</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
-In the code below we define two functions.  The first concatinates two R vecotrs, and the second computes the sum of an R vector.  We place the code into a file called <code>cppInR.cpp</code>.  Note the export direcives in the comments!
+In the code below we define two functions.  The first concatinates two R vecotrs, and the second computes the sum of an R vector.  We place the code into a
+file called <code>cppInR.cpp</code>.  Note the export direcives in the comments!
 </p>
 
 <div class="org-src-container">
-<pre class="src src-c++"><span style="color: #ffa500;">///////////////////////////////////////////////////////////</span>
+<pre class="src src-C++"><span style="color: #ffa500;">///////////////////////////////////////////////////////////</span>
 <span style="color: #6495ed;">#include</span> <span style="color: #fa8072;">&lt;Rcpp.h&gt;</span>
 
 <span style="color: #ffa500;">///////////////////////////////////////////////////////////</span>
@@ -338,8 +339,8 @@ In the code below we define two functions.  The first concatinates two R vecotrs
 </div>
 </div>
 
-<div id="outline-container-org7bdfe9f" class="outline-3">
-<h3 id="org7bdfe9f"><span class="section-number-3">3.2</span> Telling R about our external code</h3>
+<div id="outline-container-org6960567" class="outline-3">
+<h3 id="org6960567"><span class="section-number-3">3.2</span> Telling R about our external code</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 We must tell R where to find our enxternal code.  We do that with the <code>sourceCpp</code> function &#x2013; it will compile the code and create R wrappers to call the
@@ -351,8 +352,7 @@ functions.  Note that little bit of R code in the comment at the bottom of <code
 </pre>
 </div>
 
-<pre class="example" id="orgf74859c">
-
+<pre class="example" id="org4902963">
 print('HI -- I am some code in cppRcppOutOfLine.cpp')
 [1] "HI -- I am some code in cppRcppOutOfLine.cpp"
 </pre>
@@ -360,8 +360,8 @@ print('HI -- I am some code in cppRcppOutOfLine.cpp')
 </div>
 </div>
 
-<div id="outline-container-orgd911a64" class="outline-2">
-<h2 id="orgd911a64"><span class="section-number-2">4</span> Inline C++ Code</h2>
+<div id="outline-container-org2107a65" class="outline-2">
+<h2 id="org2107a65"><span class="section-number-2">4</span> Inline C++ Code</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 We define the same two functions, but we put them directly in our R code as strings.  Instead of using <code>sourceCpp</code>, we use <code>cppFunction</code>.  <code>cppFunction</code> takes care of several things for us:
@@ -386,8 +386,8 @@ We define the same two functions, but we put them directly in our R code as stri
 </div>
 </div>
 
-<div id="outline-container-orga1c2ac5" class="outline-4">
-<h4 id="orga1c2ac5"><span class="section-number-4">4.0.1</span> Function returning a number</h4>
+<div id="outline-container-org8bfefee" class="outline-4">
+<h4 id="org8bfefee"><span class="section-number-4">4.0.1</span> Function returning a number</h4>
 <div class="outline-text-4" id="text-4-0-1">
 <div class="org-src-container">
 <pre class="src src-R">Rcpp::cppFunction(<span style="color: #fa8072;">'double cppIntSum(NumericVector x) {</span>
@@ -403,8 +403,8 @@ We define the same two functions, but we put them directly in our R code as stri
 </div>
 </div>
 
-<div id="outline-container-org83486ee" class="outline-2">
-<h2 id="org83486ee"><span class="section-number-2">5</span> Calling our functions</h2>
+<div id="outline-container-org0cfcee2" class="outline-2">
+<h2 id="org0cfcee2"><span class="section-number-2">5</span> Calling our functions</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 Here we call our concatination functions (the internal one and external one):
@@ -415,7 +415,7 @@ Here we call our concatination functions (the internal one and external one):
 </pre>
 </div>
 
-<pre class="example" id="org074cc3e">
+<pre class="example" id="orgd79ef5c">
 [1]  1  2  3  4  5  6  7  8  9 10  2  3  4  5  6  7  8  9 10 11
 </pre>
 
@@ -424,7 +424,7 @@ Here we call our concatination functions (the internal one and external one):
 </pre>
 </div>
 
-<pre class="example" id="org3b63ed1">
+<pre class="example" id="org6fcc7c1">
 [1]  1  2  3  4  5  6  7  8  9 10  2  3  4  5  6  7  8  9 10 11
 </pre>
 
@@ -437,7 +437,7 @@ Here we call our sum functions (the internal one and external one):
 </pre>
 </div>
 
-<pre class="example" id="org10d8faf">
+<pre class="example" id="org996d0d0">
 [1] 55
 </pre>
 
@@ -446,14 +446,14 @@ Here we call our sum functions (the internal one and external one):
 </pre>
 </div>
 
-<pre class="example" id="org2f6a074">
+<pre class="example" id="org653fa38">
 [1] 55
 </pre>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-Created by Mitch Richling <<a href="mailto:http://www.mitchr.me/">http://www.mitchr.me/</a>>.  Rendered on 2021-05-04 Tue 13:18 via <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.4.5)
+Created by Mitch Richling <<a href="mailto:http://www.mitchr.me/">http://www.mitchr.me/</a>>.  Rendered on 2021-05-04 Tue 18:27 via <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.4.5)
 </div>
 </body>
 </html>

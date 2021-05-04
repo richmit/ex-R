@@ -2,7 +2,6 @@
 #+TITLE:       Parallel Examples
 #+AUTHOR:      Mitch Richling
 #+EMAIL:       http://www.mitchr.me/
-#+DATE:        2020-01-25
 #+DESCRIPTION: Parallel Examples.@EOL
 #+KEYWORDS:    Parallel Examples
 #+LANGUAGE:    en
@@ -23,11 +22,11 @@
 #+EXPORT_FILE_NAME: ../docs/parallelBasics
 
 #+ATTR_HTML: :border 2 solid #ccc :frame hsides :align center
-|        <r> | <l>                             |
-|  *Author:* | /{{{author}}}/                  |
-| *Updated:* | /{{{time(%Y-%m-%d)}}}/ |
+|        <r> | <l>                                          |
+|  *Author:* | /{{{author}}}/                               |
+| *Updated:* | /{{{modification-time(%Y-%m-%d %H:%M:%S)}}}/ |
 #+ATTR_HTML: :align center
-Copyright 2020 Mitch Richling. All rights reserved.
+Copyright 2020-2021 Mitch Richling. All rights reserved.
 
 #+TOC: headlines 5
 
@@ -52,129 +51,122 @@ library(parallel)
 
 ** Calculate the number instances based on core count
 
-#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/parallelBasics.R"
+#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/parallelBasics.R" :wrap "src text :eval never :tangle no"
 instancesInMyComputeCluster <- detectCores()
 instancesInMyComputeCluster
 #+END_SRC
 
 #+RESULTS:
-#+begin_example
-Error in png(filename = "../docs/figures/outl/plot.png", width = 800,  : 
-  unable to start png() device
-In addition: Warning messages:
-1: In png(filename = "../docs/figures/outl/plot.png", width = 800,  :
-  unable to open file '../docs/figures/outl/plot.png' for writing
-2: In png(filename = "../docs/figures/outl/plot.png", width = 800,  :
-  opening device failed
+#+begin_src text :eval never :tangle no
 [1] 8
-#+end_example
+#+end_src
  
 ** Start up the cluster
 
-#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/parallelBasics.R"
+#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/parallelBasics.R" :wrap "src text :eval never :tangle no"
 myComputeCluster <- makeCluster(instancesInMyComputeCluster)
 myComputeCluster
 #+END_SRC
 
 #+RESULTS:
-#+begin_example
+#+begin_src text :eval never :tangle no
 socket cluster with 8 nodes on host 'localhost'
-#+end_example
+#+end_src
 
 * Using the cluster
 
 ** Run a function in each instance (you can add arguments after the function name)
 
-#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/parallelBasics.R"
+#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/parallelBasics.R" :wrap "src text :eval never :tangle no"
 unlist(clusterCall(myComputeCluster, 'Sys.getpid'))
 #+END_SRC
 
 #+RESULTS:
-#+begin_example
-[1] 17580  6528 26212 22120  9432 20056 19420  9000
-#+end_example
+#+begin_src text :eval never :tangle no
+[1] 25704 17520 15828 18808 21660 21896 26024 12048
+#+end_src
 
 ** Run an expression in each instance
 
-#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/parallelBasics.R"
+#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/parallelBasics.R" :wrap "src text :eval never :tangle no"
 unlist(clusterEvalQ(myComputeCluster, 2*Sys.getpid()))
 #+END_SRC
 
 #+RESULTS:
-#+begin_example
-[1] 35160 13056 52424 44240 18864 40112 38840 18000
-#+end_example
+#+begin_src text :eval never :tangle no
+[1] 51408 35040 31656 37616 43320 43792 52048 24096
+#+end_src
 
 ** Using data across the cluster
 
 Notice =aVar= need not be exported because it is the second argument of =parSapply=!
 
-#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/parallelBasics.R"
+#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/parallelBasics.R" :wrap "src text :eval never :tangle no"
 aVar <- 1:10
 parSapply(myComputeCluster, aVar, sin)
 #parLapply(myComputeCluster, aVar, sin)
 #+END_SRC
 
 #+RESULTS:
-#+begin_example
+#+begin_src text :eval never :tangle no
  [1]  0.8414710  0.9092974  0.1411200 -0.7568025 -0.9589243 -0.2794155  0.6569866  0.9893582  0.4121185 -0.5440211
-#+end_example
+#+end_src
 
 ** Explicitly exporting data across the cluster
 
 While =aVar= need not be exported, =bVar= must be exported -- because it is not the second argument of =parSapply=.
 
-#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/parallelBasics.R"
+#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/parallelBasics.R" :wrap "src text :eval never :tangle no"
 bVar <- 10
 clusterExport(myComputeCluster, 'bVar')
 parSapply(myComputeCluster, aVar, function (x) bVar*x)
 #+END_SRC
 
 #+RESULTS:
-#+begin_example
+#+begin_src text :eval never :tangle no
  [1]  10  20  30  40  50  60  70  80  90 100
-#+end_example
+#+end_src
 
 * Performance
 
 ** Create some big data data and put it in 'cVar'
 
-#+BEGIN_SRC R :session :results silent :exports code :tangle "../tangled/parallelBasics.R"
+#+BEGIN_SRC R :session :results silent :exports code :tangle "../tangled/parallelBasics.R" :wrap "src text :eval never :tangle no"
 cVar <- rnorm(instancesInMyComputeCluster*2^14)
 #+END_SRC
 
 ** Export 'cVar' to to each instance
 
-#+BEGIN_SRC R :session :results silent :exports code :tangle "../tangled/parallelBasics.R"
+#+BEGIN_SRC R :session :results silent :exports code :tangle "../tangled/parallelBasics.R" :wrap "src text :eval never :tangle no"
 clusterExport(myComputeCluster, "cVar")
 #+END_SRC
 
 ** Compute in serial
 
-#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/parallelBasics.R"
+#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/parallelBasics.R" :wrap "src text :eval never :tangle no"
 system.time(b<-sapply(cVar, function (x) for(i in 1:500) sin(x)))
 #+END_SRC
 
 #+RESULTS:
-#+begin_example
+#+begin_src text :eval never :tangle no
    user  system elapsed 
-   5.08    0.00    5.07
-#+end_example
+   4.81    0.00    4.82
+#+end_src
 
 ** Compute in parallel
 
-#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/parallelBasics.R"
+#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/parallelBasics.R" :wrap "src text :eval never :tangle no"
 system.time(b<-parSapply(myComputeCluster, cVar, function (x) for(i in 1:500) sin(x)))
 #+END_SRC
 
 #+RESULTS:
-#+begin_example
+#+begin_src text :eval never :tangle no
    user  system elapsed 
-   0.02    0.03    1.13
-#+end_example
+   0.07    0.00    1.12
+#+end_src
 
 * Shut down cluster
 
-#+BEGIN_SRC R :session :results silent :exports code :tangle "../tangled/parallelBasics.R"
+#+BEGIN_SRC R :session :results silent :exports code :tangle "../tangled/parallelBasics.R" :wrap "src text :eval never :tangle no"
 stopCluster(myComputeCluster)
 #+END_SRC

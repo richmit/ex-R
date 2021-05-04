@@ -2,7 +2,6 @@
 #+TITLE:       Data Smoothing
 #+AUTHOR:      Mitch Richling
 #+EMAIL:       http://www.mitchr.me/
-#+DATE:        2020-01-25
 #+DESCRIPTION: Data Smoothing@EOL
 #+KEYWORDS:    Data Smoothing
 #+LANGUAGE:    en
@@ -24,11 +23,11 @@
 #+EXPORT_FILE_NAME: ../docs/smoothing
 
 #+ATTR_HTML: :border 2 solid #ccc :frame hsides :align center
-|        <r> | <l>                    |
-|  *Author:* | /{{{author}}}/         |
-| *Updated:* | /{{{time(%Y-%m-%d)}}}/ |
+|        <r> | <l>                                          |
+|  *Author:* | /{{{author}}}/                               |
+| *Updated:* | /{{{modification-time(%Y-%m-%d %H:%M:%S)}}}/ |
 #+ATTR_HTML: :align center
-Copyright 2020 Mitch Richling. All rights reserved.
+Copyright 2020-2021 Mitch Richling. All rights reserved.
 
 #+TOC: headlines 5
 

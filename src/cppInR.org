@@ -2,7 +2,6 @@
 #+TITLE:       Inline C++ Example
 #+AUTHOR:      Mitch Richling
 #+EMAIL:       http://www.mitchr.me/
-#+DATE:        2020-01-25
 #+DESCRIPTION: Inline C++ Example
 #+KEYWORDS:    Inline C++ Example
 #+LANGUAGE:    en
@@ -23,11 +22,11 @@
 #+EXPORT_FILE_NAME: ../docs/cppInR
 
 #+ATTR_HTML: :border 2 solid #ccc :frame hsides :align center
-|        <r> | <l>                     |
-|  *Author:* | /{{{author}}}/          |
-| *Updated:* | /{{{time(%Y-%m-%d)}}}/  |
+|        <r> | <l>                                          |
+|  *Author:* | /{{{author}}}/                               |
+| *Updated:* | /{{{modification-time(%Y-%m-%d %H:%M:%S)}}}/ |
 #+ATTR_HTML: :align center
-Copyright 2020 Mitch Richling. All rights reserved.
+Copyright 2020-2021 Mitch Richling. All rights reserved.
 
 #+TOC: headlines 5
 
@@ -55,42 +54,10 @@ We can put our code in an external file, and tell R where to find it.
 
 ** The External Code File
 
-In the code below we define two functions.  The first concatinates two R vecotrs, and the second computes the sum of an R vector.  We place the code into a file called =cppInR.cpp=.  Note the export direcives in the comments!
+In the code below we define two functions.  The first concatinates two R vecotrs, and the second computes the sum of an R vector.  We place the code into a
+file called =cppInR.cpp=.  Note the export direcives in the comments!
 
-#+BEGIN_SRC c++ :results silent :exports code :tangle cppInR.cpp :eval never
-///////////////////////////////////////////////////////////
-#include <Rcpp.h>
-
-///////////////////////////////////////////////////////////
-using namespace Rcpp;
-
-///////////////////////////////////////////////////////////
-// [[Rcpp::export]]
-NumericVector cppExtCat(NumericVector a, NumericVector b) {
-  Rcpp::NumericVector c(a.size() + b.size());
-  int j=0;
-  for (int i=0; i<a.size(); i++)
-    c[j++] += a[i];
-  for (int i=0; i<b.size(); i++)
-    c[j++] += b[i];
-  return c;
-}
-
-///////////////////////////////////////////////////////////
-// [[Rcpp::export]]
-double cppExtSum(NumericVector x) {
-  double total = 0;
-  for(int i=0; i<x.size(); ++i) {
-    total += x[i];
-  }
-  return total;
-}
-
-///////////////////////////////////////////////////////////
-/*** R
-print('HI -- I am some code in cppRcppOutOfLine.cpp')
-*/
-#+END_SRC
+#+INCLUDE: "cppInR.cpp" src C++
 
 ** Telling R about our external code
 
@@ -103,7 +70,6 @@ Rcpp::sourceCpp('cppInR.cpp')
 
  #+RESULTS:
  #+begin_example
-
  print('HI -- I am some code in cppRcppOutOfLine.cpp')
  [1] "HI -- I am some code in cppRcppOutOfLine.cpp"
  #+end_example

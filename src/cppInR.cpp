@@ -1,7 +1,9 @@
 ///////////////////////////////////////////////////////////
 #include <Rcpp.h>
+
 ///////////////////////////////////////////////////////////
 using namespace Rcpp;
+
 ///////////////////////////////////////////////////////////
 // [[Rcpp::export]]
 NumericVector cppExtCat(NumericVector a, NumericVector b) {
@@ -13,6 +15,7 @@ NumericVector cppExtCat(NumericVector a, NumericVector b) {
     c[j++] += b[i];
   return c;
 }
+
 ///////////////////////////////////////////////////////////
 // [[Rcpp::export]]
 double cppExtSum(NumericVector x) {
@@ -22,6 +25,7 @@ double cppExtSum(NumericVector x) {
   }
   return total;
 }
+
 ///////////////////////////////////////////////////////////
 /*** R
 print('HI -- I am some code in cppRcppOutOfLine.cpp')

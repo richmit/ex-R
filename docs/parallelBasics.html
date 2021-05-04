@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-05-04 Tue 13:18 -->
+<!-- 2021-05-04 Tue 18:27 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Parallel Examples</title>
@@ -230,49 +230,49 @@
 
 <tr>
 <td class="org-right"><b>Updated:</b></td>
-<td class="org-left"><i>2021-05-04</i></td>
+<td class="org-left"><i>2021-05-04 18:18:22</i></td>
 </tr>
 </tbody>
 </table>
 <p align="center">
-Copyright 2020 Mitch Richling. All rights reserved.
+Copyright 2020-2021 Mitch Richling. All rights reserved.
 </p>
 
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org1730c6d">1. Source Code and Files</a></li>
-<li><a href="#org13bd962">2. Starting a cluster</a>
+<li><a href="#org189b39a">1. Source Code and Files</a></li>
+<li><a href="#orgd49cfa9">2. Starting a cluster</a>
 <ul>
-<li><a href="#org8bbfc1b">2.1. Load the library</a></li>
-<li><a href="#org4934330">2.2. Calculate the number instances based on core count</a></li>
-<li><a href="#org3b0ae43">2.3. Start up the cluster</a></li>
+<li><a href="#org9ef9a7b">2.1. Load the library</a></li>
+<li><a href="#org3d7901e">2.2. Calculate the number instances based on core count</a></li>
+<li><a href="#orgdfb512c">2.3. Start up the cluster</a></li>
 </ul>
 </li>
-<li><a href="#org6da23e8">3. Using the cluster</a>
+<li><a href="#org88b79bd">3. Using the cluster</a>
 <ul>
-<li><a href="#org2b1cb92">3.1. Run a function in each instance (you can add arguments after the function name)</a></li>
-<li><a href="#orgf75f08d">3.2. Run an expression in each instance</a></li>
-<li><a href="#orgde0d024">3.3. Using data across the cluster</a></li>
-<li><a href="#org1207d85">3.4. Explicitly exporting data across the cluster</a></li>
+<li><a href="#org350d01d">3.1. Run a function in each instance (you can add arguments after the function name)</a></li>
+<li><a href="#orgdabd867">3.2. Run an expression in each instance</a></li>
+<li><a href="#orgf4c92cd">3.3. Using data across the cluster</a></li>
+<li><a href="#orga83d019">3.4. Explicitly exporting data across the cluster</a></li>
 </ul>
 </li>
-<li><a href="#orgb048d20">4. Performance</a>
+<li><a href="#org9640823">4. Performance</a>
 <ul>
-<li><a href="#org5eb4adc">4.1. Create some big data data and put it in 'cVar'</a></li>
-<li><a href="#org7b01664">4.2. Export 'cVar' to to each instance</a></li>
-<li><a href="#orgb87af20">4.3. Compute in serial</a></li>
-<li><a href="#org57c1b5b">4.4. Compute in parallel</a></li>
+<li><a href="#org944ed07">4.1. Create some big data data and put it in 'cVar'</a></li>
+<li><a href="#org9ba77cd">4.2. Export 'cVar' to to each instance</a></li>
+<li><a href="#org6c67b45">4.3. Compute in serial</a></li>
+<li><a href="#org81493e6">4.4. Compute in parallel</a></li>
 </ul>
 </li>
-<li><a href="#orgc3a08e5">5. Shut down cluster</a></li>
+<li><a href="#org477647d">5. Shut down cluster</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org1730c6d" class="outline-2">
-<h2 id="org1730c6d"><span class="section-number-2">1</span> Source Code and Files</h2>
+<div id="outline-container-org189b39a" class="outline-2">
+<h2 id="org189b39a"><span class="section-number-2">1</span> Source Code and Files</h2>
 <div class="outline-text-2" id="text-1">
 <ul class="org-ul">
 <li><a href="parallelBasics.org">parallelBasics.org</a></li>
@@ -281,12 +281,12 @@ Copyright 2020 Mitch Richling. All rights reserved.
 </div>
 </div>
 
-<div id="outline-container-org13bd962" class="outline-2">
-<h2 id="org13bd962"><span class="section-number-2">2</span> Starting a cluster</h2>
+<div id="outline-container-orgd49cfa9" class="outline-2">
+<h2 id="orgd49cfa9"><span class="section-number-2">2</span> Starting a cluster</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-org8bbfc1b" class="outline-3">
-<h3 id="org8bbfc1b"><span class="section-number-3">2.1</span> Load the library</h3>
+<div id="outline-container-org9ef9a7b" class="outline-3">
+<h3 id="org9ef9a7b"><span class="section-number-3">2.1</span> Load the library</h3>
 <div class="outline-text-3" id="text-2-1">
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #8470ff; font-weight: bold;">library</span>(parallel)
@@ -295,8 +295,8 @@ Copyright 2020 Mitch Richling. All rights reserved.
 </div>
 </div>
 
-<div id="outline-container-org4934330" class="outline-3">
-<h3 id="org4934330"><span class="section-number-3">2.2</span> Calculate the number instances based on core count</h3>
+<div id="outline-container-org3d7901e" class="outline-3">
+<h3 id="org3d7901e"><span class="section-number-3">2.2</span> Calculate the number instances based on core count</h3>
 <div class="outline-text-3" id="text-2-2">
 <div class="org-src-container">
 <pre class="src src-R">instancesInMyComputeCluster <span style="color: #8470ff; font-weight: bold;">&lt;-</span> detectCores()
@@ -304,21 +304,15 @@ instancesInMyComputeCluster
 </pre>
 </div>
 
-<pre class="example" id="org0e6b3bd">
-Error in png(filename = "../docs/figures/outl/plot.png", width = 800,  : 
-  unable to start png() device
-In addition: Warning messages:
-1: In png(filename = "../docs/figures/outl/plot.png", width = 800,  :
-  unable to open file '../docs/figures/outl/plot.png' for writing
-2: In png(filename = "../docs/figures/outl/plot.png", width = 800,  :
-  opening device failed
-[1] 8
+<div class="org-src-container">
+<pre class="src src-text">[1] 8
 </pre>
 </div>
 </div>
+</div>
 
-<div id="outline-container-org3b0ae43" class="outline-3">
-<h3 id="org3b0ae43"><span class="section-number-3">2.3</span> Start up the cluster</h3>
+<div id="outline-container-orgdfb512c" class="outline-3">
+<h3 id="orgdfb512c"><span class="section-number-3">2.3</span> Start up the cluster</h3>
 <div class="outline-text-3" id="text-2-3">
 <div class="org-src-container">
 <pre class="src src-R">myComputeCluster <span style="color: #8470ff; font-weight: bold;">&lt;-</span> makeCluster(instancesInMyComputeCluster)
@@ -326,47 +320,50 @@ myComputeCluster
 </pre>
 </div>
 
-<pre class="example" id="orgcbaec1c">
-socket cluster with 8 nodes on host 'localhost'
+<div class="org-src-container">
+<pre class="src src-text">socket cluster with 8 nodes on host 'localhost'
 </pre>
 </div>
 </div>
 </div>
+</div>
 
-<div id="outline-container-org6da23e8" class="outline-2">
-<h2 id="org6da23e8"><span class="section-number-2">3</span> Using the cluster</h2>
+<div id="outline-container-org88b79bd" class="outline-2">
+<h2 id="org88b79bd"><span class="section-number-2">3</span> Using the cluster</h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-org2b1cb92" class="outline-3">
-<h3 id="org2b1cb92"><span class="section-number-3">3.1</span> Run a function in each instance (you can add arguments after the function name)</h3>
+<div id="outline-container-org350d01d" class="outline-3">
+<h3 id="org350d01d"><span class="section-number-3">3.1</span> Run a function in each instance (you can add arguments after the function name)</h3>
 <div class="outline-text-3" id="text-3-1">
 <div class="org-src-container">
 <pre class="src src-R">unlist(clusterCall(myComputeCluster, <span style="color: #fa8072;">'Sys.getpid'</span>))
 </pre>
 </div>
 
-<pre class="example" id="orgb707f48">
-[1] 17580  6528 26212 22120  9432 20056 19420  9000
+<div class="org-src-container">
+<pre class="src src-text">[1] 25704 17520 15828 18808 21660 21896 26024 12048
 </pre>
 </div>
 </div>
+</div>
 
-<div id="outline-container-orgf75f08d" class="outline-3">
-<h3 id="orgf75f08d"><span class="section-number-3">3.2</span> Run an expression in each instance</h3>
+<div id="outline-container-orgdabd867" class="outline-3">
+<h3 id="orgdabd867"><span class="section-number-3">3.2</span> Run an expression in each instance</h3>
 <div class="outline-text-3" id="text-3-2">
 <div class="org-src-container">
 <pre class="src src-R">unlist(clusterEvalQ(myComputeCluster, 2*Sys.getpid()))
 </pre>
 </div>
 
-<pre class="example" id="orgb9050c7">
-[1] 35160 13056 52424 44240 18864 40112 38840 18000
+<div class="org-src-container">
+<pre class="src src-text">[1] 51408 35040 31656 37616 43320 43792 52048 24096
 </pre>
 </div>
 </div>
+</div>
 
-<div id="outline-container-orgde0d024" class="outline-3">
-<h3 id="orgde0d024"><span class="section-number-3">3.3</span> Using data across the cluster</h3>
+<div id="outline-container-orgf4c92cd" class="outline-3">
+<h3 id="orgf4c92cd"><span class="section-number-3">3.3</span> Using data across the cluster</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 Notice <code>aVar</code> need not be exported because it is the second argument of <code>parSapply</code>!
@@ -379,14 +376,15 @@ parSapply(myComputeCluster, aVar, sin)
 </pre>
 </div>
 
-<pre class="example" id="org706717b">
-[1]  0.8414710  0.9092974  0.1411200 -0.7568025 -0.9589243 -0.2794155  0.6569866  0.9893582  0.4121185 -0.5440211
+<div class="org-src-container">
+<pre class="src src-text">[1]  0.8414710  0.9092974  0.1411200 -0.7568025 -0.9589243 -0.2794155  0.6569866  0.9893582  0.4121185 -0.5440211
 </pre>
 </div>
 </div>
+</div>
 
-<div id="outline-container-org1207d85" class="outline-3">
-<h3 id="org1207d85"><span class="section-number-3">3.4</span> Explicitly exporting data across the cluster</h3>
+<div id="outline-container-orga83d019" class="outline-3">
+<h3 id="orga83d019"><span class="section-number-3">3.4</span> Explicitly exporting data across the cluster</h3>
 <div class="outline-text-3" id="text-3-4">
 <p>
 While <code>aVar</code> need not be exported, <code>bVar</code> must be exported &#x2013; because it is not the second argument of <code>parSapply</code>.
@@ -399,19 +397,20 @@ parSapply(myComputeCluster, aVar, <span style="color: #00ffff;">function</span> 
 </pre>
 </div>
 
-<pre class="example" id="orgf7b17c1">
-[1]  10  20  30  40  50  60  70  80  90 100
+<div class="org-src-container">
+<pre class="src src-text">[1]  10  20  30  40  50  60  70  80  90 100
 </pre>
 </div>
 </div>
 </div>
+</div>
 
-<div id="outline-container-orgb048d20" class="outline-2">
-<h2 id="orgb048d20"><span class="section-number-2">4</span> Performance</h2>
+<div id="outline-container-org9640823" class="outline-2">
+<h2 id="org9640823"><span class="section-number-2">4</span> Performance</h2>
 <div class="outline-text-2" id="text-4">
 </div>
-<div id="outline-container-org5eb4adc" class="outline-3">
-<h3 id="org5eb4adc"><span class="section-number-3">4.1</span> Create some big data data and put it in 'cVar'</h3>
+<div id="outline-container-org944ed07" class="outline-3">
+<h3 id="org944ed07"><span class="section-number-3">4.1</span> Create some big data data and put it in 'cVar'</h3>
 <div class="outline-text-3" id="text-4-1">
 <div class="org-src-container">
 <pre class="src src-R">cVar <span style="color: #8470ff; font-weight: bold;">&lt;-</span> rnorm(instancesInMyComputeCluster*2^14)
@@ -420,8 +419,8 @@ parSapply(myComputeCluster, aVar, <span style="color: #00ffff;">function</span> 
 </div>
 </div>
 
-<div id="outline-container-org7b01664" class="outline-3">
-<h3 id="org7b01664"><span class="section-number-3">4.2</span> Export 'cVar' to to each instance</h3>
+<div id="outline-container-org9ba77cd" class="outline-3">
+<h3 id="org9ba77cd"><span class="section-number-3">4.2</span> Export 'cVar' to to each instance</h3>
 <div class="outline-text-3" id="text-4-2">
 <div class="org-src-container">
 <pre class="src src-R">clusterExport(myComputeCluster, <span style="color: #fa8072;">"cVar"</span>)
@@ -430,39 +429,41 @@ parSapply(myComputeCluster, aVar, <span style="color: #00ffff;">function</span> 
 </div>
 </div>
 
-<div id="outline-container-orgb87af20" class="outline-3">
-<h3 id="orgb87af20"><span class="section-number-3">4.3</span> Compute in serial</h3>
+<div id="outline-container-org6c67b45" class="outline-3">
+<h3 id="org6c67b45"><span class="section-number-3">4.3</span> Compute in serial</h3>
 <div class="outline-text-3" id="text-4-3">
 <div class="org-src-container">
 <pre class="src src-R">system.time(b<span style="color: #8470ff; font-weight: bold;">&lt;-</span>sapply(cVar, <span style="color: #00ffff;">function</span> (x) <span style="color: #00ffff;">for</span>(i <span style="color: #00ffff;">in</span> 1:500) sin(x)))
 </pre>
 </div>
 
-<pre class="example" id="orgb1ce550">
-user  system elapsed 
-5.08    0.00    5.07
+<div class="org-src-container">
+<pre class="src src-text">user  system elapsed 
+4.81    0.00    4.82
 </pre>
 </div>
 </div>
+</div>
 
-<div id="outline-container-org57c1b5b" class="outline-3">
-<h3 id="org57c1b5b"><span class="section-number-3">4.4</span> Compute in parallel</h3>
+<div id="outline-container-org81493e6" class="outline-3">
+<h3 id="org81493e6"><span class="section-number-3">4.4</span> Compute in parallel</h3>
 <div class="outline-text-3" id="text-4-4">
 <div class="org-src-container">
 <pre class="src src-R">system.time(b<span style="color: #8470ff; font-weight: bold;">&lt;-</span>parSapply(myComputeCluster, cVar, <span style="color: #00ffff;">function</span> (x) <span style="color: #00ffff;">for</span>(i <span style="color: #00ffff;">in</span> 1:500) sin(x)))
 </pre>
 </div>
 
-<pre class="example" id="org8e83e0d">
-user  system elapsed 
-0.02    0.03    1.13
+<div class="org-src-container">
+<pre class="src src-text">user  system elapsed 
+0.07    0.00    1.12
 </pre>
 </div>
 </div>
 </div>
+</div>
 
-<div id="outline-container-orgc3a08e5" class="outline-2">
-<h2 id="orgc3a08e5"><span class="section-number-2">5</span> Shut down cluster</h2>
+<div id="outline-container-org477647d" class="outline-2">
+<h2 id="org477647d"><span class="section-number-2">5</span> Shut down cluster</h2>
 <div class="outline-text-2" id="text-5">
 <div class="org-src-container">
 <pre class="src src-R">stopCluster(myComputeCluster)
@@ -472,7 +473,7 @@ user  system elapsed
 </div>
 </div>
 <div id="postamble" class="status">
-Created by Mitch Richling <<a href="mailto:http://www.mitchr.me/">http://www.mitchr.me/</a>>.  Rendered on 2021-05-04 Tue 13:18 via <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.4.5)
+Created by Mitch Richling <<a href="mailto:http://www.mitchr.me/">http://www.mitchr.me/</a>>.  Rendered on 2021-05-04 Tue 18:27 via <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.4.5)
 </div>
 </body>
 </html>

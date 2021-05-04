@@ -2,7 +2,6 @@
 #+TITLE:       T Tests
 #+AUTHOR:      Mitch Richling
 #+EMAIL:       http://www.mitchr.me/
-#+DATE:        2020-01-25
 #+DESCRIPTION: T Tests.@EOL
 #+KEYWORDS:    T Tests
 #+LANGUAGE:    en
@@ -23,11 +22,11 @@
 #+EXPORT_FILE_NAME: ../docs/tTests
 
 #+ATTR_HTML: :border 2 solid #ccc :frame hsides :align center
-|        <r> | <l>                    |
-|  *Author:* | /{{{author}}}/         |
-| *Updated:* | /{{{time(%Y-%m-%d)}}}/ |
+|        <r> | <l>                                          |
+|  *Author:* | /{{{author}}}/                               |
+| *Updated:* | /{{{modification-time(%Y-%m-%d %H:%M:%S)}}}/ |
 #+ATTR_HTML: :align center
-Copyright 2020 Mitch Richling. All rights reserved.
+Copyright 2020-2021 Mitch Richling. All rights reserved.
 
 #+TOC: headlines 5
 
@@ -68,53 +67,47 @@ file:figures/tTests/tt-data.png
 
 Use when you don't know the variance of the two populations is equal
 
-#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/tTests.R"
+#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/tTests.R" :wrap "src text :eval never :tangle no"
 t.test(group1, group2)
 #+END_SRC
 
 #+RESULTS:
-#+begin_example
-null device 
-          1
-null device 
-          1
-null device 
-          1
+#+begin_src text :eval never :tangle no
 
 	Welch Two Sample t-test
 
 data:  group1 and group2
-t = 0.644, df = 1997, p-value = 0.5196
+t = -0.022292, df = 1996.8, p-value = 0.9822
 alternative hypothesis: true difference in means is not equal to 0
 95 percent confidence interval:
- -0.05877594  0.11625098
+ -0.08912823  0.08712479
 sample estimates:
 mean of x mean of y 
- 1.031484  1.002746
-#+end_example
+ 1.002692  1.003694
+#+end_src
 
 * Two Sample t-test
 
 Use when you DO know the variance of the two populations is equal
 
-#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/tTests.R"
+#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/tTests.R" :wrap "src text :eval never :tangle no"
 t.test(group1, group2, var.equal=TRUE)
 #+END_SRC
 
 #+RESULTS:
-#+begin_example
+#+begin_src text :eval never :tangle no
 
 	Two Sample t-test
 
 data:  group1 and group2
-t = 0.644, df = 1998, p-value = 0.5196
+t = -0.022292, df = 1998, p-value = 0.9822
 alternative hypothesis: true difference in means is not equal to 0
 95 percent confidence interval:
- -0.05877592  0.11625095
+ -0.08912820  0.08712476
 sample estimates:
 mean of x mean of y 
- 1.031484  1.002746
-#+end_example
+ 1.002692  1.003694
+#+end_src
 
 * Paired t-test
 
@@ -122,145 +115,145 @@ Use when the measurements in each group are related pairwise.
 
 For example, the data could be temperature measurements taken with two thermometers each hour.
 
-#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/tTests.R"
+#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/tTests.R" :wrap "src text :eval never :tangle no"
 t.test(group1, group2, paired=TRUE)
 #+END_SRC
 
 #+RESULTS:
-#+begin_example
+#+begin_src text :eval never :tangle no
 
 	Paired t-test
 
 data:  group1 and group2
-t = 0.62555, df = 999, p-value = 0.5318
+t = -0.02259, df = 999, p-value = 0.982
 alternative hypothesis: true difference in means is not equal to 0
 95 percent confidence interval:
- -0.06141232  0.11888736
+ -0.08801952  0.08601608
 sample estimates:
 mean of the differences 
-             0.02873752
-#+end_example
+           -0.001001722
+#+end_src
 
 * One Sample t-test (not equal)
 
 Use when you want to know if the sample mean is equal to a hypothesized population mean
 
-#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/tTests.R"
+#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/tTests.R" :wrap "src text :eval never :tangle no"
 t.test(group1, mu=mean1)
 t.test(group2, mu=mean2)
 t.test(group3, mu=mean1)
 #+END_SRC
 
 #+RESULTS:
-#+begin_example
+#+begin_src text :eval never :tangle no
 
 	One Sample t-test
 
 data:  group1
-t = 0.98655, df = 999, p-value = 0.3241
+t = 0.083692, df = 999, p-value = 0.9333
 alternative hypothesis: true mean is not equal to 1
 95 percent confidence interval:
- 0.9688595 1.0941084
+ 0.939569 1.065815
 sample estimates:
 mean of x 
- 1.031484
+ 1.002692
 
 	One Sample t-test
 
 data:  group2
-t = 0.088054, df = 999, p-value = 0.9299
+t = 0.11772, df = 999, p-value = 0.9063
 alternative hypothesis: true mean is not equal to 1
 95 percent confidence interval:
- 0.9415412 1.0639516
+ 0.9421213 1.0652664
 sample estimates:
 mean of x 
- 1.002746
+ 1.003694
 
 	One Sample t-test
 
 data:  group3
-t = -63.478, df = 999, p-value < 2.2e-16
+t = -61.969, df = 999, p-value < 2.2e-16
 alternative hypothesis: true mean is not equal to 1
 95 percent confidence interval:
- -1.070877 -0.946679
+ -1.058660 -0.932281
 sample estimates:
-mean of x 
--1.008778
-#+end_example
+ mean of x 
+-0.9954705
+#+end_src
 
 * One Sample t-test (greater than)
 
 Use when you want to know if the sample mean is less than a hypothesized population mean
 
-#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/tTests.R"
+#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/tTests.R" :wrap "src text :eval never :tangle no"
 t.test(group3, mu=mean1, alternative="greater")
 #+END_SRC
 
 #+RESULTS:
-#+begin_example
+#+begin_src text :eval never :tangle no
 
 	One Sample t-test
 
 data:  group3
-t = -63.478, df = 999, p-value = 1
+t = -61.969, df = 999, p-value = 1
 alternative hypothesis: true mean is greater than 1
 95 percent confidence interval:
- -1.060878       Inf
+ -1.048486       Inf
 sample estimates:
-mean of x 
--1.008778
-#+end_example
+ mean of x 
+-0.9954705
+#+end_src
 
 * Wilcoxon signed rank test with continuity correction
 
 Use when you want to know if the sample mean is equal to a hypothesized population mean
 
-#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/tTests.R"
+#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/tTests.R" :wrap "src text :eval never :tangle no"
 wilcox.test(group1, mu=mean1)
 #+END_SRC
 
 #+RESULTS:
-#+begin_example
+#+begin_src text :eval never :tangle no
 
 	Wilcoxon signed rank test with continuity correction
 
 data:  group1
-V = 259317, p-value = 0.321
+V = 253539, p-value = 0.7189
 alternative hypothesis: true location is not equal to 1
-#+end_example
+#+end_src
 
 * Wilcoxon rank sum test with continuity correction
 
 Use when the measurements in each group are related pairwise.  This test is also known as the "independent 2-group Mann-Whitney U Test".  T-test above.
 
-#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/tTests.R"
+#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/tTests.R" :wrap "src text :eval never :tangle no"
 wilcox.test(group1, group2)
 #+END_SRC
 
 #+RESULTS:
-#+begin_example
+#+begin_src text :eval never :tangle no
 
 	Wilcoxon rank sum test with continuity correction
 
 data:  group1 and group2
-W = 513914, p-value = 0.2813
+W = 502591, p-value = 0.841
 alternative hypothesis: true location shift is not equal to 0
-#+end_example
+#+end_src
 
 * Wilcoxon signed rank test with continuity correction
 
 Use when the measurements in each group are related pairwise.  See the paired T-test above.
 
-#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/tTests.R"
+#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/tTests.R" :wrap "src text :eval never :tangle no"
 wilcox.test(group1, group2, paired=TRUE)
 #+END_SRC
 
 #+RESULTS:
-#+begin_example
+#+begin_src text :eval never :tangle no
 
 	Wilcoxon signed rank test with continuity correction
 
 data:  group1 and group2
-V = 257264, p-value = 0.4427
+V = 250276, p-value = 0.9978
 alternative hypothesis: true location shift is not equal to 0
-#+end_example
+#+end_src

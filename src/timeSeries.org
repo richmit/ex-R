@@ -2,7 +2,6 @@
 #+TITLE:       Time Series Examples
 #+AUTHOR:      Mitch Richling
 #+EMAIL:       http://www.mitchr.me/
-#+DATE:        2020-01-25
 #+DESCRIPTION: timeseries.@EOL
 #+KEYWORDS:    timeseries 
 #+LANGUAGE:    en
@@ -23,11 +22,11 @@
 #+EXPORT_FILE_NAME: ../docs/timeSeries
 
 #+ATTR_HTML: :border 2 solid #ccc :frame hsides :align center
-|        <r> | <l>                    |
-|  *Author:* | /{{{author}}}/         |
-| *Updated:* | /{{{time(%Y-%m-%d)}}}/ |
+|        <r> | <l>                                          |
+|  *Author:* | /{{{author}}}/                               |
+| *Updated:* | /{{{modification-time(%Y-%m-%d %H:%M:%S)}}}/ |
 #+ATTR_HTML: :align center
-Copyright 2020 Mitch Richling. All rights reserved.
+Copyright 2020-2021 Mitch Richling. All rights reserved.
 
 #+TOC: headlines 5
 
@@ -112,7 +111,7 @@ file:figures/timeSeries/decomp-lattice.png
 *** With ggplot2
 
 #+BEGIN_SRC R :session :file ../docs/figures/timeSeries/decomp-ggplot.png :width 800 :height 600 :results graphics :exports code :tangle "../tangled/timeSeries.R"
-daDataDecompDF <- data.frame(date=daData$date, 
+daDataDecompDF <- data.table(date=daData$date, 
                              val=daData$val,
                              trend=daDataDecomp$trend, 
                              seasonal=daDataDecomp$seasonal, 
@@ -126,7 +125,7 @@ ggplot(data=daDataDecompDF, aes(x=date)) +
 
 #+RESULTS:
 
-file:figures/timeSeries/decomp-ggplot.png  
+file:figures/timeSeries/decomp-ggplot.png
 
 *** The KRAZY way
 
@@ -165,37 +164,13 @@ file:figures/timeSeries/decomp-krazy.png
 
 ** Fit an arima model
 
-#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/timeSeries.R"
+#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/timeSeries.R" :wrap "src text :eval never :tangle no"
 fit <- arima(daDataSeries, order=c(5,0,0), seasonal=list(order=c(2,1,0), period=7))
 fit
 #+END_SRC
 
 #+RESULTS:
-#+begin_example
-null device 
-          1 
-Warning messages:
-1: Use of `daDat$f` is discouraged. Use `f` instead. 
-2: Use of `daDat$fit` is discouraged. Use `fit` instead. 
-3: Use of `daDat$f` is discouraged. Use `f` instead. 
-4: Use of `daDat$fit` is discouraged. Use `fit` instead.
-null device 
-          1 
-Warning message:
-Removed 20 row(s) containing missing values (geom_path).
-null device 
-          1
-null device 
-          1
-null device 
-          1
-null device 
-          1
-[1] "ERROR : The melt generic in data.table has been passed a data.frame, but data.table::melt currently only has a method for data.tables. Please confirm your input is a data.table, with setDT(daDataDecompDF) or as.data.table(daDataDecompDF). If you intend to use a method from reshape2, try installing that package first, but do note that reshape2 is deprecated and you should be migrating your code away from using it."
-null device 
-          1
-null device 
-          1
+#+begin_src text :eval never :tangle no
 
 Call:
 arima(x = daDataSeries, order = c(5, 0, 0), seasonal = list(order = c(2, 1, 
@@ -203,11 +178,11 @@ arima(x = daDataSeries, order = c(5, 0, 0), seasonal = list(order = c(2, 1,
 
 Coefficients:
          ar1     ar2     ar3     ar4     ar5     sar1     sar2
-      0.1831  0.1385  0.1226  0.2301  0.1423  -0.6045  -0.3440
-s.e.  0.0529  0.0517  0.0526  0.0522  0.0526   0.0520   0.0515
+      0.1770  0.1664  0.1450  0.2400  0.1029  -0.7162  -0.3667
+s.e.  0.0527  0.0519  0.0539  0.0525  0.0533   0.0532   0.0523
 
-sigma^2 estimated as 0.09739:  log likelihood = -92.89,  aic = 201.79
-#+end_example
+sigma^2 estimated as 0.09406:  log likelihood = -87.07,  aic = 190.14
+#+end_src
 
 ** predict the future
 

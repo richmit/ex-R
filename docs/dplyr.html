@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-05-04 Tue 13:18 -->
+<!-- 2021-05-04 Tue 18:27 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>dplyr  Examples</title>
+<title>dplyr Examples</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="Mitch Richling" />
 <meta name="description" content="Demo of some of my most used dplyr features.@EOL"
@@ -213,7 +213,7 @@
  |
  <a accesskey="H" href="https://www.mitchr.me/"> HOME </a>
 </div><div id="content">
-<h1 class="title">dplyr  Examples</h1>
+<h1 class="title">dplyr Examples</h1>
 <table border="2 solid #ccc" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" align="center">
 
 
@@ -230,79 +230,79 @@
 
 <tr>
 <td class="org-right"><b>Updated:</b></td>
-<td class="org-left"><i>2021-05-04</i></td>
+<td class="org-left"><i>2021-05-04 18:15:26</i></td>
 </tr>
 </tbody>
 </table>
 <p align="center">
-Copyright 2020 Mitch Richling. All rights reserved.
+Copyright 2020-2021 Mitch Richling. All rights reserved.
 </p>
 
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgcb4d7ad">1. Source Code and Files</a></li>
-<li><a href="#org82101d6">2. First Steps</a>
+<li><a href="#org5c658bc">1. Source Code and Files</a></li>
+<li><a href="#orgf94e822">2. First Steps</a>
 <ul>
-<li><a href="#orge76f9a4">2.1. Load the library</a></li>
-<li><a href="#org5f1781c">2.2. Example Data</a></li>
-<li><a href="#orgf403092">2.3. Row Names</a></li>
+<li><a href="#org0e2806a">2.1. Load the library</a></li>
+<li><a href="#org46d8027">2.2. Example Data</a></li>
+<li><a href="#org1584a2d">2.3. Row Names</a></li>
 </ul>
 </li>
-<li><a href="#orga559ed7">3. Selecting Rows</a>
+<li><a href="#org9f81bd3">3. Selecting Rows</a>
 <ul>
-<li><a href="#org2a52ad6">3.1. With a boolean expression</a></li>
-<li><a href="#org6af3b80">3.2. With an index</a></li>
-<li><a href="#orgef8ff5c">3.3. Pull out a sample row for each distinct record</a></li>
+<li><a href="#org5e2788d">3.1. With a boolean expression</a></li>
+<li><a href="#orgc0f7e43">3.2. With an index</a></li>
+<li><a href="#orgd6ab2b1">3.3. Pull out a sample row for each distinct record</a></li>
 </ul>
 </li>
-<li><a href="#org41203c6">4. Sorting</a></li>
-<li><a href="#org0314f39">5. Selecting Columns</a>
+<li><a href="#org4e7ecf1">4. Sorting</a></li>
+<li><a href="#org35a477a">5. Selecting Columns</a>
 <ul>
-<li><a href="#org94b4cc1">5.1. With a range</a></li>
-<li><a href="#orgd062408">5.2. Select and rename</a></li>
-<li><a href="#org958d558">5.3. Just rename (but keep other columns)</a></li>
+<li><a href="#org74149f1">5.1. With a range</a></li>
+<li><a href="#org1f4e4e2">5.2. Select and rename</a></li>
+<li><a href="#orgb5a85bf">5.3. Just rename (but keep other columns)</a></li>
 </ul>
 </li>
-<li><a href="#orgcf71fae">6. New columns</a>
+<li><a href="#org1d99875">6. New columns</a>
 <ul>
-<li><a href="#org8d5b2d6">6.1. Compute new columns based on other columns</a></li>
-<li><a href="#org027f7a4">6.2. Compute new columns based on other columns and throw away all the old columns</a></li>
+<li><a href="#org45387cc">6.1. Compute new columns based on other columns</a></li>
+<li><a href="#orgc4a768c">6.2. Compute new columns based on other columns and throw away all the old columns</a></li>
 </ul>
 </li>
-<li><a href="#org51d3579">7. Aggregation</a>
+<li><a href="#orge5b3130">7. Aggregation</a>
 <ul>
-<li><a href="#orgd30f3eb">7.1. Global Aggregation</a></li>
-<li><a href="#org7049088">7.2. Aggregate by factor level</a></li>
-<li><a href="#org65e282f">7.3. Aggregate by multiple factors</a></li>
-<li><a href="#orge945c23">7.4. Summarize by group and put results back in data frame</a></li>
+<li><a href="#orgd4c2ff6">7.1. Global Aggregation</a></li>
+<li><a href="#org88d5857">7.2. Aggregate by factor level</a></li>
+<li><a href="#orgff6cd3f">7.3. Aggregate by multiple factors</a></li>
+<li><a href="#orgb548ba6">7.4. Summarize by group and put results back in data frame</a></li>
 </ul>
 </li>
-<li><a href="#org9013cd4">8. Join</a>
+<li><a href="#orgd2c2b2f">8. Join</a>
 <ul>
-<li><a href="#org7241107">8.1. Example Data For Joins</a></li>
-<li><a href="#org2a46393">8.2. Inner Join</a></li>
-<li><a href="#orgffd9f1a">8.3. Left Join</a></li>
-<li><a href="#org3ec0b13">8.4. Right Join</a></li>
-<li><a href="#org23afb4d">8.5. full outer Join</a></li>
-<li><a href="#org8fd7ac5">8.6. Find left matches</a></li>
-<li><a href="#org4e6521e">8.7. Fixing column names</a></li>
+<li><a href="#org6ff735f">8.1. Example Data For Joins</a></li>
+<li><a href="#orgb1710b0">8.2. Inner Join</a></li>
+<li><a href="#orgdda5297">8.3. Left Join</a></li>
+<li><a href="#org576b107">8.4. Right Join</a></li>
+<li><a href="#org266ca97">8.5. full outer Join</a></li>
+<li><a href="#org423206d">8.6. Find left matches</a></li>
+<li><a href="#orgca6d781">8.7. Fixing column names</a></li>
 </ul>
 </li>
-<li><a href="#orgbf730bd">9. Chaining vs Nesting</a>
+<li><a href="#org71c7299">9. Chaining vs Nesting</a>
 <ul>
-<li><a href="#org8fc47b5">9.1. Chaining</a></li>
-<li><a href="#orgacdb9d4">9.2. Temporary Variables</a></li>
-<li><a href="#org222f181">9.3. Composition (for the LISPers)</a></li>
+<li><a href="#org0416d3a">9.1. Chaining</a></li>
+<li><a href="#orge8d452e">9.2. Temporary Variables</a></li>
+<li><a href="#orgaa93d0f">9.3. Composition (for the LISPers)</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgcb4d7ad" class="outline-2">
-<h2 id="orgcb4d7ad"><span class="section-number-2">1</span> Source Code and Files</h2>
+<div id="outline-container-org5c658bc" class="outline-2">
+<h2 id="org5c658bc"><span class="section-number-2">1</span> Source Code and Files</h2>
 <div class="outline-text-2" id="text-1">
 <ul class="org-ul">
 <li><a href="dplyr.org">dplyr.org</a></li>
@@ -311,12 +311,12 @@ Copyright 2020 Mitch Richling. All rights reserved.
 </div>
 </div>
 
-<div id="outline-container-org82101d6" class="outline-2">
-<h2 id="org82101d6"><span class="section-number-2">2</span> First Steps</h2>
+<div id="outline-container-orgf94e822" class="outline-2">
+<h2 id="orgf94e822"><span class="section-number-2">2</span> First Steps</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-orge76f9a4" class="outline-3">
-<h3 id="orge76f9a4"><span class="section-number-3">2.1</span> Load the library</h3>
+<div id="outline-container-org0e2806a" class="outline-3">
+<h3 id="org0e2806a"><span class="section-number-3">2.1</span> Load the library</h3>
 <div class="outline-text-3" id="text-2-1">
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #8470ff; font-weight: bold;">library</span>(dplyr)
@@ -325,16 +325,16 @@ Copyright 2020 Mitch Richling. All rights reserved.
 </div>
 </div>
 
-<div id="outline-container-org5f1781c" class="outline-3">
-<h3 id="org5f1781c"><span class="section-number-3">2.2</span> Example Data</h3>
+<div id="outline-container-org46d8027" class="outline-3">
+<h3 id="org46d8027"><span class="section-number-3">2.2</span> Example Data</h3>
 <div class="outline-text-3" id="text-2-2">
 <div class="org-src-container">
 <pre class="src src-R">mtcars
 </pre>
 </div>
 
-<pre class="example" id="orgdde0c61">
-                     mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+<div class="org-src-container">
+<pre class="src src-text">                     mpg cyl  disp  hp drat    wt  qsec vs am gear carb
 Mazda RX4           21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
 Mazda RX4 Wag       21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
 Datsun 710          22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1
@@ -370,9 +370,10 @@ Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2
 </pre>
 </div>
 </div>
+</div>
 
-<div id="outline-container-orgf403092" class="outline-3">
-<h3 id="orgf403092"><span class="section-number-3">2.3</span> Row Names</h3>
+<div id="outline-container-org1584a2d" class="outline-3">
+<h3 id="org1584a2d"><span class="section-number-3">2.3</span> Row Names</h3>
 <div class="outline-text-3" id="text-2-3">
 <div class="org-src-container">
 <pre class="src src-R">mtcarsR <span style="color: #8470ff; font-weight: bold;">&lt;-</span> tibble::rownames_to_column(mtcars, <span style="color: #fa8072;">'car_name'</span>)                         
@@ -380,8 +381,8 @@ mtcarsR
 </pre>
 </div>
 
-<pre class="example" id="org9f467bd">
-              car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+<div class="org-src-container">
+<pre class="src src-text">              car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb
 1            Mazda RX4 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
 2        Mazda RX4 Wag 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
 3           Datsun 710 22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1
@@ -418,13 +419,14 @@ mtcarsR
 </div>
 </div>
 </div>
+</div>
 
-<div id="outline-container-orga559ed7" class="outline-2">
-<h2 id="orga559ed7"><span class="section-number-2">3</span> Selecting Rows</h2>
+<div id="outline-container-org9f81bd3" class="outline-2">
+<h2 id="org9f81bd3"><span class="section-number-2">3</span> Selecting Rows</h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-org2a52ad6" class="outline-3">
-<h3 id="org2a52ad6"><span class="section-number-3">3.1</span> With a boolean expression</h3>
+<div id="outline-container-org5e2788d" class="outline-3">
+<h3 id="org5e2788d"><span class="section-number-3">3.1</span> With a boolean expression</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 You can actually replace that &amp; with a comma, but I'm usually explicit about this sort of thing
@@ -435,8 +437,8 @@ You can actually replace that &amp; with a comma, but I'm usually explicit about
 </pre>
 </div>
 
-<pre class="example" id="org160ae8e">
-              car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+<div class="org-src-container">
+<pre class="src src-text">              car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb
 1            Mazda RX4 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
 2        Mazda RX4 Wag 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
 3           Duster 360 14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4
@@ -450,17 +452,18 @@ You can actually replace that &amp; with a comma, but I'm usually explicit about
 </pre>
 </div>
 </div>
+</div>
 
-<div id="outline-container-org6af3b80" class="outline-3">
-<h3 id="org6af3b80"><span class="section-number-3">3.2</span> With an index</h3>
+<div id="outline-container-orgc0f7e43" class="outline-3">
+<h3 id="orgc0f7e43"><span class="section-number-3">3.2</span> With an index</h3>
 <div class="outline-text-3" id="text-3-2">
 <div class="org-src-container">
 <pre class="src src-R">dplyr::slice(mtcarsR, 15:20)
 </pre>
 </div>
 
-<pre class="example" id="org582aae6">
-             car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+<div class="org-src-container">
+<pre class="src src-text">             car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb
 1  Cadillac Fleetwood 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
 2 Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4
 3   Chrysler Imperial 14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4
@@ -470,9 +473,10 @@ You can actually replace that &amp; with a comma, but I'm usually explicit about
 </pre>
 </div>
 </div>
+</div>
 
-<div id="outline-container-orgef8ff5c" class="outline-3">
-<h3 id="orgef8ff5c"><span class="section-number-3">3.3</span> Pull out a sample row for each distinct record</h3>
+<div id="outline-container-orgd6ab2b1" class="outline-3">
+<h3 id="orgd6ab2b1"><span class="section-number-3">3.3</span> Pull out a sample row for each distinct record</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 More useful if <code>dplyr::select</code> is used to limit input to the column(s)
@@ -483,8 +487,8 @@ More useful if <code>dplyr::select</code> is used to limit input to the column(s
 </pre>
 </div>
 
-<pre class="example" id="orgdacb352">
-  cyl carb
+<div class="org-src-container">
+<pre class="src src-text">  cyl carb
 1   6    4
 2   4    1
 3   6    1
@@ -498,9 +502,10 @@ More useful if <code>dplyr::select</code> is used to limit input to the column(s
 </div>
 </div>
 </div>
+</div>
 
-<div id="outline-container-org41203c6" class="outline-2">
-<h2 id="org41203c6"><span class="section-number-2">4</span> Sorting</h2>
+<div id="outline-container-org4e7ecf1" class="outline-2">
+<h2 id="org4e7ecf1"><span class="section-number-2">4</span> Sorting</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 Could have used '-gear' here as 'gear' is numeric, but 'desc' works on strings as well.
@@ -511,8 +516,8 @@ Could have used '-gear' here as 'gear' is numeric, but 'desc' works on strings a
 </pre>
 </div>
 
-<pre class="example" id="org87325a4">
-              car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+<div class="org-src-container">
+<pre class="src src-text">              car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb
 1        Porsche 914-2 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2
 2         Lotus Europa 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2
 3           Datsun 710 22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1
@@ -548,13 +553,14 @@ Could have used '-gear' here as 'gear' is numeric, but 'desc' works on strings a
 </pre>
 </div>
 </div>
+</div>
 
-<div id="outline-container-org0314f39" class="outline-2">
-<h2 id="org0314f39"><span class="section-number-2">5</span> Selecting Columns</h2>
+<div id="outline-container-org35a477a" class="outline-2">
+<h2 id="org35a477a"><span class="section-number-2">5</span> Selecting Columns</h2>
 <div class="outline-text-2" id="text-5">
 </div>
-<div id="outline-container-org94b4cc1" class="outline-3">
-<h3 id="org94b4cc1"><span class="section-number-3">5.1</span> With a range</h3>
+<div id="outline-container-org74149f1" class="outline-3">
+<h3 id="org74149f1"><span class="section-number-3">5.1</span> With a range</h3>
 <div class="outline-text-3" id="text-5-1">
 <p>
 Love how you can use column names with the range operator.  Numbers work too, but that is boring.
@@ -565,8 +571,8 @@ Love how you can use column names with the range operator.  Numbers work too, bu
 </pre>
 </div>
 
-<pre class="example" id="orgb56cf1c">
-   cyl  disp  hp drat
+<div class="org-src-container">
+<pre class="src src-text">   cyl  disp  hp drat
 1    6 160.0 110 3.90
 2    6 160.0 110 3.90
 3    4 108.0  93 3.85
@@ -602,17 +608,18 @@ Love how you can use column names with the range operator.  Numbers work too, bu
 </pre>
 </div>
 </div>
+</div>
 
-<div id="outline-container-orgd062408" class="outline-3">
-<h3 id="orgd062408"><span class="section-number-3">5.2</span> Select and rename</h3>
+<div id="outline-container-org1f4e4e2" class="outline-3">
+<h3 id="org1f4e4e2"><span class="section-number-3">5.2</span> Select and rename</h3>
 <div class="outline-text-3" id="text-5-2">
 <div class="org-src-container">
 <pre class="src src-R">dplyr::select(mtcarsR, displacement=disp, cyl)
 </pre>
 </div>
 
-<pre class="example" id="orgea23e9a">
-   displacement cyl
+<div class="org-src-container">
+<pre class="src src-text">   displacement cyl
 1         160.0   6
 2         160.0   6
 3         108.0   4
@@ -648,17 +655,18 @@ Love how you can use column names with the range operator.  Numbers work too, bu
 </pre>
 </div>
 </div>
+</div>
 
-<div id="outline-container-org958d558" class="outline-3">
-<h3 id="org958d558"><span class="section-number-3">5.3</span> Just rename (but keep other columns)</h3>
+<div id="outline-container-orgb5a85bf" class="outline-3">
+<h3 id="orgb5a85bf"><span class="section-number-3">5.3</span> Just rename (but keep other columns)</h3>
 <div class="outline-text-3" id="text-5-3">
 <div class="org-src-container">
 <pre class="src src-R">dplyr::rename(mtcarsR, displacement=disp, weight=wt)
 </pre>
 </div>
 
-<pre class="example" id="org5bd567a">
-              car_name  mpg cyl displacement  hp drat weight  qsec vs am gear carb
+<div class="org-src-container">
+<pre class="src src-text">              car_name  mpg cyl displacement  hp drat weight  qsec vs am gear carb
 1            Mazda RX4 21.0   6        160.0 110 3.90  2.620 16.46  0  1    4    4
 2        Mazda RX4 Wag 21.0   6        160.0 110 3.90  2.875 17.02  0  1    4    4
 3           Datsun 710 22.8   4        108.0  93 3.85  2.320 18.61  1  1    4    1
@@ -695,21 +703,22 @@ Love how you can use column names with the range operator.  Numbers work too, bu
 </div>
 </div>
 </div>
+</div>
 
-<div id="outline-container-orgcf71fae" class="outline-2">
-<h2 id="orgcf71fae"><span class="section-number-2">6</span> New columns</h2>
+<div id="outline-container-org1d99875" class="outline-2">
+<h2 id="org1d99875"><span class="section-number-2">6</span> New columns</h2>
 <div class="outline-text-2" id="text-6">
 </div>
-<div id="outline-container-org8d5b2d6" class="outline-3">
-<h3 id="org8d5b2d6"><span class="section-number-3">6.1</span> Compute new columns based on other columns</h3>
+<div id="outline-container-org45387cc" class="outline-3">
+<h3 id="org45387cc"><span class="section-number-3">6.1</span> Compute new columns based on other columns</h3>
 <div class="outline-text-3" id="text-6-1">
 <div class="org-src-container">
 <pre class="src src-R">dplyr::mutate(mtcarsR, mpc=mpg/cyl, impc=1/mpc) 
 </pre>
 </div>
 
-<pre class="example" id="org6104e4f">
-              car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb      mpc      impc
+<div class="org-src-container">
+<pre class="src src-text">              car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb      mpc      impc
 1            Mazda RX4 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4 3.500000 0.2857143
 2        Mazda RX4 Wag 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4 3.500000 0.2857143
 3           Datsun 710 22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1 5.700000 0.1754386
@@ -745,17 +754,18 @@ Love how you can use column names with the range operator.  Numbers work too, bu
 </pre>
 </div>
 </div>
+</div>
 
-<div id="outline-container-org027f7a4" class="outline-3">
-<h3 id="org027f7a4"><span class="section-number-3">6.2</span> Compute new columns based on other columns and throw away all the old columns</h3>
+<div id="outline-container-orgc4a768c" class="outline-3">
+<h3 id="orgc4a768c"><span class="section-number-3">6.2</span> Compute new columns based on other columns and throw away all the old columns</h3>
 <div class="outline-text-3" id="text-6-2">
 <div class="org-src-container">
 <pre class="src src-R">dplyr::transmute(mtcarsR, mpc=mpg/cyl, mpd=mpg/disp)
 </pre>
 </div>
 
-<pre class="example" id="orgcdbab59">
-        mpc        mpd
+<div class="org-src-container">
+<pre class="src src-text">        mpc        mpd
 1  3.500000 0.13125000
 2  3.500000 0.13125000
 3  5.700000 0.21111111
@@ -792,63 +802,58 @@ Love how you can use column names with the range operator.  Numbers work too, bu
 </div>
 </div>
 </div>
+</div>
 
-<div id="outline-container-org51d3579" class="outline-2">
-<h2 id="org51d3579"><span class="section-number-2">7</span> Aggregation</h2>
+<div id="outline-container-orge5b3130" class="outline-2">
+<h2 id="orge5b3130"><span class="section-number-2">7</span> Aggregation</h2>
 <div class="outline-text-2" id="text-7">
 </div>
-<div id="outline-container-orgd30f3eb" class="outline-3">
-<h3 id="orgd30f3eb"><span class="section-number-3">7.1</span> Global Aggregation</h3>
+<div id="outline-container-orgd4c2ff6" class="outline-3">
+<h3 id="orgd4c2ff6"><span class="section-number-3">7.1</span> Global Aggregation</h3>
 <div class="outline-text-3" id="text-7-1">
 <div class="org-src-container">
 <pre class="src src-R">dplyr::summarize(mtcars, mean_disp=mean(disp), sd_disp=sd(disp), mean_wt=mean(wt))
 </pre>
 </div>
 
-<pre class="example" id="org186934b">
-  mean_disp  sd_disp mean_wt
+<div class="org-src-container">
+<pre class="src src-text">  mean_disp  sd_disp mean_wt
 1  230.7219 123.9387 3.21725
 </pre>
 </div>
 </div>
+</div>
 
-<div id="outline-container-org7049088" class="outline-3">
-<h3 id="org7049088"><span class="section-number-3">7.2</span> Aggregate by factor level</h3>
+<div id="outline-container-org88d5857" class="outline-3">
+<h3 id="org88d5857"><span class="section-number-3">7.2</span> Aggregate by factor level</h3>
 <div class="outline-text-3" id="text-7-2">
 <div class="org-src-container">
-<pre class="src src-R">dplyr::summarize(dplyr::group_by(mtcars, cyl), mean_disp_by_cyl=mean(disp))
+<pre class="src src-R">dplyr::summarize(dplyr::group_by(mtcars, cyl), mean_disp_by_cyl=mean(disp), .groups = <span style="color: #fa8072;">'drop'</span>)
 </pre>
 </div>
 
-<pre class="example" id="org6230275">
-`summarise()` ungrouping output (override with `.groups` argument)
-# A tibble: 3 x 2
+<div class="org-src-container">
+<pre class="src src-text"># A tibble: 3 x 2
     cyl mean_disp_by_cyl
-  &lt;
-           &lt;dbl&gt;
 1     4             105.
 2     6             183.
 3     8             353.
 </pre>
 </div>
 </div>
+</div>
 
-<div id="outline-container-org65e282f" class="outline-3">
-<h3 id="org65e282f"><span class="section-number-3">7.3</span> Aggregate by multiple factors</h3>
+<div id="outline-container-orgff6cd3f" class="outline-3">
+<h3 id="orgff6cd3f"><span class="section-number-3">7.3</span> Aggregate by multiple factors</h3>
 <div class="outline-text-3" id="text-7-3">
 <div class="org-src-container">
-<pre class="src src-R">dplyr::summarize(dplyr::group_by(mtcars, cyl, gear), mean_disp_by_cyl_and_gear=mean(disp))
+<pre class="src src-R">dplyr::summarize(dplyr::group_by(mtcars, cyl, gear), mean_disp_by_cyl_and_gear=mean(disp), .groups = <span style="color: #fa8072;">'drop'</span>)
 </pre>
 </div>
 
-<pre class="example" id="orga8301ba">
-`summarise()` regrouping output by 'cyl' (override with `.groups` argument)
-# A tibble: 8 x 3
-# Groups:   cyl [3]
+<div class="org-src-container">
+<pre class="src src-text"># A tibble: 8 x 3
     cyl  gear mean_disp_by_cyl_and_gear
-  &lt;
-&lt;
-                    &lt;dbl&gt;
 1     4     3                      120.
 2     4     4                      103.
 3     4     5                      108.
@@ -860,31 +865,20 @@ Love how you can use column names with the range operator.  Numbers work too, bu
 </pre>
 </div>
 </div>
+</div>
 
-<div id="outline-container-orge945c23" class="outline-3">
-<h3 id="orge945c23"><span class="section-number-3">7.4</span> Summarize by group and put results back in data frame</h3>
+<div id="outline-container-orgb548ba6" class="outline-3">
+<h3 id="orgb548ba6"><span class="section-number-3">7.4</span> Summarize by group and put results back in data frame</h3>
 <div class="outline-text-3" id="text-7-4">
 <div class="org-src-container">
 <pre class="src src-R">dplyr::mutate(dplyr::group_by(mtcars, cyl, gear), mean_disp_by_cyl_and_gear=mean(disp))
 </pre>
 </div>
 
-<pre class="example" id="org056a11a">
-# A tibble: 32 x 12
+<div class="org-src-container">
+<pre class="src src-text"># A tibble: 32 x 12
 # Groups:   cyl, gear [8]
      mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb mean_disp_by_cyl_and_gear
-   &lt;
-&lt;
-&lt;
-&lt;
-&lt;
-&lt;
-&lt;
-&lt;
-&lt;
-&lt;
-&lt;
-                    &lt;dbl&gt;
  1  21       6 160     110  3.9   2.62  16.5     0     1     4     4                      164.
  2  21       6 160     110  3.9   2.88  17.0     0     1     4     4                      164.
  3  22.8     4 108      93  3.85  2.32  18.6     1     1     4     1                      103.
@@ -921,16 +915,17 @@ Love how you can use column names with the range operator.  Numbers work too, bu
 </div>
 </div>
 </div>
+</div>
 
-<div id="outline-container-org9013cd4" class="outline-2">
-<h2 id="org9013cd4"><span class="section-number-2">8</span> Join</h2>
+<div id="outline-container-orgd2c2b2f" class="outline-2">
+<h2 id="orgd2c2b2f"><span class="section-number-2">8</span> Join</h2>
 <div class="outline-text-2" id="text-8">
 </div>
-<div id="outline-container-org7241107" class="outline-3">
-<h3 id="org7241107"><span class="section-number-3">8.1</span> Example Data For Joins</h3>
+<div id="outline-container-org6ff735f" class="outline-3">
+<h3 id="org6ff735f"><span class="section-number-3">8.1</span> Example Data For Joins</h3>
 <div class="outline-text-3" id="text-8-1">
 <div class="org-src-container">
-<pre class="src src-R">   carSurvey <span style="color: #8470ff; font-weight: bold;">&lt;-</span> data.table::fread(header=T, text=<span style="color: #fa8072;">'</span>
+<pre class="src src-R">carSurvey <span style="color: #8470ff; font-weight: bold;">&lt;-</span> data.table::fread(header=T, text=<span style="color: #fa8072;">'</span>
 <span style="color: #fa8072;">               car_name, GEARS, word</span>
 <span style="color: #fa8072;">              Mazda RX4,     4, ZoomZoom</span>
 <span style="color: #fa8072;">          Mazda RX4 Wag,     4, ZoomZoom</span>
@@ -947,8 +942,8 @@ carSurvey
 </pre>
 </div>
 
-<pre class="example" id="orgcbd60a1">
-               car_name GEARS         word
+<div class="org-src-container">
+<pre class="src src-text">               car_name GEARS         word
  1:           Mazda RX4     4     ZoomZoom
  2:       Mazda RX4 Wag     4     ZoomZoom
  3:  Cadillac Fleetwood     3 RollingCouch
@@ -960,6 +955,7 @@ carSurvey
  9:        Ferrari Dino     5  SuperRedCar
 10:          Volvo 142E     4 BoxeyButGood
 </pre>
+</div>
 
 <p>
 Notes:
@@ -971,8 +967,8 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-org2a46393" class="outline-3">
-<h3 id="org2a46393"><span class="section-number-3">8.2</span> Inner Join</h3>
+<div id="outline-container-orgb1710b0" class="outline-3">
+<h3 id="orgb1710b0"><span class="section-number-3">8.2</span> Inner Join</h3>
 <div class="outline-text-3" id="text-8-2">
 <p>
 Here we only get records that match on both the left (x) and right (y) sides.
@@ -983,8 +979,8 @@ Here we only get records that match on both the left (x) and right (y) sides.
 </pre>
 </div>
 
-<pre class="example" id="org6d76064">
-             car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb         word
+<div class="org-src-container">
+<pre class="src src-text">             car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb         word
 1           Mazda RX4 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4     ZoomZoom
 2       Mazda RX4 Wag 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4     ZoomZoom
 3  Cadillac Fleetwood 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4 RollingCouch
@@ -997,9 +993,10 @@ Here we only get records that match on both the left (x) and right (y) sides.
 </pre>
 </div>
 </div>
+</div>
 
-<div id="outline-container-orgffd9f1a" class="outline-3">
-<h3 id="orgffd9f1a"><span class="section-number-3">8.3</span> Left Join</h3>
+<div id="outline-container-orgdda5297" class="outline-3">
+<h3 id="orgdda5297"><span class="section-number-3">8.3</span> Left Join</h3>
 <div class="outline-text-3" id="text-8-3">
 <p>
 Now we get a record for <b>every</b> record on the left (x), and any records on the right (y) that match one on the left (x).  For the "extra" records with no
@@ -1011,8 +1008,8 @@ matching data on the right (y), <code>NA</code> values are introduced.
 </pre>
 </div>
 
-<pre class="example" id="org2613bc8">
-              car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb         word
+<div class="org-src-container">
+<pre class="src src-text">              car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb         word
 1            Mazda RX4 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4     ZoomZoom
 2        Mazda RX4 Wag 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4     ZoomZoom
 3           Datsun 710 22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1         &lt;NA&gt;
@@ -1049,9 +1046,10 @@ matching data on the right (y), <code>NA</code> values are introduced.
 </pre>
 </div>
 </div>
+</div>
 
-<div id="outline-container-org3ec0b13" class="outline-3">
-<h3 id="org3ec0b13"><span class="section-number-3">8.4</span> Right Join</h3>
+<div id="outline-container-org576b107" class="outline-3">
+<h3 id="org576b107"><span class="section-number-3">8.4</span> Right Join</h3>
 <div class="outline-text-3" id="text-8-4">
 <p>
 Now we get a record for <b>every</b> record on the right (y), and any records on the left (x) that match one on the right (y).  For the "extra" records with no
@@ -1063,8 +1061,8 @@ matching data on the left (x), <code>NA</code> values are introduced.
 </pre>
 </div>
 
-<pre class="example" id="orgb80d22a">
-              car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb         word
+<div class="org-src-container">
+<pre class="src src-text">              car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb         word
 1            Mazda RX4 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4     ZoomZoom
 2        Mazda RX4 Wag 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4     ZoomZoom
 3   Cadillac Fleetwood 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4 RollingCouch
@@ -1078,9 +1076,10 @@ matching data on the left (x), <code>NA</code> values are introduced.
 </pre>
 </div>
 </div>
+</div>
 
-<div id="outline-container-org23afb4d" class="outline-3">
-<h3 id="org23afb4d"><span class="section-number-3">8.5</span> full outer Join</h3>
+<div id="outline-container-org266ca97" class="outline-3">
+<h3 id="org266ca97"><span class="section-number-3">8.5</span> full outer Join</h3>
 <div class="outline-text-3" id="text-8-5">
 <p>
 Now we get a record for <b>every</b> record on the left (x) and right (y).  Any extra records that don't match the other side get <code>NA</code> values.
@@ -1091,8 +1090,8 @@ Now we get a record for <b>every</b> record on the left (x) and right (y).  Any 
 </pre>
 </div>
 
-<pre class="example" id="org28bd9dd">
-              car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb         word
+<div class="org-src-container">
+<pre class="src src-text">              car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb         word
 1            Mazda RX4 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4     ZoomZoom
 2        Mazda RX4 Wag 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4     ZoomZoom
 3           Datsun 710 22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1         &lt;NA&gt;
@@ -1130,9 +1129,10 @@ Now we get a record for <b>every</b> record on the left (x) and right (y).  Any 
 </pre>
 </div>
 </div>
+</div>
 
-<div id="outline-container-org8fd7ac5" class="outline-3">
-<h3 id="org8fd7ac5"><span class="section-number-3">8.6</span> Find left matches</h3>
+<div id="outline-container-org423206d" class="outline-3">
+<h3 id="org423206d"><span class="section-number-3">8.6</span> Find left matches</h3>
 <div class="outline-text-3" id="text-8-6">
 <p>
 Sometimes you just want to filter a table by keeping only records that match some other table.  Note <code>semi_join</code> is not just a <code>left_join</code> followed by the
@@ -1144,8 +1144,8 @@ removal of the right columns: 1) The column titles are from the left side only, 
 </pre>
 </div>
 
-<pre class="example" id="org2ef1637">
-             car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+<div class="org-src-container">
+<pre class="src src-text">             car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb
 1           Mazda RX4 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
 2       Mazda RX4 Wag 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
 3  Cadillac Fleetwood 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
@@ -1157,17 +1157,18 @@ removal of the right columns: 1) The column titles are from the left side only, 
 </pre>
 </div>
 </div>
+</div>
 
-<div id="outline-container-org4e6521e" class="outline-3">
-<h3 id="org4e6521e"><span class="section-number-3">8.7</span> Fixing column names</h3>
+<div id="outline-container-orgca6d781" class="outline-3">
+<h3 id="orgca6d781"><span class="section-number-3">8.7</span> Fixing column names</h3>
 <div class="outline-text-3" id="text-8-7">
 <div class="org-src-container">
 <pre class="src src-R">dplyr::inner_join(mtcarsR, rename(carSurvey, gear=GEARS, survey_word=word), by=c(<span style="color: #fa8072;">'car_name'</span>, <span style="color: #fa8072;">'gear'</span>));
 </pre>
 </div>
 
-<pre class="example" id="orgd5d8ab9">
-             car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb  survey_word
+<div class="org-src-container">
+<pre class="src src-text">             car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb  survey_word
 1           Mazda RX4 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4     ZoomZoom
 2       Mazda RX4 Wag 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4     ZoomZoom
 3  Cadillac Fleetwood 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4 RollingCouch
@@ -1181,13 +1182,14 @@ removal of the right columns: 1) The column titles are from the left side only, 
 </div>
 </div>
 </div>
+</div>
 
-<div id="outline-container-orgbf730bd" class="outline-2">
-<h2 id="orgbf730bd"><span class="section-number-2">9</span> Chaining vs Nesting</h2>
+<div id="outline-container-org71c7299" class="outline-2">
+<h2 id="org71c7299"><span class="section-number-2">9</span> Chaining vs Nesting</h2>
 <div class="outline-text-2" id="text-9">
 </div>
-<div id="outline-container-org8fc47b5" class="outline-3">
-<h3 id="org8fc47b5"><span class="section-number-3">9.1</span> Chaining</h3>
+<div id="outline-container-org0416d3a" class="outline-3">
+<h3 id="org0416d3a"><span class="section-number-3">9.1</span> Chaining</h3>
 <div class="outline-text-3" id="text-9-1">
 <p>
 Chaining is a technique using the %&gt;% operator that can be used to "chain" together dplyr calls into sequential steps.  The idea is very much like how pipes
@@ -1199,57 +1201,49 @@ are used on the UNIX command line.
   dplyr::group_by(cyl, carb) <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
   dplyr::select(mpg, hp, cyl, carb) <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
   dplyr::summarise(meanMPG=mean(mpg, na.rm=<span style="color: #63b8ff;">TRUE</span>),
-                   meanCYL=mean(hp,  na.rm=<span style="color: #63b8ff;">TRUE</span>))  <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
+                   meanCYL=mean(hp,  na.rm=<span style="color: #63b8ff;">TRUE</span>),
+                   .groups = <span style="color: #fa8072;">'drop'</span>)  <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
   filter(meanMPG &gt; 20)
 </pre>
 </div>
 
-<pre class="example" id="orgb14a697">
-`summarise()` regrouping output by 'cyl' (override with `.groups` argument)
-# A tibble: 2 x 4
-# Groups:   cyl [1]
+<div class="org-src-container">
+<pre class="src src-text"># A tibble: 2 x 4
     cyl  carb meanMPG meanCYL
-  &lt;
-&lt;
-  &lt;
-  &lt;dbl&gt;
 1     4     1    27.6    77.4
 2     4     2    25.9    87
 </pre>
 </div>
 </div>
+</div>
 
-<div id="outline-container-orgacdb9d4" class="outline-3">
-<h3 id="orgacdb9d4"><span class="section-number-3">9.2</span> Temporary Variables</h3>
+<div id="outline-container-orge8d452e" class="outline-3">
+<h3 id="orge8d452e"><span class="section-number-3">9.2</span> Temporary Variables</h3>
 <div class="outline-text-3" id="text-9-2">
 <div class="org-src-container">
 <pre class="src src-R">tmp <span style="color: #8470ff; font-weight: bold;">&lt;-</span> dplyr::group_by(mtcarsR, cyl, carb)
 tmp <span style="color: #8470ff; font-weight: bold;">&lt;-</span> dplyr::select(tmp, mpg, hp, cyl, carb)
 tmp <span style="color: #8470ff; font-weight: bold;">&lt;-</span> dplyr::summarise(tmp,
                         meanMPG=mean(mpg, na.rm=<span style="color: #63b8ff;">TRUE</span>),
-                        meanCYL=mean(hp,  na.rm=<span style="color: #63b8ff;">TRUE</span>))
+                        meanCYL=mean(hp,  na.rm=<span style="color: #63b8ff;">TRUE</span>),
+                        .groups = <span style="color: #fa8072;">'drop'</span>)
 tmp <span style="color: #8470ff; font-weight: bold;">&lt;-</span> dplyr::filter(tmp, meanMPG &gt; 20)
 tmp
 </pre>
 </div>
 
-<pre class="example" id="orgee7ee87">
-`summarise()` regrouping output by 'cyl' (override with `.groups` argument)
-# A tibble: 2 x 4
-# Groups:   cyl [1]
+<div class="org-src-container">
+<pre class="src src-text"># A tibble: 2 x 4
     cyl  carb meanMPG meanCYL
-  &lt;
-&lt;
-  &lt;
-  &lt;dbl&gt;
 1     4     1    27.6    77.4
 2     4     2    25.9    87
 </pre>
 </div>
 </div>
+</div>
 
-<div id="outline-container-org222f181" class="outline-3">
-<h3 id="org222f181"><span class="section-number-3">9.3</span> Composition (for the LISPers)</h3>
+<div id="outline-container-orgaa93d0f" class="outline-3">
+<h3 id="orgaa93d0f"><span class="section-number-3">9.3</span> Composition (for the LISPers)</h3>
 <div class="outline-text-3" id="text-9-3">
 <div class="org-src-container">
 <pre class="src src-R">dplyr::filter(dplyr::summarise(dplyr::select(dplyr::group_by(mtcarsR, 
@@ -1260,20 +1254,15 @@ tmp
                                              cyl, 
                                              carb),
                                meanMPG=mean(mpg, na.rm=<span style="color: #63b8ff;">TRUE</span>),
-                               meanCYL=mean(hp,  na.rm=<span style="color: #63b8ff;">TRUE</span>)), 
+                               meanCYL=mean(hp,  na.rm=<span style="color: #63b8ff;">TRUE</span>),
+                               .groups = <span style="color: #fa8072;">'drop'</span>), 
               meanMPG &gt; 20)
 </pre>
 </div>
 
-<pre class="example" id="org7949b74">
-`summarise()` regrouping output by 'cyl' (override with `.groups` argument)
-# A tibble: 2 x 4
-# Groups:   cyl [1]
+<div class="org-src-container">
+<pre class="src src-text"># A tibble: 2 x 4
     cyl  carb meanMPG meanCYL
-  &lt;
-&lt;
-  &lt;
-  &lt;dbl&gt;
 1     4     1    27.6    77.4
 2     4     2    25.9    87
 </pre>
@@ -1281,8 +1270,9 @@ tmp
 </div>
 </div>
 </div>
+</div>
 <div id="postamble" class="status">
-Created by Mitch Richling <<a href="mailto:http://www.mitchr.me/">http://www.mitchr.me/</a>>.  Rendered on 2021-05-04 Tue 13:18 via <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.4.5)
+Created by Mitch Richling <<a href="mailto:http://www.mitchr.me/">http://www.mitchr.me/</a>>.  Rendered on 2021-05-04 Tue 18:27 via <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.4.5)
 </div>
 </body>
 </html>

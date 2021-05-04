@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-05-04 Tue 13:18 -->
+<!-- 2021-05-04 Tue 18:27 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Examples For ggplot2</title>
@@ -230,130 +230,130 @@
 
 <tr>
 <td class="org-right"><b>Updated:</b></td>
-<td class="org-left"><i>2021-05-04</i></td>
+<td class="org-left"><i>2021-05-04 17:57:26</i></td>
 </tr>
 </tbody>
 </table>
 <p align="center">
-Copyright 2020 Mitch Richling. All rights reserved.
+Copyright 2020-2021 Mitch Richling. All rights reserved.
 </p>
 
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org85c6729">1. Source Code and Files</a></li>
-<li><a href="#org01ab45a">2. Setup</a>
+<li><a href="#org9a4c0c7">1. Source Code and Files</a></li>
+<li><a href="#org2673b75">2. Setup</a>
 <ul>
-<li><a href="#org012d74a">2.1. Load libraries</a></li>
-<li><a href="#org0c2df98">2.2. Create some data sets we can graph</a></li>
+<li><a href="#orgd4396b5">2.1. Load libraries</a></li>
+<li><a href="#org324cf63">2.2. Create some data sets we can graph</a></li>
 </ul>
 </li>
-<li><a href="#org3b3086f">3. Two Corrilated Variables</a>
+<li><a href="#orgae31187">3. Two Corrilated Variables</a>
 <ul>
-<li><a href="#orga6031d6">3.1. x-y scatter plot</a></li>
-<li><a href="#orgd291c89">3.2. Time Series scatter plot broken down by a factor (Fancy Axis)</a></li>
-<li><a href="#org2d929c4">3.3. x-y scatter plot broken down by a factor (Fancy Axis)</a></li>
-<li><a href="#orgd07bb97">3.4. x-y scallter plot broken down by factor (fancy titles)</a></li>
-<li><a href="#org99698a4">3.5. x-y scatter plot with facets instead of color.</a></li>
-<li><a href="#org7daa2a6">3.6. x-y scatter plots with facets and trends (lowess &amp; linear regression)</a></li>
-<li><a href="#org678cd93">3.7. Simple x-y graphs with linear regression lines</a></li>
-<li><a href="#orgd156e61">3.8. linear regression used for future prediction</a></li>
+<li><a href="#org7e178f9">3.1. x-y scatter plot</a></li>
+<li><a href="#org91e0c3b">3.2. Time Series scatter plot broken down by a factor (Fancy Axis)</a></li>
+<li><a href="#org85aa13e">3.3. x-y scatter plot broken down by a factor (Fancy Axis)</a></li>
+<li><a href="#org1bd3eef">3.4. x-y scallter plot broken down by factor (fancy titles)</a></li>
+<li><a href="#org88b4347">3.5. x-y scatter plot with facets instead of color.</a></li>
+<li><a href="#orgc1e8e98">3.6. x-y scatter plots with facets and trends (lowess &amp; linear regression)</a></li>
+<li><a href="#orga293ee9">3.7. Simple x-y graphs with linear regression lines</a></li>
+<li><a href="#orgee45880">3.8. linear regression used for future prediction</a></li>
 </ul>
 </li>
-<li><a href="#orgdab785f">4. Distribution Comparison</a>
+<li><a href="#org28ada43">4. Distribution Comparison</a>
 <ul>
-<li><a href="#org07dc5ab">4.1. Box-n-Wisker</a></li>
-<li><a href="#org1bde77d">4.2. Colorful Box-n-Wisker</a></li>
-<li><a href="#orgb5c788f">4.3. Category labels on the axis with no legend</a></li>
-<li><a href="#org3ddaaf6">4.4. Category labels on the axis with no legend</a></li>
-<li><a href="#org5db7c37">4.5. A standard violin plot</a></li>
-<li><a href="#org47f3d5c">4.6. Combine a violin and box-n-wisker plot</a></li>
+<li><a href="#org6832e54">4.1. Box-n-Wisker</a></li>
+<li><a href="#org376ab64">4.2. Colorful Box-n-Wisker</a></li>
+<li><a href="#org6d3dc3d">4.3. Category labels on the axis with no legend</a></li>
+<li><a href="#orgb2b4764">4.4. Category labels on the axis with no legend</a></li>
+<li><a href="#orgbb01618">4.5. A standard violin plot</a></li>
+<li><a href="#org570e481">4.6. Combine a violin and box-n-wisker plot</a></li>
 </ul>
 </li>
-<li><a href="#org5795299">5. 2D Data</a>
+<li><a href="#org6cf3f2a">5. 2D Data</a>
 <ul>
-<li><a href="#org10b6c83">5.1. Images</a>
+<li><a href="#org660b00a">5.1. Images</a>
 <ul>
-<li><a href="#org1ce58f4">5.1.1. Simple Example</a></li>
-<li><a href="#org4d50c07">5.1.2. A dot in each cell scaled to <code>abs(z)</code></a></li>
-<li><a href="#orgae2b5bf">5.1.3. White text in each cell</a></li>
-<li><a href="#orge833580">5.1.4. Text in each cell with a color set by the z value</a></li>
-<li><a href="#orge8a7463">5.1.5. Contours in white</a></li>
-<li><a href="#orgc252055">5.1.6. Contours in white (via <code>stat_contour</code> instead of <code>geom_tile</code>)</a></li>
-<li><a href="#org2bd0586">5.1.7. Just contour lines colored determined by contour level</a></li>
+<li><a href="#org0f6b8a0">5.1.1. Simple Example</a></li>
+<li><a href="#orga875faa">5.1.2. A dot in each cell scaled to <code>abs(z)</code></a></li>
+<li><a href="#org7240c92">5.1.3. White text in each cell</a></li>
+<li><a href="#org574e52a">5.1.4. Text in each cell with a color set by the z value</a></li>
+<li><a href="#org5c43e65">5.1.5. Contours in white</a></li>
+<li><a href="#orga2974f1">5.1.6. Contours in white (via <code>stat_contour</code> instead of <code>geom_tile</code>)</a></li>
+<li><a href="#org3f624c7">5.1.7. Just contour lines colored determined by contour level</a></li>
 </ul>
 </li>
-<li><a href="#orgda65903">5.2. Histograms</a>
+<li><a href="#org9a900d9">5.2. Histograms</a>
 <ul>
-<li><a href="#orga950ac8">5.2.1. Rectangular or hexagon bins</a></li>
-<li><a href="#orgcb80b71">5.2.2. Density Estimation via scatterplot with semi-transparent data points</a></li>
-<li><a href="#orged83c9c">5.2.3. Density Estimation via a filled contour graph</a></li>
-<li><a href="#org8b3b6f9">5.2.4. Scatter plot with marginal histograms</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#org231bb91">6. Barcharts</a>
-<ul>
-<li><a href="#org834d9b8">6.1. With pre-computed data</a></li>
-<li><a href="#org65b2ddc">6.2. Barcharts with pre-computed data with color filled bars</a></li>
-<li><a href="#orgafe0261">6.3. Stacked barchart</a></li>
-<li><a href="#orgbfcfbc9">6.4. Side by side barchart</a></li>
-<li><a href="#org3c65039">6.5. Stacked with constant height</a></li>
-<li><a href="#org23ab4e2">6.6. Circular bar chart</a></li>
-</ul>
-</li>
-<li><a href="#org04eb35b">7. 1D Histograms</a>
-<ul>
-<li><a href="#org1117ad6">7.1. Basic</a></li>
-<li><a href="#org528cacc">7.2. With percentage instead of count</a></li>
-<li><a href="#org123d4af">7.3. Hard coded, inconsistantly sized, bin breaks</a></li>
-<li><a href="#orgb683eb2">7.4. Fill color determined by bin count</a></li>
-<li><a href="#org902e51c">7.5. With a density curve</a></li>
-</ul>
-</li>
-<li><a href="#org60a2d11">8. Pallets</a>
-<ul>
-<li><a href="#orgddcb8b0">8.1. Completely custom</a></li>
-<li><a href="#org2a6438c">8.2. Colorbrewer</a>
-<ul>
-<li><a href="#orga33cf4b">8.2.1. Sequential palettes</a></li>
-<li><a href="#org1848764">8.2.2. Diverging palettes</a></li>
-<li><a href="#org34344e4">8.2.3. Qualitative palettes</a></li>
-<li><a href="#orgbd8b815">8.2.4. With ggplot2</a></li>
+<li><a href="#orgf34d818">5.2.1. Rectangular or hexagon bins</a></li>
+<li><a href="#orgd4fd48e">5.2.2. Density Estimation via scatterplot with semi-transparent data points</a></li>
+<li><a href="#org56cbc58">5.2.3. Density Estimation via a filled contour graph</a></li>
+<li><a href="#orgac3c475">5.2.4. Scatter plot with marginal histograms</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#orgd5144ca">9. Miscellaneous Stuff</a>
+<li><a href="#org529ea7c">6. Barcharts</a>
 <ul>
-<li><a href="#org63b4c2f">9.1. Working without <code>data.frame</code></a>
-<ul>
-<li><a href="#orgba7afb9">9.1.1. Sequence Plot of ONE Vector</a></li>
-<li><a href="#org0668b54">9.1.2. Scatterplot with a two vectors</a></li>
+<li><a href="#org3de0f77">6.1. With pre-computed data</a></li>
+<li><a href="#org422fbef">6.2. Barcharts with pre-computed data with color filled bars</a></li>
+<li><a href="#org96f7a93">6.3. Stacked barchart</a></li>
+<li><a href="#orga49b812">6.4. Side by side barchart</a></li>
+<li><a href="#org4843fcb">6.5. Stacked with constant height</a></li>
+<li><a href="#org267ca66">6.6. Circular bar chart</a></li>
 </ul>
 </li>
-<li><a href="#org72c53db">9.2. Annotate within the plot region</a></li>
-<li><a href="#org62a42a4">9.3. Combine Graphs</a>
+<li><a href="#org101a2b4">7. 1D Histograms</a>
 <ul>
-<li><a href="#org19afd87">9.3.1. From potentially from different data frames on the same set of axes</a></li>
+<li><a href="#org14a2315">7.1. Basic</a></li>
+<li><a href="#org124c12d">7.2. With percentage instead of count</a></li>
+<li><a href="#org10808fe">7.3. Hard coded, inconsistantly sized, bin breaks</a></li>
+<li><a href="#orge3b6786">7.4. Fill color determined by bin count</a></li>
+<li><a href="#org2857a38">7.5. With a density curve</a></li>
+</ul>
+</li>
+<li><a href="#org8a43dbe">8. Pallets</a>
+<ul>
+<li><a href="#orgbe31ce6">8.1. Completely custom</a></li>
+<li><a href="#org6e0f255">8.2. Colorbrewer</a>
+<ul>
+<li><a href="#org80d7872">8.2.1. Sequential palettes</a></li>
+<li><a href="#org07b0247">8.2.2. Diverging palettes</a></li>
+<li><a href="#org3d6c1b1">8.2.3. Qualitative palettes</a></li>
+<li><a href="#orgf0de88e">8.2.4. With ggplot2</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#orgec4e70b">10. Area graphs</a>
+<li><a href="#org3308b32">9. Miscellaneous Stuff</a>
 <ul>
-<li><a href="#org7d28b54">10.1. Standard</a></li>
-<li><a href="#orga17d5ea">10.2. Stacked</a></li>
+<li><a href="#org6adad7b">9.1. Working without <code>data.frame</code></a>
+<ul>
+<li><a href="#orga8d9e36">9.1.1. Sequence Plot of ONE Vector</a></li>
+<li><a href="#org281f4ee">9.1.2. Scatterplot with a two vectors</a></li>
+</ul>
+</li>
+<li><a href="#org50f28db">9.2. Annotate within the plot region</a></li>
+<li><a href="#orgfe69586">9.3. Combine Graphs</a>
+<ul>
+<li><a href="#org445fc39">9.3.1. From potentially from different data frames on the same set of axes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org19a93ea">10. Area graphs</a>
+<ul>
+<li><a href="#org9137bcf">10.1. Standard</a></li>
+<li><a href="#org1445e30">10.2. Stacked</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org85c6729" class="outline-2">
-<h2 id="org85c6729"><span class="section-number-2">1</span> Source Code and Files</h2>
+<div id="outline-container-org9a4c0c7" class="outline-2">
+<h2 id="org9a4c0c7"><span class="section-number-2">1</span> Source Code and Files</h2>
 <div class="outline-text-2" id="text-1">
 <ul class="org-ul">
 <li><a href="ggplot.org">ggplot.org</a></li>
@@ -362,12 +362,12 @@ Copyright 2020 Mitch Richling. All rights reserved.
 </div>
 </div>
 
-<div id="outline-container-org01ab45a" class="outline-2">
-<h2 id="org01ab45a"><span class="section-number-2">2</span> Setup</h2>
+<div id="outline-container-org2673b75" class="outline-2">
+<h2 id="org2673b75"><span class="section-number-2">2</span> Setup</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-org012d74a" class="outline-3">
-<h3 id="org012d74a"><span class="section-number-3">2.1</span> Load libraries</h3>
+<div id="outline-container-orgd4396b5" class="outline-3">
+<h3 id="orgd4396b5"><span class="section-number-3">2.1</span> Load libraries</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 <code>ggplot2</code> is the graphics library, and <code>gridExtra</code> helps us lay things out.
@@ -383,8 +383,8 @@ Copyright 2020 Mitch Richling. All rights reserved.
 </div>
 </div>
 
-<div id="outline-container-org0c2df98" class="outline-3">
-<h3 id="org0c2df98"><span class="section-number-3">2.2</span> Create some data sets we can graph</h3>
+<div id="outline-container-org324cf63" class="outline-3">
+<h3 id="org324cf63"><span class="section-number-3">2.2</span> Create some data sets we can graph</h3>
 <div class="outline-text-3" id="text-2-2">
 <div class="org-src-container">
 <pre class="src src-R">numPnt <span style="color: #8470ff; font-weight: bold;">&lt;-</span> 1000
@@ -431,12 +431,12 @@ twoDimNormal$y <span style="color: #8470ff; font-weight: bold;">&lt;-</span> two
 </div>
 </div>
 
-<div id="outline-container-org3b3086f" class="outline-2">
-<h2 id="org3b3086f"><span class="section-number-2">3</span> Two Corrilated Variables</h2>
+<div id="outline-container-orgae31187" class="outline-2">
+<h2 id="orgae31187"><span class="section-number-2">3</span> Two Corrilated Variables</h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-orga6031d6" class="outline-3">
-<h3 id="orga6031d6"><span class="section-number-3">3.1</span> x-y scatter plot</h3>
+<div id="outline-container-org7e178f9" class="outline-3">
+<h3 id="org7e178f9"><span class="section-number-3">3.1</span> x-y scatter plot</h3>
 <div class="outline-text-3" id="text-3-1">
 <div class="org-src-container">
 <pre class="src src-R">ggplot(data=someData, aes(x=xi, y=y)) +
@@ -445,15 +445,15 @@ twoDimNormal$y <span style="color: #8470ff; font-weight: bold;">&lt;-</span> two
 </div>
 
 
-<div id="org9b95f6f" class="figure">
+<div id="orgcca08c6" class="figure">
 <p><img src="figures/ggplot/2c-basic.png" alt="2c-basic.png" />
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgd291c89" class="outline-3">
-<h3 id="orgd291c89"><span class="section-number-3">3.2</span> Time Series scatter plot broken down by a factor (Fancy Axis)</h3>
+<div id="outline-container-org91e0c3b" class="outline-3">
+<h3 id="org91e0c3b"><span class="section-number-3">3.2</span> Time Series scatter plot broken down by a factor (Fancy Axis)</h3>
 <div class="outline-text-3" id="text-3-2">
 <div class="org-src-container">
 <pre class="src src-R">ggplot(data=someData, aes(x=xd, y=y, col=k1)) +
@@ -468,15 +468,15 @@ twoDimNormal$y <span style="color: #8470ff; font-weight: bold;">&lt;-</span> two
 </div>
 
 
-<div id="org3d442a2" class="figure">
+<div id="orgf235c03" class="figure">
 <p><img src="figures/ggplot/2dc-cats1.png" alt="2dc-cats1.png" />  
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org2d929c4" class="outline-3">
-<h3 id="org2d929c4"><span class="section-number-3">3.3</span> x-y scatter plot broken down by a factor (Fancy Axis)</h3>
+<div id="outline-container-org85aa13e" class="outline-3">
+<h3 id="org85aa13e"><span class="section-number-3">3.3</span> x-y scatter plot broken down by a factor (Fancy Axis)</h3>
 <div class="outline-text-3" id="text-3-3">
 <div class="org-src-container">
 <pre class="src src-R">ggplot(data=someData, aes(x=xi, y=y, col=k1)) + geom_point() +
@@ -494,15 +494,15 @@ twoDimNormal$y <span style="color: #8470ff; font-weight: bold;">&lt;-</span> two
 </div>
 
 
-<div id="org6ce2115" class="figure">
+<div id="orgb31eca1" class="figure">
 <p><img src="figures/ggplot/2dc-cats2.png" alt="2dc-cats2.png" />
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgd07bb97" class="outline-3">
-<h3 id="orgd07bb97"><span class="section-number-3">3.4</span> x-y scallter plot broken down by factor (fancy titles)</h3>
+<div id="outline-container-org1bd3eef" class="outline-3">
+<h3 id="org1bd3eef"><span class="section-number-3">3.4</span> x-y scallter plot broken down by factor (fancy titles)</h3>
 <div class="outline-text-3" id="text-3-4">
 <p>
 Adding a 'ribbon' of color to a plot (useful for things like confidence intervals and ranges around a smoother). Also demo some crazy title and legend stuff.
@@ -536,15 +536,15 @@ Adding a 'ribbon' of color to a plot (useful for things like confidence interval
 </div>
 
 
-<div id="org3c4c05f" class="figure">
+<div id="org9455827" class="figure">
 <p><img src="figures/ggplot/2dc-cats3.png" alt="2dc-cats3.png" />
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org99698a4" class="outline-3">
-<h3 id="org99698a4"><span class="section-number-3">3.5</span> x-y scatter plot with facets instead of color.</h3>
+<div id="outline-container-org88b4347" class="outline-3">
+<h3 id="org88b4347"><span class="section-number-3">3.5</span> x-y scatter plot with facets instead of color.</h3>
 <div class="outline-text-3" id="text-3-5">
 <div class="org-src-container">
 <pre class="src src-R">ggplot(data=someData, aes(x=xd, y=y, col=k1)) +  <span style="color: #ffa500;">## </span><span style="color: #ff7f24;">col=k1 has nothing to do with facets</span>
@@ -562,15 +562,15 @@ Adding a 'ribbon' of color to a plot (useful for things like confidence interval
 </div>
 
 
-<div id="orgfe95ef7" class="figure">
+<div id="orgb333fce" class="figure">
 <p><img src="figures/ggplot/2dc-facet1.png" alt="2dc-facet1.png" />
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org7daa2a6" class="outline-3">
-<h3 id="org7daa2a6"><span class="section-number-3">3.6</span> x-y scatter plots with facets and trends (lowess &amp; linear regression)</h3>
+<div id="outline-container-orgc1e8e98" class="outline-3">
+<h3 id="orgc1e8e98"><span class="section-number-3">3.6</span> x-y scatter plots with facets and trends (lowess &amp; linear regression)</h3>
 <div class="outline-text-3" id="text-3-6">
 <div class="org-src-container">
 <pre class="src src-R">ggplot(data=someData, aes(x=xd, y=y)) +
@@ -586,15 +586,15 @@ Adding a 'ribbon' of color to a plot (useful for things like confidence interval
 </div>
 
 
-<div id="orge555cea" class="figure">
+<div id="orgca52ff6" class="figure">
 <p><img src="figures/ggplot/2dc-facet2.png" alt="2dc-facet2.png" />
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org678cd93" class="outline-3">
-<h3 id="org678cd93"><span class="section-number-3">3.7</span> Simple x-y graphs with linear regression lines</h3>
+<div id="outline-container-orga293ee9" class="outline-3">
+<h3 id="orga293ee9"><span class="section-number-3">3.7</span> Simple x-y graphs with linear regression lines</h3>
 <div class="outline-text-3" id="text-3-7">
 <div class="org-src-container">
 <pre class="src src-R">ggplot(data=someData, aes(x=xd, y=y, col=k1)) +
@@ -605,15 +605,15 @@ Adding a 'ribbon' of color to a plot (useful for things like confidence interval
 </div>
 
 
-<div id="orgd74685f" class="figure">
+<div id="org53e60f3" class="figure">
 <p><img src="figures/ggplot/2dc-lr1.png" alt="2dc-lr1.png" />
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgd156e61" class="outline-3">
-<h3 id="orgd156e61"><span class="section-number-3">3.8</span> linear regression used for future prediction</h3>
+<div id="outline-container-orgee45880" class="outline-3">
+<h3 id="orgee45880"><span class="section-number-3">3.8</span> linear regression used for future prediction</h3>
 <div class="outline-text-3" id="text-3-8">
 <div class="org-src-container">
 <pre class="src src-R">expandedRange <span style="color: #8470ff; font-weight: bold;">&lt;-</span> c(min(someData$xi),                     <span style="color: #ffa500;">## </span><span style="color: #ff7f24;">Range from min to max+1/2 the range.</span>
@@ -628,7 +628,7 @@ ggplot(data=someData, aes(x=xi, y=y)) +
 </div>
 
 
-<div id="org576d8e3" class="figure">
+<div id="orgaabf8c4" class="figure">
 <p><img src="figures/ggplot/2dc-lrf.png" alt="2dc-lrf.png" />
 </p>
 </div>
@@ -636,12 +636,12 @@ ggplot(data=someData, aes(x=xi, y=y)) +
 </div>
 </div>
 
-<div id="outline-container-orgdab785f" class="outline-2">
-<h2 id="orgdab785f"><span class="section-number-2">4</span> Distribution Comparison</h2>
+<div id="outline-container-org28ada43" class="outline-2">
+<h2 id="org28ada43"><span class="section-number-2">4</span> Distribution Comparison</h2>
 <div class="outline-text-2" id="text-4">
 </div>
-<div id="outline-container-org07dc5ab" class="outline-3">
-<h3 id="org07dc5ab"><span class="section-number-3">4.1</span> Box-n-Wisker</h3>
+<div id="outline-container-org6832e54" class="outline-3">
+<h3 id="org6832e54"><span class="section-number-3">4.1</span> Box-n-Wisker</h3>
 <div class="outline-text-3" id="text-4-1">
 <div class="org-src-container">
 <pre class="src src-R">ggplot(data=someData, aes(x=k1, y=y)) + 
@@ -650,15 +650,15 @@ ggplot(data=someData, aes(x=xi, y=y)) +
 </div>
 
 
-<div id="orge6f0d54" class="figure">
+<div id="org0b173e7" class="figure">
 <p><img src="figures/ggplot/dc-baw.png" alt="dc-baw.png" />
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org1bde77d" class="outline-3">
-<h3 id="org1bde77d"><span class="section-number-3">4.2</span> Colorful Box-n-Wisker</h3>
+<div id="outline-container-org376ab64" class="outline-3">
+<h3 id="org376ab64"><span class="section-number-3">4.2</span> Colorful Box-n-Wisker</h3>
 <div class="outline-text-3" id="text-4-2">
 <div class="org-src-container">
 <pre class="src src-R">ggplot(data=someData, aes(x=k1, y=y, fill=k1))+
@@ -667,15 +667,15 @@ ggplot(data=someData, aes(x=xi, y=y)) +
 </div>
 
 
-<div id="org0e9b187" class="figure">
+<div id="orga65b672" class="figure">
 <p><img src="figures/ggplot/dc-bawcolor.png" alt="dc-bawcolor.png" />
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgb5c788f" class="outline-3">
-<h3 id="orgb5c788f"><span class="section-number-3">4.3</span> Category labels on the axis with no legend</h3>
+<div id="outline-container-org6d3dc3d" class="outline-3">
+<h3 id="org6d3dc3d"><span class="section-number-3">4.3</span> Category labels on the axis with no legend</h3>
 <div class="outline-text-3" id="text-4-3">
 <div class="org-src-container">
 <pre class="src src-R">ggplot(data=someData, aes(x=k1, y=y, fill=k1)) +  
@@ -687,15 +687,15 @@ ggplot(data=someData, aes(x=xi, y=y)) +
 </div>
 
 
-<div id="orgbfe0799" class="figure">
+<div id="org97109d5" class="figure">
 <p><img src="figures/ggplot/dc-leg1.png" alt="dc-leg1.png" />
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org3ddaaf6" class="outline-3">
-<h3 id="org3ddaaf6"><span class="section-number-3">4.4</span> Category labels on the axis with no legend</h3>
+<div id="outline-container-orgb2b4764" class="outline-3">
+<h3 id="orgb2b4764"><span class="section-number-3">4.4</span> Category labels on the axis with no legend</h3>
 <div class="outline-text-3" id="text-4-4">
 <div class="org-src-container">
 <pre class="src src-R">ggplot(data=someData, aes(x=k1, y=y, fill=k1)) +  
@@ -707,15 +707,15 @@ ggplot(data=someData, aes(x=xi, y=y)) +
 </div>
 
 
-<div id="orga0945cb" class="figure">
+<div id="orgd2b11c6" class="figure">
 <p><img src="figures/ggplot/dc-leg2.png" alt="dc-leg2.png" />
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org5db7c37" class="outline-3">
-<h3 id="org5db7c37"><span class="section-number-3">4.5</span> A standard violin plot</h3>
+<div id="outline-container-orgbb01618" class="outline-3">
+<h3 id="orgbb01618"><span class="section-number-3">4.5</span> A standard violin plot</h3>
 <div class="outline-text-3" id="text-4-5">
 <p>
 Note: The white borders help the regions stand out
@@ -729,15 +729,15 @@ Note: The white borders help the regions stand out
 </div>
 
 
-<div id="org950bc0d" class="figure">
+<div id="org0d3a64b" class="figure">
 <p><img src="figures/ggplot/dc-v.png" alt="dc-v.png" />
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org47f3d5c" class="outline-3">
-<h3 id="org47f3d5c"><span class="section-number-3">4.6</span> Combine a violin and box-n-wisker plot</h3>
+<div id="outline-container-org570e481" class="outline-3">
+<h3 id="org570e481"><span class="section-number-3">4.6</span> Combine a violin and box-n-wisker plot</h3>
 <div class="outline-text-3" id="text-4-6">
 <div class="org-src-container">
 <pre class="src src-R">ggplot(data=someData, aes(x=k1, y=y, fill=k1)) + 
@@ -748,7 +748,7 @@ Note: The white borders help the regions stand out
 </div>
 
 
-<div id="orgb5dc96d" class="figure">
+<div id="orga60d08d" class="figure">
 <p><img src="figures/ggplot/dc-vpbnw.png" alt="dc-vpbnw.png" />
 </p>
 </div>
@@ -756,16 +756,16 @@ Note: The white borders help the regions stand out
 </div>
 </div>
 
-<div id="outline-container-org5795299" class="outline-2">
-<h2 id="org5795299"><span class="section-number-2">5</span> 2D Data</h2>
+<div id="outline-container-org6cf3f2a" class="outline-2">
+<h2 id="org6cf3f2a"><span class="section-number-2">5</span> 2D Data</h2>
 <div class="outline-text-2" id="text-5">
 </div>
-<div id="outline-container-org10b6c83" class="outline-3">
-<h3 id="org10b6c83"><span class="section-number-3">5.1</span> Images</h3>
+<div id="outline-container-org660b00a" class="outline-3">
+<h3 id="org660b00a"><span class="section-number-3">5.1</span> Images</h3>
 <div class="outline-text-3" id="text-5-1">
 </div>
-<div id="outline-container-org1ce58f4" class="outline-4">
-<h4 id="org1ce58f4"><span class="section-number-4">5.1.1</span> Simple Example</h4>
+<div id="outline-container-org0f6b8a0" class="outline-4">
+<h4 id="org0f6b8a0"><span class="section-number-4">5.1.1</span> Simple Example</h4>
 <div class="outline-text-4" id="text-5-1-1">
 <div class="org-src-container">
 <pre class="src src-R">ggplot(data=twoDimData, aes(x=x, y=y, fill=z)) +
@@ -775,15 +775,15 @@ Note: The white borders help the regions stand out
 </div>
 
 
-<div id="org7f4840a" class="figure">
+<div id="org4005cce" class="figure">
 <p><img src="figures/ggplot/2di-basic.png" alt="2di-basic.png" />
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org4d50c07" class="outline-4">
-<h4 id="org4d50c07"><span class="section-number-4">5.1.2</span> A dot in each cell scaled to <code>abs(z)</code></h4>
+<div id="outline-container-orga875faa" class="outline-4">
+<h4 id="orga875faa"><span class="section-number-4">5.1.2</span> A dot in each cell scaled to <code>abs(z)</code></h4>
 <div class="outline-text-4" id="text-5-1-2">
 <div class="org-src-container">
 <pre class="src src-R">ggplot(data=twoDimData, aes(x=x, y=y)) +
@@ -793,15 +793,15 @@ Note: The white borders help the regions stand out
 </div>
 
 
-<div id="org395857e" class="figure">
+<div id="orgc73dbe0" class="figure">
 <p><img src="figures/ggplot/2di-dots.png" alt="2di-dots.png" />
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgae2b5bf" class="outline-4">
-<h4 id="orgae2b5bf"><span class="section-number-4">5.1.3</span> White text in each cell</h4>
+<div id="outline-container-org7240c92" class="outline-4">
+<h4 id="org7240c92"><span class="section-number-4">5.1.3</span> White text in each cell</h4>
 <div class="outline-text-4" id="text-5-1-3">
 <div class="org-src-container">
 <pre class="src src-R">ggplot(data=twoDimData, aes(x=x, y=y)) +
@@ -811,15 +811,15 @@ Note: The white borders help the regions stand out
 </div>
 
 
-<div id="orgae83007" class="figure">
+<div id="orgbfb616c" class="figure">
 <p><img src="figures/ggplot/2di-text.png" alt="2di-text.png" />
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orge833580" class="outline-4">
-<h4 id="orge833580"><span class="section-number-4">5.1.4</span> Text in each cell with a color set by the z value</h4>
+<div id="outline-container-org574e52a" class="outline-4">
+<h4 id="org574e52a"><span class="section-number-4">5.1.4</span> Text in each cell with a color set by the z value</h4>
 <div class="outline-text-4" id="text-5-1-4">
 <div class="org-src-container">
 <pre class="src src-R">ggplot(data=twoDimData, aes(x=x, y=y)) +
@@ -829,15 +829,15 @@ Note: The white borders help the regions stand out
 </div>
 
 
-<div id="org925059a" class="figure">
+<div id="orgd26429b" class="figure">
 <p><img src="figures/ggplot/2di-txtcol.png" alt="2di-txtcol.png" />
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orge8a7463" class="outline-4">
-<h4 id="orge8a7463"><span class="section-number-4">5.1.5</span> Contours in white</h4>
+<div id="outline-container-org5c43e65" class="outline-4">
+<h4 id="org5c43e65"><span class="section-number-4">5.1.5</span> Contours in white</h4>
 <div class="outline-text-4" id="text-5-1-5">
 <div class="org-src-container">
 <pre class="src src-R">ggplot(data=volcanoDF, aes(x=x, y=y)) +
@@ -847,15 +847,15 @@ Note: The white borders help the regions stand out
 </div>
 
 
-<div id="org9d90cdb" class="figure">
+<div id="orgf863f27" class="figure">
 <p><img src="figures/ggplot/2di-cont1.png" alt="2di-cont1.png" />
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgc252055" class="outline-4">
-<h4 id="orgc252055"><span class="section-number-4">5.1.6</span> Contours in white (via <code>stat_contour</code> instead of <code>geom_tile</code>)</h4>
+<div id="outline-container-orga2974f1" class="outline-4">
+<h4 id="orga2974f1"><span class="section-number-4">5.1.6</span> Contours in white (via <code>stat_contour</code> instead of <code>geom_tile</code>)</h4>
 <div class="outline-text-4" id="text-5-1-6">
 <div class="org-src-container">
 <pre class="src src-R">ggplot(data=volcanoDF, aes(x=x, y=y, z=values)) +
@@ -865,15 +865,15 @@ Note: The white borders help the regions stand out
 </div>
 
 
-<div id="orgabebdbe" class="figure">
+<div id="org8152c00" class="figure">
 <p><img src="figures/ggplot/2di-cont2.png" alt="2di-cont2.png" />
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org2bd0586" class="outline-4">
-<h4 id="org2bd0586"><span class="section-number-4">5.1.7</span> Just contour lines colored determined by contour level</h4>
+<div id="outline-container-org3f624c7" class="outline-4">
+<h4 id="org3f624c7"><span class="section-number-4">5.1.7</span> Just contour lines colored determined by contour level</h4>
 <div class="outline-text-4" id="text-5-1-7">
 <div class="org-src-container">
 <pre class="src src-R">ggplot(data=volcanoDF, aes(x=x, y=y, z=values)) +
@@ -882,7 +882,7 @@ Note: The white borders help the regions stand out
 </div>
 
 
-<div id="org924329b" class="figure">
+<div id="org50fac2c" class="figure">
 <p><img src="figures/ggplot/2di-ccont.png" alt="2di-ccont.png" />
 </p>
 </div>
@@ -890,12 +890,12 @@ Note: The white borders help the regions stand out
 </div>
 </div>
 
-<div id="outline-container-orgda65903" class="outline-3">
-<h3 id="orgda65903"><span class="section-number-3">5.2</span> Histograms</h3>
+<div id="outline-container-org9a900d9" class="outline-3">
+<h3 id="org9a900d9"><span class="section-number-3">5.2</span> Histograms</h3>
 <div class="outline-text-3" id="text-5-2">
 </div>
-<div id="outline-container-orga950ac8" class="outline-4">
-<h4 id="orga950ac8"><span class="section-number-4">5.2.1</span> Rectangular or hexagon bins</h4>
+<div id="outline-container-orgf34d818" class="outline-4">
+<h4 id="orgf34d818"><span class="section-number-4">5.2.1</span> Rectangular or hexagon bins</h4>
 <div class="outline-text-4" id="text-5-2-1">
 <div class="org-src-container">
 <pre class="src src-R">ggplot(data=twoDimNormal, aes(x=x,y=y)) + 
@@ -906,15 +906,15 @@ Note: The white borders help the regions stand out
 </div>
 
 
-<div id="orga49df3a" class="figure">
+<div id="org05f587d" class="figure">
 <p><img src="figures/ggplot/2d-hexhist.png" alt="2d-hexhist.png" />
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgcb80b71" class="outline-4">
-<h4 id="orgcb80b71"><span class="section-number-4">5.2.2</span> Density Estimation via scatterplot with semi-transparent data points</h4>
+<div id="outline-container-orgd4fd48e" class="outline-4">
+<h4 id="orgd4fd48e"><span class="section-number-4">5.2.2</span> Density Estimation via scatterplot with semi-transparent data points</h4>
 <div class="outline-text-4" id="text-5-2-2">
 <div class="org-src-container">
 <pre class="src src-R">ggplot(data=twoDimNormal, aes(x=x,y=y)) +
@@ -925,15 +925,15 @@ Note: The white borders help the regions stand out
 </div>
 
 
-<div id="org2f07fc7" class="figure">
+<div id="org399e336" class="figure">
 <p><img src="figures/ggplot/2d-densa.png" alt="2d-densa.png" />
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orged83c9c" class="outline-4">
-<h4 id="orged83c9c"><span class="section-number-4">5.2.3</span> Density Estimation via a filled contour graph</h4>
+<div id="outline-container-org56cbc58" class="outline-4">
+<h4 id="org56cbc58"><span class="section-number-4">5.2.3</span> Density Estimation via a filled contour graph</h4>
 <div class="outline-text-4" id="text-5-2-3">
 <div class="org-src-container">
 <pre class="src src-R">ggplot(data=twoDimNormal, aes(x=x,y=y)) +
@@ -945,15 +945,15 @@ Note: The white borders help the regions stand out
 </div>
 
 
-<div id="orgbcba8e1" class="figure">
+<div id="org7d4f13f" class="figure">
 <p><img src="figures/ggplot/2d-densc.png" alt="2d-densc.png" />
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org8b3b6f9" class="outline-4">
-<h4 id="org8b3b6f9"><span class="section-number-4">5.2.4</span> Scatter plot with marginal histograms</h4>
+<div id="outline-container-orgac3c475" class="outline-4">
+<h4 id="orgac3c475"><span class="section-number-4">5.2.4</span> Scatter plot with marginal histograms</h4>
 <div class="outline-text-4" id="text-5-2-4">
 <div class="org-src-container">
 <pre class="src src-R">histTop <span style="color: #8470ff; font-weight: bold;">&lt;-</span> ggplot(twoDimNormal) +                                     <span style="color: #ffa500;">## </span><span style="color: #ff7f24;">Create histogram that goes at the top</span>
@@ -1016,7 +1016,7 @@ grid.draw(aGrob)
 </div>
 
 
-<div id="org9a35624" class="figure">
+<div id="org5a7f89e" class="figure">
 <p><img src="figures/ggplot/scat-hist.png" alt="scat-hist.png" />
 </p>
 </div>
@@ -1025,12 +1025,12 @@ grid.draw(aGrob)
 </div>
 </div>
 
-<div id="outline-container-org231bb91" class="outline-2">
-<h2 id="org231bb91"><span class="section-number-2">6</span> Barcharts</h2>
+<div id="outline-container-org529ea7c" class="outline-2">
+<h2 id="org529ea7c"><span class="section-number-2">6</span> Barcharts</h2>
 <div class="outline-text-2" id="text-6">
 </div>
-<div id="outline-container-org834d9b8" class="outline-3">
-<h3 id="org834d9b8"><span class="section-number-3">6.1</span> With pre-computed data</h3>
+<div id="outline-container-org3de0f77" class="outline-3">
+<h3 id="org3de0f77"><span class="section-number-3">6.1</span> With pre-computed data</h3>
 <div class="outline-text-3" id="text-6-1">
 <div class="org-src-container">
 <pre class="src src-R">ggplot(data=someLessData, aes(x=quarter, y=value)) +
@@ -1042,15 +1042,15 @@ grid.draw(aGrob)
 </div>
 
 
-<div id="orgba6eec3" class="figure">
+<div id="org592f91d" class="figure">
 <p><img src="figures/ggplot/bar-basic.png" alt="bar-basic.png" />
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org65b2ddc" class="outline-3">
-<h3 id="org65b2ddc"><span class="section-number-3">6.2</span> Barcharts with pre-computed data with color filled bars</h3>
+<div id="outline-container-org422fbef" class="outline-3">
+<h3 id="org422fbef"><span class="section-number-3">6.2</span> Barcharts with pre-computed data with color filled bars</h3>
 <div class="outline-text-3" id="text-6-2">
 <div class="org-src-container">
 <pre class="src src-R">ggplot(data=someLessData, aes(x=quarter, y=value, fill=quarter)) +
@@ -1062,15 +1062,15 @@ grid.draw(aGrob)
 </div>
 
 
-<div id="orgddf65be" class="figure">
+<div id="org6d7b1f6" class="figure">
 <p><img src="figures/ggplot/bars-fill.png" alt="bars-fill.png" />
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgafe0261" class="outline-3">
-<h3 id="orgafe0261"><span class="section-number-3">6.3</span> Stacked barchart</h3>
+<div id="outline-container-org96f7a93" class="outline-3">
+<h3 id="org96f7a93"><span class="section-number-3">6.3</span> Stacked barchart</h3>
 <div class="outline-text-3" id="text-6-3">
 <p>
 Note: This form of barchart is easily misread by may people.  Not generally recommended.
@@ -1086,15 +1086,15 @@ Note: This form of barchart is easily misread by may people.  Not generally reco
 </div>
 
 
-<div id="org9ec3e6f" class="figure">
+<div id="org0488429" class="figure">
 <p><img src="figures/ggplot/bar-stack.png" alt="bar-stack.png" />
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgbfcfbc9" class="outline-3">
-<h3 id="orgbfcfbc9"><span class="section-number-3">6.4</span> Side by side barchart</h3>
+<div id="outline-container-orga49b812" class="outline-3">
+<h3 id="orga49b812"><span class="section-number-3">6.4</span> Side by side barchart</h3>
 <div class="outline-text-3" id="text-6-4">
 <div class="org-src-container">
 <pre class="src src-R">ggplot(data=someMoreData, aes(x=quarter, y=value, fill=factors)) +
@@ -1106,15 +1106,15 @@ Note: This form of barchart is easily misread by may people.  Not generally reco
 </div>
 
 
-<div id="org9e2538e" class="figure">
+<div id="orgf187b12" class="figure">
 <p><img src="figures/ggplot/bar-sbs.png" alt="bar-sbs.png" />
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org3c65039" class="outline-3">
-<h3 id="org3c65039"><span class="section-number-3">6.5</span> Stacked with constant height</h3>
+<div id="outline-container-org4843fcb" class="outline-3">
+<h3 id="org4843fcb"><span class="section-number-3">6.5</span> Stacked with constant height</h3>
 <div class="outline-text-3" id="text-6-5">
 <p>
 Note: With more than two colors per bar, this form of barchart is easily misread by may people.  Not generally recommended.
@@ -1130,15 +1130,15 @@ Note: With more than two colors per bar, this form of barchart is easily misread
 </div>
 
 
-<div id="orgc9bd881" class="figure">
+<div id="org54aa942" class="figure">
 <p><img src="figures/ggplot/bar-stackunit.png" alt="bar-stackunit.png" />
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org23ab4e2" class="outline-3">
-<h3 id="org23ab4e2"><span class="section-number-3">6.6</span> Circular bar chart</h3>
+<div id="outline-container-org267ca66" class="outline-3">
+<h3 id="org267ca66"><span class="section-number-3">6.6</span> Circular bar chart</h3>
 <div class="outline-text-3" id="text-6-6">
 <p>
 Note: Yhis form of chart is easily misread by may people.  Not generally recommended.
@@ -1158,7 +1158,7 @@ Note: Yhis form of chart is easily misread by may people.  Not generally recomme
 </div>
 
 
-<div id="orgaa0e549" class="figure">
+<div id="org57e979c" class="figure">
 <p><img src="figures/ggplot/bar-pie.png" alt="bar-pie.png" />
 </p>
 </div>
@@ -1166,12 +1166,12 @@ Note: Yhis form of chart is easily misread by may people.  Not generally recomme
 </div>
 </div>
 
-<div id="outline-container-org04eb35b" class="outline-2">
-<h2 id="org04eb35b"><span class="section-number-2">7</span> 1D Histograms</h2>
+<div id="outline-container-org101a2b4" class="outline-2">
+<h2 id="org101a2b4"><span class="section-number-2">7</span> 1D Histograms</h2>
 <div class="outline-text-2" id="text-7">
 </div>
-<div id="outline-container-org1117ad6" class="outline-3">
-<h3 id="org1117ad6"><span class="section-number-3">7.1</span> Basic</h3>
+<div id="outline-container-org14a2315" class="outline-3">
+<h3 id="org14a2315"><span class="section-number-3">7.1</span> Basic</h3>
 <div class="outline-text-3" id="text-7-1">
 <div class="org-src-container">
 <pre class="src src-R">ggplot(data=someData, aes(x=rn)) +
@@ -1180,15 +1180,15 @@ Note: Yhis form of chart is easily misread by may people.  Not generally recomme
 </div>
 
 
-<div id="org16c448d" class="figure">
+<div id="orgd0f252a" class="figure">
 <p><img src="figures/ggplot/1dh-basic.png" alt="1dh-basic.png" />
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org528cacc" class="outline-3">
-<h3 id="org528cacc"><span class="section-number-3">7.2</span> With percentage instead of count</h3>
+<div id="outline-container-org124c12d" class="outline-3">
+<h3 id="org124c12d"><span class="section-number-3">7.2</span> With percentage instead of count</h3>
 <div class="outline-text-3" id="text-7-2">
 <div class="org-src-container">
 <pre class="src src-R">ggplot(data=someData, aes(x=rn, y = (..count..)/sum(..count..))) +
@@ -1199,15 +1199,15 @@ Note: Yhis form of chart is easily misread by may people.  Not generally recomme
 </div>
 
 
-<div id="org859b739" class="figure">
+<div id="org59da077" class="figure">
 <p><img src="figures/ggplot/1dh-perc.png" alt="1dh-perc.png" />
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org123d4af" class="outline-3">
-<h3 id="org123d4af"><span class="section-number-3">7.3</span> Hard coded, inconsistantly sized, bin breaks</h3>
+<div id="outline-container-org10808fe" class="outline-3">
+<h3 id="org10808fe"><span class="section-number-3">7.3</span> Hard coded, inconsistantly sized, bin breaks</h3>
 <div class="outline-text-3" id="text-7-3">
 <div class="org-src-container">
 <pre class="src src-R">ggplot(data=someData, aes(x=rn)) +
@@ -1216,15 +1216,15 @@ Note: Yhis form of chart is easily misread by may people.  Not generally recomme
 </div>
 
 
-<div id="orgca42230" class="figure">
+<div id="org040cfdd" class="figure">
 <p><img src="figures/ggplot/1dh-badbins.png" alt="1dh-badbins.png" />
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgb683eb2" class="outline-3">
-<h3 id="orgb683eb2"><span class="section-number-3">7.4</span> Fill color determined by bin count</h3>
+<div id="outline-container-orge3b6786" class="outline-3">
+<h3 id="orge3b6786"><span class="section-number-3">7.4</span> Fill color determined by bin count</h3>
 <div class="outline-text-3" id="text-7-4">
 <div class="org-src-container">
 <pre class="src src-R">ggplot(data=someData, aes(x=rn, fill=..count..)) + 
@@ -1234,15 +1234,15 @@ Note: Yhis form of chart is easily misread by may people.  Not generally recomme
 </div>
 
 
-<div id="orgbfccab6" class="figure">
+<div id="org5ff5e49" class="figure">
 <p><img src="figures/ggplot/1dh-cbc.png" alt="1dh-cbc.png" />
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org902e51c" class="outline-3">
-<h3 id="org902e51c"><span class="section-number-3">7.5</span> With a density curve</h3>
+<div id="outline-container-org2857a38" class="outline-3">
+<h3 id="org2857a38"><span class="section-number-3">7.5</span> With a density curve</h3>
 <div class="outline-text-3" id="text-7-5">
 <div class="org-src-container">
 <pre class="src src-R">ggplot(data=someData, aes(x=rn, y=..density..)) +
@@ -1252,7 +1252,7 @@ Note: Yhis form of chart is easily misread by may people.  Not generally recomme
 </div>
 
 
-<div id="org00f6abf" class="figure">
+<div id="org4402c49" class="figure">
 <p><img src="figures/ggplot/1dh-dens.png" alt="1dh-dens.png" />
 </p>
 </div>
@@ -1260,12 +1260,12 @@ Note: Yhis form of chart is easily misread by may people.  Not generally recomme
 </div>
 </div>
 
-<div id="outline-container-org60a2d11" class="outline-2">
-<h2 id="org60a2d11"><span class="section-number-2">8</span> Pallets</h2>
+<div id="outline-container-org8a43dbe" class="outline-2">
+<h2 id="org8a43dbe"><span class="section-number-2">8</span> Pallets</h2>
 <div class="outline-text-2" id="text-8">
 </div>
-<div id="outline-container-orgddcb8b0" class="outline-3">
-<h3 id="orgddcb8b0"><span class="section-number-3">8.1</span> Completely custom</h3>
+<div id="outline-container-orgbe31ce6" class="outline-3">
+<h3 id="orgbe31ce6"><span class="section-number-3">8.1</span> Completely custom</h3>
 <div class="outline-text-3" id="text-8-1">
 <p>
 For example, a color blind safe palette from <a href="http://jfly.iam.u-tokyo.ac.jp/color/">http://jfly.iam.u-tokyo.ac.jp/color/</a>
@@ -1276,7 +1276,7 @@ For example, a color blind safe palette from <a href="http://jfly.iam.u-tokyo.ac
 </pre>
 </div>
 
-<pre class="example" id="orge62b39f">
+<pre class="example" id="orgd7ff84b">
 null device 
           1
 null device 
@@ -1318,7 +1318,7 @@ null device
 </div>
 
 
-<div id="org221d61b" class="figure">
+<div id="org8c556c8" class="figure">
 <p><img src="figures/ggplot/pal-custom1.png" alt="pal-custom1.png" />
 </p>
 </div>
@@ -1330,19 +1330,19 @@ null device
 </div>
 
 
-<div id="orga52e663" class="figure">
+<div id="orgcb175de" class="figure">
 <p><img src="figures/ggplot/pal-custom2.png" alt="pal-custom2.png" />
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org2a6438c" class="outline-3">
-<h3 id="org2a6438c"><span class="section-number-3">8.2</span> Colorbrewer</h3>
+<div id="outline-container-org6e0f255" class="outline-3">
+<h3 id="org6e0f255"><span class="section-number-3">8.2</span> Colorbrewer</h3>
 <div class="outline-text-3" id="text-8-2">
 </div>
-<div id="outline-container-orga33cf4b" class="outline-4">
-<h4 id="orga33cf4b"><span class="section-number-4">8.2.1</span> Sequential palettes</h4>
+<div id="outline-container-org80d7872" class="outline-4">
+<h4 id="org80d7872"><span class="section-number-4">8.2.1</span> Sequential palettes</h4>
 <div class="outline-text-4" id="text-8-2-1">
 <div class="org-src-container">
 <pre class="src src-R">display.brewer.all(type=<span style="color: #fa8072;">"div"</span>)
@@ -1350,15 +1350,15 @@ null device
 </div>
 
 
-<div id="orgee37594" class="figure">
+<div id="org5345f99" class="figure">
 <p><img src="figures/ggplot/pal-cb-div.png" alt="pal-cb-div.png" />
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org1848764" class="outline-4">
-<h4 id="org1848764"><span class="section-number-4">8.2.2</span> Diverging palettes</h4>
+<div id="outline-container-org07b0247" class="outline-4">
+<h4 id="org07b0247"><span class="section-number-4">8.2.2</span> Diverging palettes</h4>
 <div class="outline-text-4" id="text-8-2-2">
 <div class="org-src-container">
 <pre class="src src-R">display.brewer.all(type=<span style="color: #fa8072;">"seq"</span>)
@@ -1366,15 +1366,15 @@ null device
 </div>
 
 
-<div id="org5d82a0c" class="figure">
+<div id="org2ae2b37" class="figure">
 <p><img src="figures/ggplot/pal-cb-seq.png" alt="pal-cb-seq.png" />
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org34344e4" class="outline-4">
-<h4 id="org34344e4"><span class="section-number-4">8.2.3</span> Qualitative palettes</h4>
+<div id="outline-container-org3d6c1b1" class="outline-4">
+<h4 id="org3d6c1b1"><span class="section-number-4">8.2.3</span> Qualitative palettes</h4>
 <div class="outline-text-4" id="text-8-2-3">
 <div class="org-src-container">
 <pre class="src src-R">display.brewer.all(type=<span style="color: #fa8072;">"qual"</span>)
@@ -1382,15 +1382,15 @@ null device
 </div>
 
 
-<div id="org86ab1ca" class="figure">
+<div id="org79394a1" class="figure">
 <p><img src="figures/ggplot/pal-cb-qual.png" alt="pal-cb-qual.png" />
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgbd8b815" class="outline-4">
-<h4 id="orgbd8b815"><span class="section-number-4">8.2.4</span> With ggplot2</h4>
+<div id="outline-container-orgf0de88e" class="outline-4">
+<h4 id="orgf0de88e"><span class="section-number-4">8.2.4</span> With ggplot2</h4>
 <div class="outline-text-4" id="text-8-2-4">
 <div class="org-src-container">
 <pre class="src src-R">ggplot(data=someData, aes(x=k1, y=y, fill=k1)) +
@@ -1400,7 +1400,7 @@ null device
 </div>
 
 
-<div id="orgf2db103" class="figure">
+<div id="orge4bbd19" class="figure">
 <p><img src="figures/ggplot/pal-cb1.png" alt="pal-cb1.png" />
 </p>
 </div>
@@ -1413,7 +1413,7 @@ null device
 </div>
 
 
-<div id="org956b9af" class="figure">
+<div id="org3aa8454" class="figure">
 <p><img src="figures/ggplot/pal-cb2.png" alt="pal-cb2.png" />
 </p>
 </div>
@@ -1423,16 +1423,16 @@ null device
 </div>
 
 
-<div id="outline-container-orgd5144ca" class="outline-2">
-<h2 id="orgd5144ca"><span class="section-number-2">9</span> Miscellaneous Stuff</h2>
+<div id="outline-container-org3308b32" class="outline-2">
+<h2 id="org3308b32"><span class="section-number-2">9</span> Miscellaneous Stuff</h2>
 <div class="outline-text-2" id="text-9">
 </div>
-<div id="outline-container-org63b4c2f" class="outline-3">
-<h3 id="org63b4c2f"><span class="section-number-3">9.1</span> Working without <code>data.frame</code></h3>
+<div id="outline-container-org6adad7b" class="outline-3">
+<h3 id="org6adad7b"><span class="section-number-3">9.1</span> Working without <code>data.frame</code></h3>
 <div class="outline-text-3" id="text-9-1">
 </div>
-<div id="outline-container-orgba7afb9" class="outline-4">
-<h4 id="orgba7afb9"><span class="section-number-4">9.1.1</span> Sequence Plot of ONE Vector</h4>
+<div id="outline-container-orga8d9e36" class="outline-4">
+<h4 id="orga8d9e36"><span class="section-number-4">9.1.1</span> Sequence Plot of ONE Vector</h4>
 <div class="outline-text-4" id="text-9-1-1">
 <p>
 Note: Like <code>plot(x)</code>
@@ -1444,15 +1444,15 @@ Note: Like <code>plot(x)</code>
 </div>
 
 
-<div id="org8b98f49" class="figure">
+<div id="orge2a6008" class="figure">
 <p><img src="figures/ggplot/basic-seq.png" alt="basic-seq.png" />
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org0668b54" class="outline-4">
-<h4 id="org0668b54"><span class="section-number-4">9.1.2</span> Scatterplot with a two vectors</h4>
+<div id="outline-container-org281f4ee" class="outline-4">
+<h4 id="org281f4ee"><span class="section-number-4">9.1.2</span> Scatterplot with a two vectors</h4>
 <div class="outline-text-4" id="text-9-1-2">
 <p>
 Note: Like <code>plot(x, y)</code>
@@ -1464,7 +1464,7 @@ Note: Like <code>plot(x, y)</code>
 </div>
 
 
-<div id="org03dcccf" class="figure">
+<div id="org92208db" class="figure">
 <p><img src="figures/ggplot/basic-scat.png" alt="basic-scat.png" />
 </p>
 </div>
@@ -1472,8 +1472,8 @@ Note: Like <code>plot(x, y)</code>
 </div>
 </div>
 
-<div id="outline-container-org72c53db" class="outline-3">
-<h3 id="org72c53db"><span class="section-number-3">9.2</span> Annotate within the plot region</h3>
+<div id="outline-container-org50f28db" class="outline-3">
+<h3 id="org50f28db"><span class="section-number-3">9.2</span> Annotate within the plot region</h3>
 <div class="outline-text-3" id="text-9-2">
 <div class="org-src-container">
 <pre class="src src-R">qplot(data=someData,x=xi, y=y, color=k1) +
@@ -1488,19 +1488,19 @@ Note: Like <code>plot(x, y)</code>
 </div>
 
 
-<div id="org653c609" class="figure">
+<div id="orgda68728" class="figure">
 <p><img src="figures/ggplot/anno.png" alt="anno.png" />
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org62a42a4" class="outline-3">
-<h3 id="org62a42a4"><span class="section-number-3">9.3</span> Combine Graphs</h3>
+<div id="outline-container-orgfe69586" class="outline-3">
+<h3 id="orgfe69586"><span class="section-number-3">9.3</span> Combine Graphs</h3>
 <div class="outline-text-3" id="text-9-3">
 </div>
-<div id="outline-container-org19afd87" class="outline-4">
-<h4 id="org19afd87"><span class="section-number-4">9.3.1</span> From potentially from different data frames on the same set of axes</h4>
+<div id="outline-container-org445fc39" class="outline-4">
+<h4 id="org445fc39"><span class="section-number-4">9.3.1</span> From potentially from different data frames on the same set of axes</h4>
 <div class="outline-text-4" id="text-9-3-1">
 <div class="org-src-container">
 <pre class="src src-R">ggplot() +
@@ -1513,7 +1513,7 @@ Note: Like <code>plot(x, y)</code>
 </div>
 
 
-<div id="org3f267d6" class="figure">
+<div id="org0012116" class="figure">
 <p><img src="figures/ggplot/misc-combine.png" alt="misc-combine.png" />
 </p>
 </div>
@@ -1522,12 +1522,12 @@ Note: Like <code>plot(x, y)</code>
 </div>
 </div>
 
-<div id="outline-container-orgec4e70b" class="outline-2">
-<h2 id="orgec4e70b"><span class="section-number-2">10</span> Area graphs</h2>
+<div id="outline-container-org19a93ea" class="outline-2">
+<h2 id="org19a93ea"><span class="section-number-2">10</span> Area graphs</h2>
 <div class="outline-text-2" id="text-10">
 </div>
-<div id="outline-container-org7d28b54" class="outline-3">
-<h3 id="org7d28b54"><span class="section-number-3">10.1</span> Standard</h3>
+<div id="outline-container-org9137bcf" class="outline-3">
+<h3 id="org9137bcf"><span class="section-number-3">10.1</span> Standard</h3>
 <div class="outline-text-3" id="text-10-1">
 <div class="org-src-container">
 <pre class="src src-R">ggplot(data=subset(someData, k1==<span style="color: #fa8072;">'K1F_1'</span>), aes(x=xi, y=abs(y))) +
@@ -1536,15 +1536,15 @@ Note: Like <code>plot(x, y)</code>
 </div>
 
 
-<div id="orgfbe2b26" class="figure">
+<div id="org767038c" class="figure">
 <p><img src="figures/ggplot/area-basic.png" alt="area-basic.png" />
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orga17d5ea" class="outline-3">
-<h3 id="orga17d5ea"><span class="section-number-3">10.2</span> Stacked</h3>
+<div id="outline-container-org1445e30" class="outline-3">
+<h3 id="org1445e30"><span class="section-number-3">10.2</span> Stacked</h3>
 <div class="outline-text-3" id="text-10-2">
 <p>
 Note: Yhis form of chart is easily misread by may people.  Not generally recommended.
@@ -1557,7 +1557,7 @@ Note: Yhis form of chart is easily misread by may people.  Not generally recomme
 </div>
 
 
-<div id="orgede900b" class="figure">
+<div id="org42b42a9" class="figure">
 <p><img src="figures/ggplot/area-stack.png" alt="area-stack.png" />
 </p>
 </div>
@@ -1566,7 +1566,7 @@ Note: Yhis form of chart is easily misread by may people.  Not generally recomme
 </div>
 </div>
 <div id="postamble" class="status">
-Created by Mitch Richling <<a href="mailto:http://www.mitchr.me/">http://www.mitchr.me/</a>>.  Rendered on 2021-05-04 Tue 13:18 via <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.4.5)
+Created by Mitch Richling <<a href="mailto:http://www.mitchr.me/">http://www.mitchr.me/</a>>.  Rendered on 2021-05-04 Tue 18:27 via <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.4.5)
 </div>
 </body>
 </html>

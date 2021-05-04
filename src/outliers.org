@@ -1,8 +1,6 @@
 # -*- Mode:Org; Coding:utf-8; fill-column:158 org-html-link-org-files-as-html:nil -*-
 #+TITLE:       Outliers
 #+AUTHOR:      Mitch Richling
-#+EMAIL:       http://www.mitchr.me/
-#+DATE:        2020-01-25
 #+DESCRIPTION: Outliers.@EOL
 #+KEYWORDS:    Outliers R
 #+LANGUAGE:    en
@@ -23,11 +21,11 @@
 #+EXPORT_FILE_NAME: ../docs/outliers
 
 #+ATTR_HTML: :border 2 solid #ccc :frame hsides :align center
-|        <r> | <l>                             |
-|  *Author:* | /{{{author}}}/                  |
-| *Updated:* | /{{{time(%Y-%m-%d)}}}/ |
+|        <r> | <l>                                          |
+|  *Author:* | /{{{author}}}/                               |
+| *Updated:* | /{{{modification-time(%Y-%m-%d %H:%M:%S)}}}/ |
 #+ATTR_HTML: :align center
-Copyright 2020 Mitch Richling. All rights reserved.
+Copyright 2020-2021 Mitch Richling. All rights reserved.
 
 #+TOC: headlines 5
 
@@ -37,11 +35,6 @@ Copyright 2020 Mitch Richling. All rights reserved.
 #        #         #         #         #         #         #         #         #         #         #         #         #         #         #         #         #         #
 #        #         #         #         #         #         #         #         #         #         #         #         #         #         #         #         #         #
 
-* Source Code and Files
-
-  - file:outliers.org
-  - file:outliers.R
-
 * Example Data
 
 Three kinds of data (set =dataType= to one of the following):
@@ -49,7 +42,7 @@ Three kinds of data (set =dataType= to one of the following):
    - '=normzoom='  -- Heavy tails constructed from a sequence of normals
    - '=weibull='   -- Weibull has a heavy tail, and it is always positive
 
-#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/outliers.R"
+#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/outliers.R" :wrap "src text :eval never :tangle no"
 dataType <- 'hand'
 if(dataType=='normzoom')
   daData <- do.call(c, lapply(1:5, function (x) rnorm(2^(7-x), sd=2*x)))      
@@ -61,36 +54,9 @@ dataType
 #+END_SRC
 
 #+RESULTS:
-#+begin_example
-null device 
-          1
-null device 
-          1
-null device 
-          1
-null device 
-          1
-null device 
-          1
-null device 
-          1
-null device 
-          1
-null device 
-          1
-null device 
-          1
-null device 
-          1
-null device 
-          1
-null device 
-          1
-null device 
-          1
+#+begin_src text :eval never :tangle no
 [1] "hand"
-#+end_example
-
+#+end_src
 
 * Good Old 3 sigma rule
 
@@ -128,7 +94,7 @@ cutOffBox <- daQUAR+cParmBox*c(-1,1)*(daQUAR[2]-daQUAR[1])    # Lower and upper 
 
 * Plot it all
 
-#+BEGIN_SRC R :session :file ../docs/figures/outl/plot.png :width 800 :height 600 :results graphics :exports code :tangle "../tangled/outliers.R"
+#+BEGIN_SRC R :session :file ../docs/figures/outliers/plot.png :width 1024 :height 768 :results graphics
 plot(1:length(daData), daData,                                                 # Plot the data with artificial x-data
      ylim=c(-1,1)*max(abs(c(daData,                                            # Set the y-axis to be symmetric about 0 and
                             cutOffSig, cutOffHem, cutOffBox))),                  # big enough for all data and intervals
@@ -157,4 +123,4 @@ if(dataType!='hand')                                                           #
 
 #+RESULTS:
 
-file:figures/outl/plot.png
+file:../docs/figures/outliers/plot.png
