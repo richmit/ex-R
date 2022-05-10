@@ -5,7 +5,7 @@
 #+DESCRIPTION: Demo of some of my most used dplyr features.@EOL
 #+KEYWORDS:    package cran dplyr R
 #+LANGUAGE:    en
-#+OPTIONS:     num:t toc:nil \n:nil @:t ::t |:t ^:nil -:t f:t *:t <:t skip:nil d:nil todo:t pri:nil H:5 p:t author:t html-scripts:nil 
+#+OPTIONS:     num:t toc:nil \n:nil @:t ::t |:t ^:nil -:t f:t *:t <:t skip:nil d:nil todo:t pri:nil H:5 p:t author:t html-scripts:nil
 #+SEQ_TODO:    TODO:NEW(t)                         TODO:WORK(w)    TODO:HOLD(h)    | TODO:FUTURE(f)   TODO:DONE(d)    TODO:CANCELED(c)
 #+HTML_HEAD: <style>body { width: 95%; margin: 2% auto; font-size: 18px; line-height: 1.4em; font-family: Georgia, serif; color: black; background-color: white; }</style>
 #+HTML_HEAD: <style>body { min-width: 820px; max-width: 1024px; }</style>
@@ -50,11 +50,12 @@ Directory contents:
    | =tangled= | - | Tangled R code from this document                   |
 
 * First Steps
-
 ** Load the library
 
 #+BEGIN_SRC R :session :results silent :exports code :tangle "../tangled/dplyr.R" :wrap "src text :eval never :tangle no"
 library(dplyr)
+library(data.table)
+library(tidyr)
 #+END_SRC
 
 ** Example Data
@@ -103,45 +104,101 @@ Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2
 ** Row Names
 
 #+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/dplyr.R" :wrap "src text :eval never :tangle no"
-mtcarsR <- tibble::rownames_to_column(mtcars, 'car_name')                         
-mtcarsR
+mtcarsR <-
+  mtcars %>%
+  tibble::rownames_to_column('car_name') %>%
+  data.table::data.table()
+mtcarsR %>%
+  head()
 #+END_SRC
 
 #+RESULTS:
 #+begin_src text :eval never :tangle no
-              car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb
-1            Mazda RX4 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
-2        Mazda RX4 Wag 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
-3           Datsun 710 22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1
-4       Hornet 4 Drive 21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1
-5    Hornet Sportabout 18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2
-6              Valiant 18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1
-7           Duster 360 14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4
-8            Merc 240D 24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2
-9             Merc 230 22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2
-10            Merc 280 19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4
-11           Merc 280C 17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4
-12          Merc 450SE 16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3
-13          Merc 450SL 17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3
-14         Merc 450SLC 15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3
-15  Cadillac Fleetwood 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
-16 Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4
-17   Chrysler Imperial 14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4
-18            Fiat 128 32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1
-19         Honda Civic 30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2
-20      Toyota Corolla 33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1
-21       Toyota Corona 21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1
-22    Dodge Challenger 15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2
-23         AMC Javelin 15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2
-24          Camaro Z28 13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4
-25    Pontiac Firebird 19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2
-26           Fiat X1-9 27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1
-27       Porsche 914-2 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2
-28        Lotus Europa 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2
-29      Ford Pantera L 15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4
-30        Ferrari Dino 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6
-31       Maserati Bora 15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8
-32          Volvo 142E 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2
+            car_name  mpg cyl disp  hp drat    wt  qsec vs am gear carb
+1:         Mazda RX4 21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+2:     Mazda RX4 Wag 21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+3:        Datsun 710 22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+4:    Hornet 4 Drive 21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+5: Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+6:           Valiant 18.1   6  225 105 2.76 3.460 20.22  1  0    3    1
+#+end_src
+
+** Chaining/Pipes vs Nesting vs Assignments
+
+Using the Tidyverse tends to lead to deeply nested function calls, which can get a bit messy using traditional infix notation.  Ofcource the LISPers would
+tell our syntax is wrong, and the smalltalk peeps would say "just use dots".  The Tidyverse has taken a diffrent appraoch: the pipe.  In UNIX shells the pipe
+has long been used as a way to manage a flow of text transformations -- the essence of many shell scripts.  In R we frequently deal with a flow of data
+taransformations, so the pipe concept seems liek a good fit.  After this section, I'll pretty much stick to the "pipe way".
+
+*** Chaining (Pipes)
+
+Chaining is a technique using the %>% operator that can be used to "chain" together dplyr calls into sequential steps.  Note modern R versions contain native
+pipe operators that have slightly different semantics.  In this document I'll stick to the Tidyverse pipe.
+
+#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/dplyr.R" :wrap "src text :eval never :tangle no"
+mtcarsR %>%
+  dplyr::group_by(cyl, carb) %>%
+  dplyr::select(mpg, hp, cyl, carb) %>%
+  dplyr::summarise(meanMPG=mean(mpg, na.rm=TRUE),
+                   meanCYL=mean(hp,  na.rm=TRUE),
+                   .groups = 'drop')  %>%
+  filter(meanMPG > 20) %>%
+  data.table::data.table()
+#+END_SRC
+
+#+RESULTS:
+#+begin_src text :eval never :tangle no
+   cyl carb meanMPG meanCYL
+1:   4    1   27.58    77.4
+2:   4    2   25.90    87.0
+#+end_src
+
+*** Temporary Variables
+
+A favorite for FORTRAN programmers!
+
+#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/dplyr.R" :wrap "src text :eval never :tangle no"
+tmp <- dplyr::group_by(mtcarsR, cyl, carb)
+tmp <- dplyr::select(tmp, mpg, hp, cyl, carb)
+tmp <- dplyr::summarise(tmp,
+                        meanMPG=mean(mpg, na.rm=TRUE),
+                        meanCYL=mean(hp,  na.rm=TRUE),
+                        .groups = 'drop')
+tmp <- dplyr::filter(tmp, meanMPG > 20)
+tmp <- data.table::data.table(tmp)
+tmp
+#+END_SRC
+
+#+RESULTS:
+#+begin_src text :eval never :tangle no
+   cyl carb meanMPG meanCYL
+1:   4    1   27.58    77.4
+2:   4    2   25.90    87.0
+#+end_src
+
+*** Composition
+
+How the LISPers do it, but with worse syntax. ;)
+
+#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/dplyr.R" :wrap "src text :eval never :tangle no"
+data.table::data.table(dplyr::filter(dplyr::summarise(dplyr::select(dplyr::group_by(mtcarsR,
+                                                                                    cyl,
+                                                                                    carb),
+                                                                    mpg,
+                                                                    hp,
+                                                                    cyl,
+                                                                    carb),
+                                                      meanMPG=mean(mpg, na.rm=TRUE),
+                                                      meanCYL=mean(hp,  na.rm=TRUE),
+                                                      .groups = 'drop'),
+                                     meanMPG > 20))
+#+END_SRC
+
+#+RESULTS:
+#+begin_src text :eval never :tangle no
+   cyl carb meanMPG meanCYL
+1:   4    1   27.58    77.4
+2:   4    2   25.90    87.0
 #+end_src
 
 * Selecting Rows
@@ -151,39 +208,41 @@ mtcarsR
 You can actually replace that & with a comma, but I'm usually explicit about this sort of thing
 
 #+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/dplyr.R" :wrap "src text :eval never :tangle no"
-dplyr::filter(mtcarsR, cyl>4 & carb==4)                        
+mtcarsR %>%
+  dplyr::filter(cyl>4 & carb==4)
 #+END_SRC
 
 #+RESULTS:
 #+begin_src text :eval never :tangle no
-              car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb
-1            Mazda RX4 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
-2        Mazda RX4 Wag 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
-3           Duster 360 14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4
-4             Merc 280 19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4
-5            Merc 280C 17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4
-6   Cadillac Fleetwood 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
-7  Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4
-8    Chrysler Imperial 14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4
-9           Camaro Z28 13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4
-10      Ford Pantera L 15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4
+               car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+ 1:           Mazda RX4 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
+ 2:       Mazda RX4 Wag 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
+ 3:          Duster 360 14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4
+ 4:            Merc 280 19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4
+ 5:           Merc 280C 17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4
+ 6:  Cadillac Fleetwood 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
+ 7: Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4
+ 8:   Chrysler Imperial 14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4
+ 9:          Camaro Z28 13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4
+10:      Ford Pantera L 15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4
 #+end_src
 
 ** With an index
 
 #+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/dplyr.R" :wrap "src text :eval never :tangle no"
-dplyr::slice(mtcarsR, 15:20)
+mtcarsR %>%
+  dplyr::slice(15:20)
 #+END_SRC
 
 #+RESULTS:
 #+begin_src text :eval never :tangle no
-             car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb
-1  Cadillac Fleetwood 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
-2 Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4
-3   Chrysler Imperial 14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4
-4            Fiat 128 32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1
-5         Honda Civic 30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2
-6      Toyota Corolla 33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1
+              car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+1:  Cadillac Fleetwood 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
+2: Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4
+3:   Chrysler Imperial 14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4
+4:            Fiat 128 32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1
+5:         Honda Civic 30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2
+6:      Toyota Corolla 33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1
 #+end_src
 
 ** Pull out a sample row for each distinct record
@@ -191,21 +250,22 @@ dplyr::slice(mtcarsR, 15:20)
 More useful if =dplyr::select= is used to limit input to the column(s)
 
 #+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/dplyr.R" :wrap "src text :eval never :tangle no"
-dplyr::distinct(mtcarsR, cyl, carb)           
+mtcarsR %>%
+  dplyr::distinct(cyl, carb)
 #+END_SRC
 
 #+RESULTS:
 #+begin_src text :eval never :tangle no
-  cyl carb
-1   6    4
-2   4    1
-3   6    1
-4   8    2
-5   8    4
-6   4    2
-7   8    3
-8   6    6
-9   8    8
+   cyl carb
+1:   6    4
+2:   4    1
+3:   6    1
+4:   8    2
+5:   8    4
+6:   4    2
+7:   8    3
+8:   6    6
+9:   8    8
 #+end_src
 
 * Sorting
@@ -213,44 +273,46 @@ dplyr::distinct(mtcarsR, cyl, carb)
 Could have used '-gear' here as 'gear' is numeric, but 'desc' works on strings as well.
 
 #+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/dplyr.R" :wrap "src text :eval never :tangle no"
-dplyr::arrange(mtcarsR, cyl, desc(gear)) 
+mtcarsR %>%
+  dplyr::arrange(cyl, desc(gear))
 #+END_SRC
 
 #+RESULTS:
 #+begin_src text :eval never :tangle no
-              car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb
-1        Porsche 914-2 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2
-2         Lotus Europa 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2
-3           Datsun 710 22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1
-4            Merc 240D 24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2
-5             Merc 230 22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2
-6             Fiat 128 32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1
-7          Honda Civic 30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2
-8       Toyota Corolla 33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1
-9            Fiat X1-9 27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1
-10          Volvo 142E 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2
-11       Toyota Corona 21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1
-12        Ferrari Dino 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6
-13           Mazda RX4 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
-14       Mazda RX4 Wag 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
-15            Merc 280 19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4
-16           Merc 280C 17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4
-17      Hornet 4 Drive 21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1
-18             Valiant 18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1
-19      Ford Pantera L 15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4
-20       Maserati Bora 15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8
-21   Hornet Sportabout 18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2
-22          Duster 360 14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4
-23          Merc 450SE 16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3
-24          Merc 450SL 17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3
-25         Merc 450SLC 15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3
-26  Cadillac Fleetwood 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
-27 Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4
-28   Chrysler Imperial 14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4
-29    Dodge Challenger 15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2
-30         AMC Javelin 15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2
-31          Camaro Z28 13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4
-32    Pontiac Firebird 19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2
+               car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+ 1:       Porsche 914-2 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2
+ 2:        Lotus Europa 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2
+ 3:          Datsun 710 22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1
+ 4:           Merc 240D 24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2
+ 5:            Merc 230 22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2
+ 6:            Fiat 128 32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1
+ 7:         Honda Civic 30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2
+ 8:      Toyota Corolla 33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1
+ 9:           Fiat X1-9 27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1
+10:          Volvo 142E 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2
+11:       Toyota Corona 21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1
+12:        Ferrari Dino 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6
+13:           Mazda RX4 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
+14:       Mazda RX4 Wag 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
+15:            Merc 280 19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4
+16:           Merc 280C 17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4
+17:      Hornet 4 Drive 21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1
+18:             Valiant 18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1
+19:      Ford Pantera L 15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4
+20:       Maserati Bora 15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8
+21:   Hornet Sportabout 18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2
+22:          Duster 360 14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4
+23:          Merc 450SE 16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3
+24:          Merc 450SL 17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3
+25:         Merc 450SLC 15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3
+26:  Cadillac Fleetwood 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
+27: Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4
+28:   Chrysler Imperial 14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4
+29:    Dodge Challenger 15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2
+30:         AMC Javelin 15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2
+31:          Camaro Z28 13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4
+32:    Pontiac Firebird 19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2
+               car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb
 #+end_src
 
 * Selecting Columns
@@ -260,130 +322,58 @@ dplyr::arrange(mtcarsR, cyl, desc(gear))
 Love how you can use column names with the range operator.  Numbers work too, but that is boring.
 
 #+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/dplyr.R" :wrap "src text :eval never :tangle no"
-dplyr::select(mtcarsR, cyl:drat)         
+mtcarsR %>%
+  dplyr::select(cyl:drat) %>%
+  head()
 #+END_SRC
 
 #+RESULTS:
 #+begin_src text :eval never :tangle no
-   cyl  disp  hp drat
-1    6 160.0 110 3.90
-2    6 160.0 110 3.90
-3    4 108.0  93 3.85
-4    6 258.0 110 3.08
-5    8 360.0 175 3.15
-6    6 225.0 105 2.76
-7    8 360.0 245 3.21
-8    4 146.7  62 3.69
-9    4 140.8  95 3.92
-10   6 167.6 123 3.92
-11   6 167.6 123 3.92
-12   8 275.8 180 3.07
-13   8 275.8 180 3.07
-14   8 275.8 180 3.07
-15   8 472.0 205 2.93
-16   8 460.0 215 3.00
-17   8 440.0 230 3.23
-18   4  78.7  66 4.08
-19   4  75.7  52 4.93
-20   4  71.1  65 4.22
-21   4 120.1  97 3.70
-22   8 318.0 150 2.76
-23   8 304.0 150 3.15
-24   8 350.0 245 3.73
-25   8 400.0 175 3.08
-26   4  79.0  66 4.08
-27   4 120.3  91 4.43
-28   4  95.1 113 3.77
-29   8 351.0 264 4.22
-30   6 145.0 175 3.62
-31   8 301.0 335 3.54
-32   4 121.0 109 4.11
+   cyl disp  hp drat
+1:   6  160 110 3.90
+2:   6  160 110 3.90
+3:   4  108  93 3.85
+4:   6  258 110 3.08
+5:   8  360 175 3.15
+6:   6  225 105 2.76
 #+end_src
 
 ** Select and rename
 
 #+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/dplyr.R" :wrap "src text :eval never :tangle no"
-dplyr::select(mtcarsR, displacement=disp, cyl)
+mtcarsR %>%
+  dplyr::select(displacement=disp, cyl) %>%
+  head()
 #+END_SRC
 
 #+RESULTS:
 #+begin_src text :eval never :tangle no
    displacement cyl
-1         160.0   6
-2         160.0   6
-3         108.0   4
-4         258.0   6
-5         360.0   8
-6         225.0   6
-7         360.0   8
-8         146.7   4
-9         140.8   4
-10        167.6   6
-11        167.6   6
-12        275.8   8
-13        275.8   8
-14        275.8   8
-15        472.0   8
-16        460.0   8
-17        440.0   8
-18         78.7   4
-19         75.7   4
-20         71.1   4
-21        120.1   4
-22        318.0   8
-23        304.0   8
-24        350.0   8
-25        400.0   8
-26         79.0   4
-27        120.3   4
-28         95.1   4
-29        351.0   8
-30        145.0   6
-31        301.0   8
-32        121.0   4
+1:          160   6
+2:          160   6
+3:          108   4
+4:          258   6
+5:          360   8
+6:          225   6
 #+end_src
 
 ** Just rename (but keep other columns)
 
 #+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/dplyr.R" :wrap "src text :eval never :tangle no"
-dplyr::rename(mtcarsR, displacement=disp, weight=wt)
+mtcarsR %>%
+  dplyr::rename(displacement=disp, weight=wt) %>%
+  head()
 #+END_SRC
 
 #+RESULTS:
 #+begin_src text :eval never :tangle no
-              car_name  mpg cyl displacement  hp drat weight  qsec vs am gear carb
-1            Mazda RX4 21.0   6        160.0 110 3.90  2.620 16.46  0  1    4    4
-2        Mazda RX4 Wag 21.0   6        160.0 110 3.90  2.875 17.02  0  1    4    4
-3           Datsun 710 22.8   4        108.0  93 3.85  2.320 18.61  1  1    4    1
-4       Hornet 4 Drive 21.4   6        258.0 110 3.08  3.215 19.44  1  0    3    1
-5    Hornet Sportabout 18.7   8        360.0 175 3.15  3.440 17.02  0  0    3    2
-6              Valiant 18.1   6        225.0 105 2.76  3.460 20.22  1  0    3    1
-7           Duster 360 14.3   8        360.0 245 3.21  3.570 15.84  0  0    3    4
-8            Merc 240D 24.4   4        146.7  62 3.69  3.190 20.00  1  0    4    2
-9             Merc 230 22.8   4        140.8  95 3.92  3.150 22.90  1  0    4    2
-10            Merc 280 19.2   6        167.6 123 3.92  3.440 18.30  1  0    4    4
-11           Merc 280C 17.8   6        167.6 123 3.92  3.440 18.90  1  0    4    4
-12          Merc 450SE 16.4   8        275.8 180 3.07  4.070 17.40  0  0    3    3
-13          Merc 450SL 17.3   8        275.8 180 3.07  3.730 17.60  0  0    3    3
-14         Merc 450SLC 15.2   8        275.8 180 3.07  3.780 18.00  0  0    3    3
-15  Cadillac Fleetwood 10.4   8        472.0 205 2.93  5.250 17.98  0  0    3    4
-16 Lincoln Continental 10.4   8        460.0 215 3.00  5.424 17.82  0  0    3    4
-17   Chrysler Imperial 14.7   8        440.0 230 3.23  5.345 17.42  0  0    3    4
-18            Fiat 128 32.4   4         78.7  66 4.08  2.200 19.47  1  1    4    1
-19         Honda Civic 30.4   4         75.7  52 4.93  1.615 18.52  1  1    4    2
-20      Toyota Corolla 33.9   4         71.1  65 4.22  1.835 19.90  1  1    4    1
-21       Toyota Corona 21.5   4        120.1  97 3.70  2.465 20.01  1  0    3    1
-22    Dodge Challenger 15.5   8        318.0 150 2.76  3.520 16.87  0  0    3    2
-23         AMC Javelin 15.2   8        304.0 150 3.15  3.435 17.30  0  0    3    2
-24          Camaro Z28 13.3   8        350.0 245 3.73  3.840 15.41  0  0    3    4
-25    Pontiac Firebird 19.2   8        400.0 175 3.08  3.845 17.05  0  0    3    2
-26           Fiat X1-9 27.3   4         79.0  66 4.08  1.935 18.90  1  1    4    1
-27       Porsche 914-2 26.0   4        120.3  91 4.43  2.140 16.70  0  1    5    2
-28        Lotus Europa 30.4   4         95.1 113 3.77  1.513 16.90  1  1    5    2
-29      Ford Pantera L 15.8   8        351.0 264 4.22  3.170 14.50  0  1    5    4
-30        Ferrari Dino 19.7   6        145.0 175 3.62  2.770 15.50  0  1    5    6
-31       Maserati Bora 15.0   8        301.0 335 3.54  3.570 14.60  0  1    5    8
-32          Volvo 142E 21.4   4        121.0 109 4.11  2.780 18.60  1  1    4    2
+            car_name  mpg cyl displacement  hp drat weight  qsec vs am gear carb
+1:         Mazda RX4 21.0   6          160 110 3.90  2.620 16.46  0  1    4    4
+2:     Mazda RX4 Wag 21.0   6          160 110 3.90  2.875 17.02  0  1    4    4
+3:        Datsun 710 22.8   4          108  93 3.85  2.320 18.61  1  1    4    1
+4:    Hornet 4 Drive 21.4   6          258 110 3.08  3.215 19.44  1  0    3    1
+5: Hornet Sportabout 18.7   8          360 175 3.15  3.440 17.02  0  0    3    2
+6:           Valiant 18.1   6          225 105 2.76  3.460 20.22  1  0    3    1
 #+end_src
 
 * New columns
@@ -391,87 +381,39 @@ dplyr::rename(mtcarsR, displacement=disp, weight=wt)
 ** Compute new columns based on other columns
 
 #+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/dplyr.R" :wrap "src text :eval never :tangle no"
-dplyr::mutate(mtcarsR, mpc=mpg/cyl, impc=1/mpc) 
+mtcarsR %>%
+  dplyr::mutate(mpc=mpg/cyl, impc=1/mpc) %>%
+  head()
 #+END_SRC
 
 #+RESULTS:
 #+begin_src text :eval never :tangle no
-              car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb      mpc      impc
-1            Mazda RX4 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4 3.500000 0.2857143
-2        Mazda RX4 Wag 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4 3.500000 0.2857143
-3           Datsun 710 22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1 5.700000 0.1754386
-4       Hornet 4 Drive 21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1 3.566667 0.2803738
-5    Hornet Sportabout 18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2 2.337500 0.4278075
-6              Valiant 18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1 3.016667 0.3314917
-7           Duster 360 14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4 1.787500 0.5594406
-8            Merc 240D 24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2 6.100000 0.1639344
-9             Merc 230 22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2 5.700000 0.1754386
-10            Merc 280 19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4 3.200000 0.3125000
-11           Merc 280C 17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4 2.966667 0.3370787
-12          Merc 450SE 16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3 2.050000 0.4878049
-13          Merc 450SL 17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3 2.162500 0.4624277
-14         Merc 450SLC 15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3 1.900000 0.5263158
-15  Cadillac Fleetwood 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4 1.300000 0.7692308
-16 Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4 1.300000 0.7692308
-17   Chrysler Imperial 14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4 1.837500 0.5442177
-18            Fiat 128 32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1 8.100000 0.1234568
-19         Honda Civic 30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2 7.600000 0.1315789
-20      Toyota Corolla 33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1 8.475000 0.1179941
-21       Toyota Corona 21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1 5.375000 0.1860465
-22    Dodge Challenger 15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2 1.937500 0.5161290
-23         AMC Javelin 15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2 1.900000 0.5263158
-24          Camaro Z28 13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4 1.662500 0.6015038
-25    Pontiac Firebird 19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2 2.400000 0.4166667
-26           Fiat X1-9 27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1 6.825000 0.1465201
-27       Porsche 914-2 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2 6.500000 0.1538462
-28        Lotus Europa 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2 7.600000 0.1315789
-29      Ford Pantera L 15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4 1.975000 0.5063291
-30        Ferrari Dino 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6 3.283333 0.3045685
-31       Maserati Bora 15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8 1.875000 0.5333333
-32          Volvo 142E 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2 5.350000 0.1869159
+            car_name  mpg cyl disp  hp drat    wt  qsec vs am gear carb      mpc      impc
+1:         Mazda RX4 21.0   6  160 110 3.90 2.620 16.46  0  1    4    4 3.500000 0.2857143
+2:     Mazda RX4 Wag 21.0   6  160 110 3.90 2.875 17.02  0  1    4    4 3.500000 0.2857143
+3:        Datsun 710 22.8   4  108  93 3.85 2.320 18.61  1  1    4    1 5.700000 0.1754386
+4:    Hornet 4 Drive 21.4   6  258 110 3.08 3.215 19.44  1  0    3    1 3.566667 0.2803738
+5: Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2 2.337500 0.4278075
+6:           Valiant 18.1   6  225 105 2.76 3.460 20.22  1  0    3    1 3.016667 0.3314917
 #+end_src
 
 ** Compute new columns based on other columns and throw away all the old columns
 
 #+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/dplyr.R" :wrap "src text :eval never :tangle no"
-dplyr::transmute(mtcarsR, mpc=mpg/cyl, mpd=mpg/disp)
+mtcarsR %>%
+  dplyr::transmute(mpc=mpg/cyl, mpd=mpg/disp) %>%
+  head()
 #+END_SRC
 
 #+RESULTS:
 #+begin_src text :eval never :tangle no
         mpc        mpd
-1  3.500000 0.13125000
-2  3.500000 0.13125000
-3  5.700000 0.21111111
-4  3.566667 0.08294574
-5  2.337500 0.05194444
-6  3.016667 0.08044444
-7  1.787500 0.03972222
-8  6.100000 0.16632584
-9  5.700000 0.16193182
-10 3.200000 0.11455847
-11 2.966667 0.10620525
-12 2.050000 0.05946338
-13 2.162500 0.06272661
-14 1.900000 0.05511240
-15 1.300000 0.02203390
-16 1.300000 0.02260870
-17 1.837500 0.03340909
-18 8.100000 0.41168996
-19 7.600000 0.40158520
-20 8.475000 0.47679325
-21 5.375000 0.17901749
-22 1.937500 0.04874214
-23 1.900000 0.05000000
-24 1.662500 0.03800000
-25 2.400000 0.04800000
-26 6.825000 0.34556962
-27 6.500000 0.21612635
-28 7.600000 0.31966351
-29 1.975000 0.04501425
-30 3.283333 0.13586207
-31 1.875000 0.04983389
-32 5.350000 0.17685950
+1: 3.500000 0.13125000
+2: 3.500000 0.13125000
+3: 5.700000 0.21111111
+4: 3.566667 0.08294574
+5: 2.337500 0.05194444
+6: 3.016667 0.08044444
 #+end_src
 
 * Aggregation
@@ -479,117 +421,125 @@ dplyr::transmute(mtcarsR, mpc=mpg/cyl, mpd=mpg/disp)
 ** Global Aggregation
 
 #+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/dplyr.R" :wrap "src text :eval never :tangle no"
-dplyr::summarize(mtcars, mean_disp=mean(disp), sd_disp=sd(disp), mean_wt=mean(wt))
+mtcarsR %>%
+  dplyr::summarize(mean_disp=mean(disp), sd_disp=sd(disp), mean_wt=mean(wt)) %>%
+  data.table::data.table()
 #+END_SRC
 
 #+RESULTS:
 #+begin_src text :eval never :tangle no
-  mean_disp  sd_disp mean_wt
-1  230.7219 123.9387 3.21725
+   mean_disp  sd_disp mean_wt
+1:  230.7219 123.9387 3.21725
 #+end_src
 
 ** Aggregate by factor level
 
 #+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/dplyr.R" :wrap "src text :eval never :tangle no"
-dplyr::summarize(dplyr::group_by(mtcars, cyl), mean_disp_by_cyl=mean(disp), .groups = 'drop')
+mtcarsR %>%
+  dplyr::group_by(cyl) %>%
+  dplyr::summarize(mean_disp_by_cyl=mean(disp), .groups = 'drop') %>%
+  data.table::data.table()
 #+END_SRC
 
 #+RESULTS:
 #+begin_src text :eval never :tangle no
-# A tibble: 3 x 2
-    cyl mean_disp_by_cyl
-1     4             105.
-2     6             183.
-3     8             353.
+   cyl mean_disp_by_cyl
+1:   4         105.1364
+2:   6         183.3143
+3:   8         353.1000
 #+end_src
 
 ** Aggregate by multiple factors
 
 #+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/dplyr.R" :wrap "src text :eval never :tangle no"
-dplyr::summarize(dplyr::group_by(mtcars, cyl, gear), mean_disp_by_cyl_and_gear=mean(disp), .groups = 'drop')
+mtcarsR %>%
+  dplyr::group_by(cyl, gear) %>%
+  dplyr::summarize(, mean_disp_by_cyl_and_gear=mean(disp), .groups = 'drop') %>%
+  data.table::data.table()
 #+END_SRC
 
 #+RESULTS:
 #+begin_src text :eval never :tangle no
-# A tibble: 8 x 3
-    cyl  gear mean_disp_by_cyl_and_gear
-1     4     3                      120.
-2     4     4                      103.
-3     4     5                      108.
-4     6     3                      242.
-5     6     4                      164.
-6     6     5                      145 
-7     8     3                      358.
-8     8     5                      326
+   cyl gear mean_disp_by_cyl_and_gear
+1:   4    3                  120.1000
+2:   4    4                  102.6250
+3:   4    5                  107.7000
+4:   6    3                  241.5000
+5:   6    4                  163.8000
+6:   6    5                  145.0000
+7:   8    3                  357.6167
+8:   8    5                  326.0000
 #+end_src
 
 ** Summarize by group and put results back in data frame
 
 #+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/dplyr.R" :wrap "src text :eval never :tangle no"
-dplyr::mutate(dplyr::group_by(mtcars, cyl, gear), mean_disp_by_cyl_and_gear=mean(disp))
+mtcarsR %>%
+  dplyr::group_by(cyl, gear) %>%
+  dplyr::mutate(mean_disp_by_cyl_and_gear=mean(disp)) %>%
+  data.table::data.table()
 #+END_SRC
 
 #+RESULTS:
 #+begin_src text :eval never :tangle no
-# A tibble: 32 x 12
-# Groups:   cyl, gear [8]
-     mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb mean_disp_by_cyl_and_gear
- 1  21       6 160     110  3.9   2.62  16.5     0     1     4     4                      164.
- 2  21       6 160     110  3.9   2.88  17.0     0     1     4     4                      164.
- 3  22.8     4 108      93  3.85  2.32  18.6     1     1     4     1                      103.
- 4  21.4     6 258     110  3.08  3.22  19.4     1     0     3     1                      242.
- 5  18.7     8 360     175  3.15  3.44  17.0     0     0     3     2                      358.
- 6  18.1     6 225     105  2.76  3.46  20.2     1     0     3     1                      242.
- 7  14.3     8 360     245  3.21  3.57  15.8     0     0     3     4                      358.
- 8  24.4     4 147.     62  3.69  3.19  20       1     0     4     2                      103.
- 9  22.8     4 141.     95  3.92  3.15  22.9     1     0     4     2                      103.
-10  19.2     6 168.    123  3.92  3.44  18.3     1     0     4     4                      164.
-11  17.8     6 168.    123  3.92  3.44  18.9     1     0     4     4                      164.
-12  16.4     8 276.    180  3.07  4.07  17.4     0     0     3     3                      358.
-13  17.3     8 276.    180  3.07  3.73  17.6     0     0     3     3                      358.
-14  15.2     8 276.    180  3.07  3.78  18       0     0     3     3                      358.
-15  10.4     8 472     205  2.93  5.25  18.0     0     0     3     4                      358.
-16  10.4     8 460     215  3     5.42  17.8     0     0     3     4                      358.
-17  14.7     8 440     230  3.23  5.34  17.4     0     0     3     4                      358.
-18  32.4     4  78.7    66  4.08  2.2   19.5     1     1     4     1                      103.
-19  30.4     4  75.7    52  4.93  1.62  18.5     1     1     4     2                      103.
-20  33.9     4  71.1    65  4.22  1.84  19.9     1     1     4     1                      103.
-21  21.5     4 120.     97  3.7   2.46  20.0     1     0     3     1                      120.
-22  15.5     8 318     150  2.76  3.52  16.9     0     0     3     2                      358.
-23  15.2     8 304     150  3.15  3.44  17.3     0     0     3     2                      358.
-24  13.3     8 350     245  3.73  3.84  15.4     0     0     3     4                      358.
-25  19.2     8 400     175  3.08  3.84  17.0     0     0     3     2                      358.
-26  27.3     4  79      66  4.08  1.94  18.9     1     1     4     1                      103.
-27  26       4 120.     91  4.43  2.14  16.7     0     1     5     2                      108.
-28  30.4     4  95.1   113  3.77  1.51  16.9     1     1     5     2                      108.
-29  15.8     8 351     264  4.22  3.17  14.5     0     1     5     4                      326 
-30  19.7     6 145     175  3.62  2.77  15.5     0     1     5     6                      145 
-31  15       8 301     335  3.54  3.57  14.6     0     1     5     8                      326 
-32  21.4     4 121     109  4.11  2.78  18.6     1     1     4     2                      103.
+               car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb mean_disp_by_cyl_and_gear
+ 1:           Mazda RX4 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4                  163.8000
+ 2:       Mazda RX4 Wag 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4                  163.8000
+ 3:          Datsun 710 22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1                  102.6250
+ 4:      Hornet 4 Drive 21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1                  241.5000
+ 5:   Hornet Sportabout 18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2                  357.6167
+ 6:             Valiant 18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1                  241.5000
+ 7:          Duster 360 14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4                  357.6167
+ 8:           Merc 240D 24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2                  102.6250
+ 9:            Merc 230 22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2                  102.6250
+10:            Merc 280 19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4                  163.8000
+11:           Merc 280C 17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4                  163.8000
+12:          Merc 450SE 16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3                  357.6167
+13:          Merc 450SL 17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3                  357.6167
+14:         Merc 450SLC 15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3                  357.6167
+15:  Cadillac Fleetwood 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4                  357.6167
+16: Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4                  357.6167
+17:   Chrysler Imperial 14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4                  357.6167
+18:            Fiat 128 32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1                  102.6250
+19:         Honda Civic 30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2                  102.6250
+20:      Toyota Corolla 33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1                  102.6250
+21:       Toyota Corona 21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1                  120.1000
+22:    Dodge Challenger 15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2                  357.6167
+23:         AMC Javelin 15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2                  357.6167
+24:          Camaro Z28 13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4                  357.6167
+25:    Pontiac Firebird 19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2                  357.6167
+26:           Fiat X1-9 27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1                  102.6250
+27:       Porsche 914-2 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2                  107.7000
+28:        Lotus Europa 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2                  107.7000
+29:      Ford Pantera L 15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4                  326.0000
+30:        Ferrari Dino 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6                  145.0000
+31:       Maserati Bora 15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8                  326.0000
+32:          Volvo 142E 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2                  102.6250
+               car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb mean_disp_by_cyl_and_gear
 #+end_src
 
 * Join
 ** Example Data For Joins
 
- #+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/dplyr.R" :wrap "src text :eval never :tangle no"
- carSurvey <- data.table::fread(header=T, text='
-                car_name, GEARS, word
-               Mazda RX4,     4, ZoomZoom
-           Mazda RX4 Wag,     4, ZoomZoom
-      Cadillac Fleetwood,     3, RollingCouch
-     Lincoln Continental,     3, RollingCouch
-                Delorean,    16, TimeWarp
-           Porsche 914-2,     5, SuperCar
-            Lotus Europa,     5, SuperCar
-            Ferrari Dino,     5, SuperCar
-            Ferrari Dino,     5, SuperRedCar
-              Volvo 142E,     4, BoxeyButGood
-    ')
- carSurvey
- #+END_SRC
+#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/dplyr.R" :wrap "src text :eval never :tangle no"
+carSurvey <- data.table::fread(header=T, text='
+               car_name, GEARS, word
+              Mazda RX4,     4, ZoomZoom
+          Mazda RX4 Wag,     4, ZoomZoom
+     Cadillac Fleetwood,     3, RollingCouch
+    Lincoln Continental,     3, RollingCouch
+               Delorean,    16, TimeWarp
+          Porsche 914-2,     5, SuperCar
+           Lotus Europa,     5, SuperCar
+           Ferrari Dino,     5, SuperCar
+           Ferrari Dino,     5, SuperRedCar
+             Volvo 142E,     4, BoxeyButGood
+   ')
+carSurvey
+#+END_SRC
 
- #+RESULTS:
- #+begin_src text :eval never :tangle no
+#+RESULTS:
+#+begin_src text :eval never :tangle no
                 car_name GEARS         word
   1:           Mazda RX4     4     ZoomZoom
   2:       Mazda RX4 Wag     4     ZoomZoom
@@ -601,7 +551,7 @@ dplyr::mutate(dplyr::group_by(mtcars, cyl, gear), mean_disp_by_cyl_and_gear=mean
   8:        Ferrari Dino     5     SuperCar
   9:        Ferrari Dino     5  SuperRedCar
  10:          Volvo 142E     4 BoxeyButGood
- #+end_src
+#+end_src
 
  Notes:
    - The '=gear=' column in =mtcars= and the '=GEARS=' column in =carSurvey= are logically the equivlant; however, they have different names!
@@ -611,251 +561,270 @@ dplyr::mutate(dplyr::group_by(mtcars, cyl, gear), mean_disp_by_cyl_and_gear=mean
 
  Here we only get records that match on both the left (x) and right (y) sides.
 
- #+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/dplyr.R" :wrap "src text :eval never :tangle no"
- dplyr::inner_join(mtcarsR, carSurvey, by=c('car_name', 'gear'='GEARS'));
- #+END_SRC
+#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/dplyr.R" :wrap "src text :eval never :tangle no"
+mtcarsR %>%
+  dplyr::inner_join(carSurvey, by=c('car_name', 'gear'='GEARS'))
+#+END_SRC
 
- #+RESULTS:
- #+begin_src text :eval never :tangle no
+#+RESULTS:
+#+begin_src text :eval never :tangle no
               car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb         word
- 1           Mazda RX4 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4     ZoomZoom
- 2       Mazda RX4 Wag 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4     ZoomZoom
- 3  Cadillac Fleetwood 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4 RollingCouch
- 4 Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4 RollingCouch
- 5       Porsche 914-2 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2     SuperCar
- 6        Lotus Europa 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2     SuperCar
- 7        Ferrari Dino 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6     SuperCar
- 8        Ferrari Dino 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6  SuperRedCar
- 9          Volvo 142E 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2 BoxeyButGood
- #+end_src
+1:           Mazda RX4 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4     ZoomZoom
+2:       Mazda RX4 Wag 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4     ZoomZoom
+3:  Cadillac Fleetwood 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4 RollingCouch
+4: Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4 RollingCouch
+5:       Porsche 914-2 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2     SuperCar
+6:        Lotus Europa 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2     SuperCar
+7:        Ferrari Dino 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6     SuperCar
+8:        Ferrari Dino 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6  SuperRedCar
+9:          Volvo 142E 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2 BoxeyButGood
+#+end_src
 
 ** Left Join
 
  Now we get a record for *every* record on the left (x), and any records on the right (y) that match one on the left (x).  For the "extra" records with no
  matching data on the right (y), =NA= values are introduced.
 
- #+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/dplyr.R" :wrap "src text :eval never :tangle no"
- dplyr::left_join(mtcarsR, carSurvey, by=c('car_name', 'gear'='GEARS'));
- #+END_SRC
+#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/dplyr.R" :wrap "src text :eval never :tangle no"
+mtcarsR %>%
+  dplyr::left_join(carSurvey, by=c('car_name', 'gear'='GEARS'))
+#+END_SRC
 
- #+RESULTS:
- #+begin_src text :eval never :tangle no
+#+RESULTS:
+#+begin_src text :eval never :tangle no
                car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb         word
- 1            Mazda RX4 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4     ZoomZoom
- 2        Mazda RX4 Wag 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4     ZoomZoom
- 3           Datsun 710 22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1         <NA>
- 4       Hornet 4 Drive 21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1         <NA>
- 5    Hornet Sportabout 18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2         <NA>
- 6              Valiant 18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1         <NA>
- 7           Duster 360 14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4         <NA>
- 8            Merc 240D 24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2         <NA>
- 9             Merc 230 22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2         <NA>
- 10            Merc 280 19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4         <NA>
- 11           Merc 280C 17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4         <NA>
- 12          Merc 450SE 16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3         <NA>
- 13          Merc 450SL 17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3         <NA>
- 14         Merc 450SLC 15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3         <NA>
- 15  Cadillac Fleetwood 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4 RollingCouch
- 16 Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4 RollingCouch
- 17   Chrysler Imperial 14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4         <NA>
- 18            Fiat 128 32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1         <NA>
- 19         Honda Civic 30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2         <NA>
- 20      Toyota Corolla 33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1         <NA>
- 21       Toyota Corona 21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1         <NA>
- 22    Dodge Challenger 15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2         <NA>
- 23         AMC Javelin 15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2         <NA>
- 24          Camaro Z28 13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4         <NA>
- 25    Pontiac Firebird 19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2         <NA>
- 26           Fiat X1-9 27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1         <NA>
- 27       Porsche 914-2 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2     SuperCar
- 28        Lotus Europa 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2     SuperCar
- 29      Ford Pantera L 15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4         <NA>
- 30        Ferrari Dino 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6     SuperCar
- 31        Ferrari Dino 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6  SuperRedCar
- 32       Maserati Bora 15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8         <NA>
- 33          Volvo 142E 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2 BoxeyButGood
- #+end_src
+ 1:           Mazda RX4 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4     ZoomZoom
+ 2:       Mazda RX4 Wag 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4     ZoomZoom
+ 3:          Datsun 710 22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1         <NA>
+ 4:      Hornet 4 Drive 21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1         <NA>
+ 5:   Hornet Sportabout 18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2         <NA>
+ 6:             Valiant 18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1         <NA>
+ 7:          Duster 360 14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4         <NA>
+ 8:           Merc 240D 24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2         <NA>
+ 9:            Merc 230 22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2         <NA>
+10:            Merc 280 19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4         <NA>
+11:           Merc 280C 17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4         <NA>
+12:          Merc 450SE 16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3         <NA>
+13:          Merc 450SL 17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3         <NA>
+14:         Merc 450SLC 15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3         <NA>
+15:  Cadillac Fleetwood 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4 RollingCouch
+16: Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4 RollingCouch
+17:   Chrysler Imperial 14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4         <NA>
+18:            Fiat 128 32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1         <NA>
+19:         Honda Civic 30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2         <NA>
+20:      Toyota Corolla 33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1         <NA>
+21:       Toyota Corona 21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1         <NA>
+22:    Dodge Challenger 15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2         <NA>
+23:         AMC Javelin 15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2         <NA>
+24:          Camaro Z28 13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4         <NA>
+25:    Pontiac Firebird 19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2         <NA>
+26:           Fiat X1-9 27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1         <NA>
+27:       Porsche 914-2 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2     SuperCar
+28:        Lotus Europa 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2     SuperCar
+29:      Ford Pantera L 15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4         <NA>
+30:        Ferrari Dino 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6     SuperCar
+31:        Ferrari Dino 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6  SuperRedCar
+32:       Maserati Bora 15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8         <NA>
+33:          Volvo 142E 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2 BoxeyButGood
+               car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb         word
+#+end_src
 
 ** Right Join
 
  Now we get a record for *every* record on the right (y), and any records on the left (x) that match one on the right (y).  For the "extra" records with no
  matching data on the left (x), =NA= values are introduced.
 
- #+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/dplyr.R" :wrap "src text :eval never :tangle no"
- dplyr::right_join(mtcarsR, carSurvey, by=c('car_name', 'gear'='GEARS'));
- #+END_SRC
+#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/dplyr.R" :wrap "src text :eval never :tangle no"
+mtcarsR %>%
+  dplyr::right_join(carSurvey, by=c('car_name', 'gear'='GEARS'));
+#+END_SRC
 
- #+RESULTS:
- #+begin_src text :eval never :tangle no
+#+RESULTS:
+#+begin_src text :eval never :tangle no
                car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb         word
- 1            Mazda RX4 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4     ZoomZoom
- 2        Mazda RX4 Wag 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4     ZoomZoom
- 3   Cadillac Fleetwood 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4 RollingCouch
- 4  Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4 RollingCouch
- 5        Porsche 914-2 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2     SuperCar
- 6         Lotus Europa 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2     SuperCar
- 7         Ferrari Dino 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6     SuperCar
- 8         Ferrari Dino 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6  SuperRedCar
- 9           Volvo 142E 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2 BoxeyButGood
- 10            Delorean   NA  NA    NA  NA   NA    NA    NA NA NA   16   NA     TimeWarp
- #+end_src
+ 1:           Mazda RX4 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4     ZoomZoom
+ 2:       Mazda RX4 Wag 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4     ZoomZoom
+ 3:  Cadillac Fleetwood 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4 RollingCouch
+ 4: Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4 RollingCouch
+ 5:       Porsche 914-2 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2     SuperCar
+ 6:        Lotus Europa 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2     SuperCar
+ 7:        Ferrari Dino 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6     SuperCar
+ 8:        Ferrari Dino 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6  SuperRedCar
+ 9:          Volvo 142E 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2 BoxeyButGood
+10:            Delorean   NA  NA    NA  NA   NA    NA    NA NA NA   16   NA     TimeWarp
+#+end_src
 
 ** full outer Join
 
  Now we get a record for *every* record on the left (x) and right (y).  Any extra records that don't match the other side get =NA= values.
 
- #+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/dplyr.R" :wrap "src text :eval never :tangle no"
- dplyr::full_join(mtcarsR, carSurvey, by=c('car_name', 'gear'='GEARS'));
- #+END_SRC
+#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/dplyr.R" :wrap "src text :eval never :tangle no"
+mtcarsR %>%
+  dplyr::full_join(carSurvey, by=c('car_name', 'gear'='GEARS'));
+#+END_SRC
 
- #+RESULTS:
- #+begin_src text :eval never :tangle no
+#+RESULTS:
+#+begin_src text :eval never :tangle no
                car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb         word
- 1            Mazda RX4 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4     ZoomZoom
- 2        Mazda RX4 Wag 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4     ZoomZoom
- 3           Datsun 710 22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1         <NA>
- 4       Hornet 4 Drive 21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1         <NA>
- 5    Hornet Sportabout 18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2         <NA>
- 6              Valiant 18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1         <NA>
- 7           Duster 360 14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4         <NA>
- 8            Merc 240D 24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2         <NA>
- 9             Merc 230 22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2         <NA>
- 10            Merc 280 19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4         <NA>
- 11           Merc 280C 17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4         <NA>
- 12          Merc 450SE 16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3         <NA>
- 13          Merc 450SL 17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3         <NA>
- 14         Merc 450SLC 15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3         <NA>
- 15  Cadillac Fleetwood 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4 RollingCouch
- 16 Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4 RollingCouch
- 17   Chrysler Imperial 14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4         <NA>
- 18            Fiat 128 32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1         <NA>
- 19         Honda Civic 30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2         <NA>
- 20      Toyota Corolla 33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1         <NA>
- 21       Toyota Corona 21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1         <NA>
- 22    Dodge Challenger 15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2         <NA>
- 23         AMC Javelin 15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2         <NA>
- 24          Camaro Z28 13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4         <NA>
- 25    Pontiac Firebird 19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2         <NA>
- 26           Fiat X1-9 27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1         <NA>
- 27       Porsche 914-2 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2     SuperCar
- 28        Lotus Europa 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2     SuperCar
- 29      Ford Pantera L 15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4         <NA>
- 30        Ferrari Dino 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6     SuperCar
- 31        Ferrari Dino 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6  SuperRedCar
- 32       Maserati Bora 15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8         <NA>
- 33          Volvo 142E 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2 BoxeyButGood
- 34            Delorean   NA  NA    NA  NA   NA    NA    NA NA NA   16   NA     TimeWarp
- #+end_src
+ 1:           Mazda RX4 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4     ZoomZoom
+ 2:       Mazda RX4 Wag 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4     ZoomZoom
+ 3:          Datsun 710 22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1         <NA>
+ 4:      Hornet 4 Drive 21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1         <NA>
+ 5:   Hornet Sportabout 18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2         <NA>
+ 6:             Valiant 18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1         <NA>
+ 7:          Duster 360 14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4         <NA>
+ 8:           Merc 240D 24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2         <NA>
+ 9:            Merc 230 22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2         <NA>
+10:            Merc 280 19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4         <NA>
+11:           Merc 280C 17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4         <NA>
+12:          Merc 450SE 16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3         <NA>
+13:          Merc 450SL 17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3         <NA>
+14:         Merc 450SLC 15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3         <NA>
+15:  Cadillac Fleetwood 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4 RollingCouch
+16: Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4 RollingCouch
+17:   Chrysler Imperial 14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4         <NA>
+18:            Fiat 128 32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1         <NA>
+19:         Honda Civic 30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2         <NA>
+20:      Toyota Corolla 33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1         <NA>
+21:       Toyota Corona 21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1         <NA>
+22:    Dodge Challenger 15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2         <NA>
+23:         AMC Javelin 15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2         <NA>
+24:          Camaro Z28 13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4         <NA>
+25:    Pontiac Firebird 19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2         <NA>
+26:           Fiat X1-9 27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1         <NA>
+27:       Porsche 914-2 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2     SuperCar
+28:        Lotus Europa 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2     SuperCar
+29:      Ford Pantera L 15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4         <NA>
+30:        Ferrari Dino 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6     SuperCar
+31:        Ferrari Dino 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6  SuperRedCar
+32:       Maserati Bora 15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8         <NA>
+33:          Volvo 142E 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2 BoxeyButGood
+34:            Delorean   NA  NA    NA  NA   NA    NA    NA NA NA   16   NA     TimeWarp
+               car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb         word
+#+end_src
 
 ** Find left matches
 
  Sometimes you just want to filter a table by keeping only records that match some other table.  Note =semi_join= is not just a =left_join= followed by the
  removal of the right columns: 1) The column titles are from the left side only, and 2) records are not duplicated when multiple matches exist on the right.
 
- #+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/dplyr.R" :wrap "src text :eval never :tangle no"
- dplyr::semi_join(mtcarsR, carSurvey, by=c('car_name', 'gear'='GEARS'));
- #+END_SRC
+#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/dplyr.R" :wrap "src text :eval never :tangle no"
+mtcarsR %>%
+  dplyr::semi_join(carSurvey, by=c('car_name', 'gear'='GEARS'));
+#+END_SRC
 
- #+RESULTS:
- #+begin_src text :eval never :tangle no
+#+RESULTS:
+#+begin_src text :eval never :tangle no
               car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb
- 1           Mazda RX4 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
- 2       Mazda RX4 Wag 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
- 3  Cadillac Fleetwood 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
- 4 Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4
- 5       Porsche 914-2 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2
- 6        Lotus Europa 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2
- 7        Ferrari Dino 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6
- 8          Volvo 142E 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2
- #+end_src
+1:           Mazda RX4 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
+2:       Mazda RX4 Wag 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
+3:  Cadillac Fleetwood 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
+4: Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4
+5:       Porsche 914-2 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2
+6:        Lotus Europa 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2
+7:        Ferrari Dino 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6
+8:          Volvo 142E 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2
+#+end_src
 
 ** Fixing column names
 
- #+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/dplyr.R" :wrap "src text :eval never :tangle no"
- dplyr::inner_join(mtcarsR, rename(carSurvey, gear=GEARS, survey_word=word), by=c('car_name', 'gear'));
- #+END_SRC
-
- #+RESULTS:
- #+begin_src text :eval never :tangle no
-              car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb  survey_word
- 1           Mazda RX4 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4     ZoomZoom
- 2       Mazda RX4 Wag 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4     ZoomZoom
- 3  Cadillac Fleetwood 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4 RollingCouch
- 4 Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4 RollingCouch
- 5       Porsche 914-2 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2     SuperCar
- 6        Lotus Europa 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2     SuperCar
- 7        Ferrari Dino 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6     SuperCar
- 8        Ferrari Dino 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6  SuperRedCar
- 9          Volvo 142E 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2 BoxeyButGood
- #+end_src
-
-* Chaining vs Nesting
-
-** Chaining
-
-Chaining is a technique using the %>% operator that can be used to "chain" together dplyr calls into sequential steps.  The idea is very much like how pipes
-are used on the UNIX command line.
-
 #+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/dplyr.R" :wrap "src text :eval never :tangle no"
 mtcarsR %>%
-  dplyr::group_by(cyl, carb) %>%
-  dplyr::select(mpg, hp, cyl, carb) %>%
-  dplyr::summarise(meanMPG=mean(mpg, na.rm=TRUE),
-                   meanCYL=mean(hp,  na.rm=TRUE),
-                   .groups = 'drop')  %>%
-  filter(meanMPG > 20)
+  dplyr::inner_join(rename(carSurvey, gear=GEARS, survey_word=word), by=c('car_name', 'gear'));
 #+END_SRC
 
 #+RESULTS:
 #+begin_src text :eval never :tangle no
-# A tibble: 2 x 4
-    cyl  carb meanMPG meanCYL
-1     4     1    27.6    77.4
-2     4     2    25.9    87
+              car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb  survey_word
+1:           Mazda RX4 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4     ZoomZoom
+2:       Mazda RX4 Wag 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4     ZoomZoom
+3:  Cadillac Fleetwood 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4 RollingCouch
+4: Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4 RollingCouch
+5:       Porsche 914-2 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2     SuperCar
+6:        Lotus Europa 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2     SuperCar
+7:        Ferrari Dino 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6     SuperCar
+8:        Ferrari Dino 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6  SuperRedCar
+9:          Volvo 142E 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2 BoxeyButGood
 #+end_src
 
-** Temporary Variables
+* Long & Wide
+
+In the past I had an entire page with examples of how to transform data between wide and long formats using various R tools.  Today I almost always use =tidyr=...
+
+First we need some long data:
 
 #+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/dplyr.R" :wrap "src text :eval never :tangle no"
-tmp <- dplyr::group_by(mtcarsR, cyl, carb)
-tmp <- dplyr::select(tmp, mpg, hp, cyl, carb)
-tmp <- dplyr::summarise(tmp,
-                        meanMPG=mean(mpg, na.rm=TRUE),
-                        meanCYL=mean(hp,  na.rm=TRUE),
-                        .groups = 'drop')
-tmp <- dplyr::filter(tmp, meanMPG > 20)
-tmp
+longData <-
+  mtcarsR %>%
+  dplyr::select(gear, carb, mpg) %>%
+  dplyr::group_by(gear, carb) %>%
+  dplyr::summarise(mpg=mean(mpg), .groups = 'drop') %>%
+  data.table::data.table()
+longData
 #+END_SRC
 
 #+RESULTS:
 #+begin_src text :eval never :tangle no
-# A tibble: 2 x 4
-    cyl  carb meanMPG meanCYL
-1     4     1    27.6    77.4
-2     4     2    25.9    87
+    gear carb      mpg
+ 1:    3    1 20.33333
+ 2:    3    2 17.15000
+ 3:    3    3 16.30000
+ 4:    3    4 12.62000
+ 5:    4    1 29.10000
+ 6:    4    2 24.75000
+ 7:    4    4 19.75000
+ 8:    5    2 28.20000
+ 9:    5    4 15.80000
+10:    5    6 19.70000
+11:    5    8 15.00000
 #+end_src
 
-** Composition (for the LISPers)
+** Long to Wide
 
 #+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/dplyr.R" :wrap "src text :eval never :tangle no"
-dplyr::filter(dplyr::summarise(dplyr::select(dplyr::group_by(mtcarsR, 
-                                                             cyl, 
-                                                             carb), 
-                                             mpg, 
-                                             hp, 
-                                             cyl, 
-                                             carb),
-                               meanMPG=mean(mpg, na.rm=TRUE),
-                               meanCYL=mean(hp,  na.rm=TRUE),
-                               .groups = 'drop'), 
-              meanMPG > 20)
+wideData <-
+  longData %>%
+  tidyr::pivot_wider(names_from=carb,
+                     names_prefix='carb_',            ### This prepends "carb_" to the column titles created from the  carb column
+                     values_from=mpg) %>%
+  data.table::data.table()
+wideData
 #+END_SRC
 
 #+RESULTS:
 #+begin_src text :eval never :tangle no
-# A tibble: 2 x 4
-    cyl  carb meanMPG meanCYL
-1     4     1    27.6    77.4
-2     4     2    25.9    87
+   gear   carb_1 carb_2 carb_3 carb_4 carb_6 carb_8
+1:    3 20.33333  17.15   16.3  12.62     NA     NA
+2:    4 29.10000  24.75     NA  19.75     NA     NA
+3:    5       NA  28.20     NA  15.80   19.7     15
+#+end_src
+
+** Long to Wide
+
+#+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/dplyr.R" :wrap "src text :eval never :tangle no"
+wideData %>%
+  tidyr::pivot_longer(cols=2:7,
+                      names_to="carb",
+                      names_prefix='carb_',                     ### Wack the "carb_" we added to the column names.
+                      names_transform = list(carb=as.integer),  #### Previous line gets rid of the "carb_", but left a string.  Convert it to integers.
+                      values_drop_na=TRUE,                      ### Get rid of the NA values we created when we made teh wide dta
+                      values_to='mpg') %>%
+  data.table::data.table()
+#+END_SRC
+
+#+RESULTS:
+#+begin_src text :eval never :tangle no
+    gear carb      mpg
+ 1:    3    1 20.33333
+ 2:    3    2 17.15000
+ 3:    3    3 16.30000
+ 4:    3    4 12.62000
+ 5:    4    1 29.10000
+ 6:    4    2 24.75000
+ 7:    4    4 19.75000
+ 8:    5    2 28.20000
+ 9:    5    4 15.80000
+10:    5    6 19.70000
+11:    5    8 15.00000
 #+end_src
 

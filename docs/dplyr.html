@@ -3,17 +3,16 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-05-04 Tue 18:35 -->
+<!-- 2022-05-10 Tue 18:44 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="viewport" content="width=1024, initial-scale=1" />
 <title>dplyr Examples</title>
-<meta name="generator" content="Org mode" />
 <meta name="author" content="Mitch Richling" />
-<meta name="description" content="Demo of some of my most used dplyr features.@EOL"
- />
+<meta name="description" content="Demo of some of my most used dplyr features.@EOL" />
 <meta name="keywords" content="package cran dplyr R" />
-<style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
   .title  { text-align: center;
              margin-bottom: .2em; }
   .subtitle { text-align: center;
@@ -34,8 +33,9 @@
   #postamble p, #preamble p { font-size: 90%; margin: .2em; }
   p.verse { margin-left: 3%; }
   pre {
-    border: 1px solid #ccc;
-    box-shadow: 3px 3px 3px #eee;
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
     padding: 8pt;
     font-family: monospace;
     overflow: auto;
@@ -44,21 +44,21 @@
   pre.src {
     position: relative;
     overflow: auto;
-    padding-top: 1.2em;
   }
   pre.src:before {
     display: none;
     position: absolute;
-    background-color: white;
-    top: -10px;
-    right: 10px;
+    top: -8px;
+    right: 12px;
     padding: 3px;
-    border: 1px solid black;
+    color: #555;
+    background-color: #f2f2f299;
   }
   pre.src:hover:before { display: inline; margin-top: 14px;}
   /* Languages per Org manual */
   pre.src-asymptote:before { content: 'Asymptote'; }
   pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
   pre.src-C:before { content: 'C'; }
   /* pre.src-C++ doesn't work in CSS */
   pre.src-clojure:before { content: 'Clojure'; }
@@ -194,7 +194,6 @@
   .org-info-js_search-highlight
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   .org-svg { width: 90%; }
-  /*]]>*/-->
 </style>
 <style>body { width: 95%; margin: 2% auto; font-size: 18px; line-height: 1.4em; font-family: Georgia, serif; color: black; background-color: white; }</style>
 <style>body { min-width: 820px; max-width: 1024px; }</style>
@@ -212,7 +211,7 @@
  <a accesskey="h" href="https://richmit.github.io/ex-R/"> UP </a>
  |
  <a accesskey="H" href="https://www.mitchr.me/"> HOME </a>
-</div><div id="content">
+</div><div id="content" class="content">
 <h1 class="title">dplyr Examples</h1>
 <table border="2 solid #ccc" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" align="center">
 
@@ -230,7 +229,7 @@
 
 <tr>
 <td class="org-right"><b>Updated:</b></td>
-<td class="org-left"><i>2021-05-04 18:33:47</i></td>
+<td class="org-left"><i>2022-05-10 14:22:11</i></td>
 </tr>
 </tbody>
 </table>
@@ -238,71 +237,77 @@
 Copyright 2020-2021 Mitch Richling. All rights reserved.
 </p>
 
-<div id="table-of-contents">
+<div id="table-of-contents" role="doc-toc">
 <h2>Table of Contents</h2>
-<div id="text-table-of-contents">
+<div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org35d8edb">1. Metadata</a></li>
-<li><a href="#org09e5fe8">2. First Steps</a>
+<li><a href="#org26d3367">1. Metadata</a></li>
+<li><a href="#orgbb00ddf">2. First Steps</a>
 <ul>
-<li><a href="#orge821a25">2.1. Load the library</a></li>
-<li><a href="#orgda981ab">2.2. Example Data</a></li>
-<li><a href="#orgf5c5d35">2.3. Row Names</a></li>
+<li><a href="#org4487c19">2.1. Load the library</a></li>
+<li><a href="#org438ab5b">2.2. Example Data</a></li>
+<li><a href="#orgff1428f">2.3. Row Names</a></li>
+<li><a href="#orgc08c15c">2.4. Chaining/Pipes vs Nesting vs Assignments</a>
+<ul>
+<li><a href="#org396fd7d">2.4.1. Chaining (Pipes)</a></li>
+<li><a href="#org800d569">2.4.2. Temporary Variables</a></li>
+<li><a href="#orgeae5bbc">2.4.3. Composition</a></li>
 </ul>
 </li>
-<li><a href="#orgcde39ea">3. Selecting Rows</a>
-<ul>
-<li><a href="#orga8fe7dc">3.1. With a boolean expression</a></li>
-<li><a href="#orgad24a6f">3.2. With an index</a></li>
-<li><a href="#orgf80aa85">3.3. Pull out a sample row for each distinct record</a></li>
 </ul>
 </li>
-<li><a href="#org332bb42">4. Sorting</a></li>
-<li><a href="#org0a2d43c">5. Selecting Columns</a>
+<li><a href="#orgf864c1e">3. Selecting Rows</a>
 <ul>
-<li><a href="#orgbd5d10c">5.1. With a range</a></li>
-<li><a href="#orgb347afe">5.2. Select and rename</a></li>
-<li><a href="#org55f20bd">5.3. Just rename (but keep other columns)</a></li>
+<li><a href="#orgb78df03">3.1. With a boolean expression</a></li>
+<li><a href="#orge23c6fe">3.2. With an index</a></li>
+<li><a href="#org3f1cf4c">3.3. Pull out a sample row for each distinct record</a></li>
 </ul>
 </li>
-<li><a href="#org23b1915">6. New columns</a>
+<li><a href="#org410afa0">4. Sorting</a></li>
+<li><a href="#orgfb85db8">5. Selecting Columns</a>
 <ul>
-<li><a href="#org2979af1">6.1. Compute new columns based on other columns</a></li>
-<li><a href="#orgaabdf25">6.2. Compute new columns based on other columns and throw away all the old columns</a></li>
+<li><a href="#org375dc97">5.1. With a range</a></li>
+<li><a href="#orgfca0d3d">5.2. Select and rename</a></li>
+<li><a href="#org59af236">5.3. Just rename (but keep other columns)</a></li>
 </ul>
 </li>
-<li><a href="#org18dddde">7. Aggregation</a>
+<li><a href="#org4f1004f">6. New columns</a>
 <ul>
-<li><a href="#org625ec79">7.1. Global Aggregation</a></li>
-<li><a href="#org8696e33">7.2. Aggregate by factor level</a></li>
-<li><a href="#orgb9a9fdb">7.3. Aggregate by multiple factors</a></li>
-<li><a href="#org10dc682">7.4. Summarize by group and put results back in data frame</a></li>
+<li><a href="#org46ab67d">6.1. Compute new columns based on other columns</a></li>
+<li><a href="#orgff67a42">6.2. Compute new columns based on other columns and throw away all the old columns</a></li>
 </ul>
 </li>
-<li><a href="#org2b12d35">8. Join</a>
+<li><a href="#orgb3e95a6">7. Aggregation</a>
 <ul>
-<li><a href="#org5ea46f0">8.1. Example Data For Joins</a></li>
-<li><a href="#org93334fb">8.2. Inner Join</a></li>
-<li><a href="#org6ffed13">8.3. Left Join</a></li>
-<li><a href="#org8138a47">8.4. Right Join</a></li>
-<li><a href="#org93927f0">8.5. full outer Join</a></li>
-<li><a href="#orgc2ed9b3">8.6. Find left matches</a></li>
-<li><a href="#org4f3ef28">8.7. Fixing column names</a></li>
+<li><a href="#orge3a3863">7.1. Global Aggregation</a></li>
+<li><a href="#org0c784fc">7.2. Aggregate by factor level</a></li>
+<li><a href="#orgf9a13b6">7.3. Aggregate by multiple factors</a></li>
+<li><a href="#org3dd6692">7.4. Summarize by group and put results back in data frame</a></li>
 </ul>
 </li>
-<li><a href="#orgb1f021b">9. Chaining vs Nesting</a>
+<li><a href="#org46240c6">8. Join</a>
 <ul>
-<li><a href="#orgba6aefb">9.1. Chaining</a></li>
-<li><a href="#org6465e79">9.2. Temporary Variables</a></li>
-<li><a href="#org9a4172c">9.3. Composition (for the LISPers)</a></li>
+<li><a href="#orgde9a515">8.1. Example Data For Joins</a></li>
+<li><a href="#org93fefdd">8.2. Inner Join</a></li>
+<li><a href="#orgd4ae55f">8.3. Left Join</a></li>
+<li><a href="#org63812cf">8.4. Right Join</a></li>
+<li><a href="#org0fbcf21">8.5. full outer Join</a></li>
+<li><a href="#orgf2dfa58">8.6. Find left matches</a></li>
+<li><a href="#orgad064df">8.7. Fixing column names</a></li>
+</ul>
+</li>
+<li><a href="#orgac8d10a">9. Long &amp; Wide</a>
+<ul>
+<li><a href="#org576ec42">9.1. Long to Wide</a></li>
+<li><a href="#org8a73936">9.2. Long to Wide</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org35d8edb" class="outline-2">
-<h2 id="org35d8edb"><span class="section-number-2">1</span> Metadata</h2>
+<div id="outline-container-org26d3367" class="outline-2">
+<h2 id="org26d3367"><span class="section-number-2">1.</span> Metadata</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 The home for this HTML file is: <a href="https://richmit.github.io/ex-R/dplyr.html">https://richmit.github.io/ex-R/dplyr.html</a>
@@ -354,22 +359,24 @@ Directory contents:
 </div>
 </div>
 
-<div id="outline-container-org09e5fe8" class="outline-2">
-<h2 id="org09e5fe8"><span class="section-number-2">2</span> First Steps</h2>
+<div id="outline-container-orgbb00ddf" class="outline-2">
+<h2 id="orgbb00ddf"><span class="section-number-2">2.</span> First Steps</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-orge821a25" class="outline-3">
-<h3 id="orge821a25"><span class="section-number-3">2.1</span> Load the library</h3>
+<div id="outline-container-org4487c19" class="outline-3">
+<h3 id="org4487c19"><span class="section-number-3">2.1.</span> Load the library</h3>
 <div class="outline-text-3" id="text-2-1">
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #8470ff; font-weight: bold;">library</span>(dplyr)
+<span style="color: #8470ff; font-weight: bold;">library</span>(data.table)
+<span style="color: #8470ff; font-weight: bold;">library</span>(tidyr)
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgda981ab" class="outline-3">
-<h3 id="orgda981ab"><span class="section-number-3">2.2</span> Example Data</h3>
+<div id="outline-container-org438ab5b" class="outline-3">
+<h3 id="org438ab5b"><span class="section-number-3">2.2.</span> Example Data</h3>
 <div class="outline-text-3" id="text-2-2">
 <div class="org-src-container">
 <pre class="src src-R">mtcars
@@ -415,557 +422,529 @@ Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2
 </div>
 </div>
 
-<div id="outline-container-orgf5c5d35" class="outline-3">
-<h3 id="orgf5c5d35"><span class="section-number-3">2.3</span> Row Names</h3>
+<div id="outline-container-orgff1428f" class="outline-3">
+<h3 id="orgff1428f"><span class="section-number-3">2.3.</span> Row Names</h3>
 <div class="outline-text-3" id="text-2-3">
 <div class="org-src-container">
-<pre class="src src-R">mtcarsR <span style="color: #8470ff; font-weight: bold;">&lt;-</span> tibble::rownames_to_column(mtcars, <span style="color: #fa8072;">'car_name'</span>)                         
-mtcarsR
+<pre class="src src-R">mtcarsR <span style="color: #8470ff; font-weight: bold;">&lt;-</span>
+  mtcars <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
+  tibble::rownames_to_column(<span style="color: #fa8072;">'car_name'</span>) <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
+  data.table::data.table()
+mtcarsR <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
+  head()
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-text">              car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb
-1            Mazda RX4 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
-2        Mazda RX4 Wag 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
-3           Datsun 710 22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1
-4       Hornet 4 Drive 21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1
-5    Hornet Sportabout 18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2
-6              Valiant 18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1
-7           Duster 360 14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4
-8            Merc 240D 24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2
-9             Merc 230 22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2
-10            Merc 280 19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4
-11           Merc 280C 17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4
-12          Merc 450SE 16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3
-13          Merc 450SL 17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3
-14         Merc 450SLC 15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3
-15  Cadillac Fleetwood 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
-16 Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4
-17   Chrysler Imperial 14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4
-18            Fiat 128 32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1
-19         Honda Civic 30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2
-20      Toyota Corolla 33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1
-21       Toyota Corona 21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1
-22    Dodge Challenger 15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2
-23         AMC Javelin 15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2
-24          Camaro Z28 13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4
-25    Pontiac Firebird 19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2
-26           Fiat X1-9 27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1
-27       Porsche 914-2 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2
-28        Lotus Europa 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2
-29      Ford Pantera L 15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4
-30        Ferrari Dino 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6
-31       Maserati Bora 15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8
-32          Volvo 142E 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2
+<pre class="src src-text">            car_name  mpg cyl disp  hp drat    wt  qsec vs am gear carb
+1:         Mazda RX4 21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+2:     Mazda RX4 Wag 21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+3:        Datsun 710 22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+4:    Hornet 4 Drive 21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+5: Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+6:           Valiant 18.1   6  225 105 2.76 3.460 20.22  1  0    3    1
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc08c15c" class="outline-3">
+<h3 id="orgc08c15c"><span class="section-number-3">2.4.</span> Chaining/Pipes vs Nesting vs Assignments</h3>
+<div class="outline-text-3" id="text-2-4">
+<p>
+Using the Tidyverse tends to lead to deeply nested function calls, which can get a bit messy using traditional infix notation.  Ofcource the LISPers would
+tell our syntax is wrong, and the smalltalk peeps would say "just use dots".  The Tidyverse has taken a diffrent appraoch: the pipe.  In UNIX shells the pipe
+has long been used as a way to manage a flow of text transformations &#x2013; the essence of many shell scripts.  In R we frequently deal with a flow of data
+taransformations, so the pipe concept seems liek a good fit.  After this section, I'll pretty much stick to the "pipe way".
+</p>
+</div>
+
+<div id="outline-container-org396fd7d" class="outline-4">
+<h4 id="org396fd7d"><span class="section-number-4">2.4.1.</span> Chaining (Pipes)</h4>
+<div class="outline-text-4" id="text-2-4-1">
+<p>
+Chaining is a technique using the %&gt;% operator that can be used to "chain" together dplyr calls into sequential steps.  Note modern R versions contain native
+pipe operators that have slightly different semantics.  In this document I'll stick to the Tidyverse pipe.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">mtcarsR <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
+  dplyr::group_by(cyl, carb) <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
+  dplyr::select(mpg, hp, cyl, carb) <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
+  dplyr::summarise(meanMPG=mean(mpg, na.rm=<span style="color: #63b8ff;">TRUE</span>),
+                   meanCYL=mean(hp,  na.rm=<span style="color: #63b8ff;">TRUE</span>),
+                   .groups = <span style="color: #fa8072;">'drop'</span>)  <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
+  filter(meanMPG &gt; 20) <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
+  data.table::data.table()
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-text">   cyl carb meanMPG meanCYL
+1:   4    1   27.58    77.4
+2:   4    2   25.90    87.0
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org800d569" class="outline-4">
+<h4 id="org800d569"><span class="section-number-4">2.4.2.</span> Temporary Variables</h4>
+<div class="outline-text-4" id="text-2-4-2">
+<p>
+A favorite for FORTRAN programmers!
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">tmp <span style="color: #8470ff; font-weight: bold;">&lt;-</span> dplyr::group_by(mtcarsR, cyl, carb)
+tmp <span style="color: #8470ff; font-weight: bold;">&lt;-</span> dplyr::select(tmp, mpg, hp, cyl, carb)
+tmp <span style="color: #8470ff; font-weight: bold;">&lt;-</span> dplyr::summarise(tmp,
+                        meanMPG=mean(mpg, na.rm=<span style="color: #63b8ff;">TRUE</span>),
+                        meanCYL=mean(hp,  na.rm=<span style="color: #63b8ff;">TRUE</span>),
+                        .groups = <span style="color: #fa8072;">'drop'</span>)
+tmp <span style="color: #8470ff; font-weight: bold;">&lt;-</span> dplyr::filter(tmp, meanMPG &gt; 20)
+tmp <span style="color: #8470ff; font-weight: bold;">&lt;-</span> data.table::data.table(tmp)
+tmp
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-text">   cyl carb meanMPG meanCYL
+1:   4    1   27.58    77.4
+2:   4    2   25.90    87.0
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgeae5bbc" class="outline-4">
+<h4 id="orgeae5bbc"><span class="section-number-4">2.4.3.</span> Composition</h4>
+<div class="outline-text-4" id="text-2-4-3">
+<p>
+How the LISPers do it, but with worse syntax. ;)
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">data.table::data.table(dplyr::filter(dplyr::summarise(dplyr::select(dplyr::group_by(mtcarsR,
+                                                                                    cyl,
+                                                                                    carb),
+                                                                    mpg,
+                                                                    hp,
+                                                                    cyl,
+                                                                    carb),
+                                                      meanMPG=mean(mpg, na.rm=<span style="color: #63b8ff;">TRUE</span>),
+                                                      meanCYL=mean(hp,  na.rm=<span style="color: #63b8ff;">TRUE</span>),
+                                                      .groups = <span style="color: #fa8072;">'drop'</span>),
+                                     meanMPG &gt; 20))
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-text">   cyl carb meanMPG meanCYL
+1:   4    1   27.58    77.4
+2:   4    2   25.90    87.0
 </pre>
 </div>
 </div>
 </div>
 </div>
+</div>
 
-<div id="outline-container-orgcde39ea" class="outline-2">
-<h2 id="orgcde39ea"><span class="section-number-2">3</span> Selecting Rows</h2>
+<div id="outline-container-orgf864c1e" class="outline-2">
+<h2 id="orgf864c1e"><span class="section-number-2">3.</span> Selecting Rows</h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-orga8fe7dc" class="outline-3">
-<h3 id="orga8fe7dc"><span class="section-number-3">3.1</span> With a boolean expression</h3>
+<div id="outline-container-orgb78df03" class="outline-3">
+<h3 id="orgb78df03"><span class="section-number-3">3.1.</span> With a boolean expression</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 You can actually replace that &amp; with a comma, but I'm usually explicit about this sort of thing
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">dplyr::filter(mtcarsR, cyl&gt;4 &amp; carb==4)                        
+<pre class="src src-R">mtcarsR <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
+  dplyr::filter(cyl&gt;4 &amp; carb==4)
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-text">               car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+ 1:           Mazda RX4 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
+ 2:       Mazda RX4 Wag 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
+ 3:          Duster 360 14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4
+ 4:            Merc 280 19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4
+ 5:           Merc 280C 17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4
+ 6:  Cadillac Fleetwood 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
+ 7: Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4
+ 8:   Chrysler Imperial 14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4
+ 9:          Camaro Z28 13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4
+10:      Ford Pantera L 15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge23c6fe" class="outline-3">
+<h3 id="orge23c6fe"><span class="section-number-3">3.2.</span> With an index</h3>
+<div class="outline-text-3" id="text-3-2">
+<div class="org-src-container">
+<pre class="src src-R">mtcarsR <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
+  dplyr::slice(15:20)
 </pre>
 </div>
 
 <div class="org-src-container">
 <pre class="src src-text">              car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb
-1            Mazda RX4 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
-2        Mazda RX4 Wag 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
-3           Duster 360 14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4
-4             Merc 280 19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4
-5            Merc 280C 17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4
-6   Cadillac Fleetwood 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
-7  Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4
-8    Chrysler Imperial 14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4
-9           Camaro Z28 13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4
-10      Ford Pantera L 15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4
+1:  Cadillac Fleetwood 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
+2: Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4
+3:   Chrysler Imperial 14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4
+4:            Fiat 128 32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1
+5:         Honda Civic 30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2
+6:      Toyota Corolla 33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgad24a6f" class="outline-3">
-<h3 id="orgad24a6f"><span class="section-number-3">3.2</span> With an index</h3>
-<div class="outline-text-3" id="text-3-2">
-<div class="org-src-container">
-<pre class="src src-R">dplyr::slice(mtcarsR, 15:20)
-</pre>
-</div>
-
-<div class="org-src-container">
-<pre class="src src-text">             car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb
-1  Cadillac Fleetwood 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
-2 Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4
-3   Chrysler Imperial 14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4
-4            Fiat 128 32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1
-5         Honda Civic 30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2
-6      Toyota Corolla 33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orgf80aa85" class="outline-3">
-<h3 id="orgf80aa85"><span class="section-number-3">3.3</span> Pull out a sample row for each distinct record</h3>
+<div id="outline-container-org3f1cf4c" class="outline-3">
+<h3 id="org3f1cf4c"><span class="section-number-3">3.3.</span> Pull out a sample row for each distinct record</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 More useful if <code>dplyr::select</code> is used to limit input to the column(s)
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">dplyr::distinct(mtcarsR, cyl, carb)           
+<pre class="src src-R">mtcarsR <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
+  dplyr::distinct(cyl, carb)
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-text">  cyl carb
-1   6    4
-2   4    1
-3   6    1
-4   8    2
-5   8    4
-6   4    2
-7   8    3
-8   6    6
-9   8    8
+<pre class="src src-text">   cyl carb
+1:   6    4
+2:   4    1
+3:   6    1
+4:   8    2
+5:   8    4
+6:   4    2
+7:   8    3
+8:   6    6
+9:   8    8
 </pre>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org332bb42" class="outline-2">
-<h2 id="org332bb42"><span class="section-number-2">4</span> Sorting</h2>
+<div id="outline-container-org410afa0" class="outline-2">
+<h2 id="org410afa0"><span class="section-number-2">4.</span> Sorting</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 Could have used '-gear' here as 'gear' is numeric, but 'desc' works on strings as well.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">dplyr::arrange(mtcarsR, cyl, desc(gear)) 
+<pre class="src src-R">mtcarsR <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
+  dplyr::arrange(cyl, desc(gear))
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-text">              car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb
-1        Porsche 914-2 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2
-2         Lotus Europa 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2
-3           Datsun 710 22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1
-4            Merc 240D 24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2
-5             Merc 230 22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2
-6             Fiat 128 32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1
-7          Honda Civic 30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2
-8       Toyota Corolla 33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1
-9            Fiat X1-9 27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1
-10          Volvo 142E 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2
-11       Toyota Corona 21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1
-12        Ferrari Dino 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6
-13           Mazda RX4 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
-14       Mazda RX4 Wag 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
-15            Merc 280 19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4
-16           Merc 280C 17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4
-17      Hornet 4 Drive 21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1
-18             Valiant 18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1
-19      Ford Pantera L 15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4
-20       Maserati Bora 15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8
-21   Hornet Sportabout 18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2
-22          Duster 360 14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4
-23          Merc 450SE 16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3
-24          Merc 450SL 17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3
-25         Merc 450SLC 15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3
-26  Cadillac Fleetwood 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
-27 Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4
-28   Chrysler Imperial 14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4
-29    Dodge Challenger 15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2
-30         AMC Javelin 15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2
-31          Camaro Z28 13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4
-32    Pontiac Firebird 19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2
+<pre class="src src-text">               car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+ 1:       Porsche 914-2 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2
+ 2:        Lotus Europa 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2
+ 3:          Datsun 710 22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1
+ 4:           Merc 240D 24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2
+ 5:            Merc 230 22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2
+ 6:            Fiat 128 32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1
+ 7:         Honda Civic 30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2
+ 8:      Toyota Corolla 33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1
+ 9:           Fiat X1-9 27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1
+10:          Volvo 142E 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2
+11:       Toyota Corona 21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1
+12:        Ferrari Dino 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6
+13:           Mazda RX4 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
+14:       Mazda RX4 Wag 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
+15:            Merc 280 19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4
+16:           Merc 280C 17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4
+17:      Hornet 4 Drive 21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1
+18:             Valiant 18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1
+19:      Ford Pantera L 15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4
+20:       Maserati Bora 15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8
+21:   Hornet Sportabout 18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2
+22:          Duster 360 14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4
+23:          Merc 450SE 16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3
+24:          Merc 450SL 17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3
+25:         Merc 450SLC 15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3
+26:  Cadillac Fleetwood 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
+27: Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4
+28:   Chrysler Imperial 14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4
+29:    Dodge Challenger 15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2
+30:         AMC Javelin 15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2
+31:          Camaro Z28 13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4
+32:    Pontiac Firebird 19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2
+               car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org0a2d43c" class="outline-2">
-<h2 id="org0a2d43c"><span class="section-number-2">5</span> Selecting Columns</h2>
+<div id="outline-container-orgfb85db8" class="outline-2">
+<h2 id="orgfb85db8"><span class="section-number-2">5.</span> Selecting Columns</h2>
 <div class="outline-text-2" id="text-5">
 </div>
-<div id="outline-container-orgbd5d10c" class="outline-3">
-<h3 id="orgbd5d10c"><span class="section-number-3">5.1</span> With a range</h3>
+<div id="outline-container-org375dc97" class="outline-3">
+<h3 id="org375dc97"><span class="section-number-3">5.1.</span> With a range</h3>
 <div class="outline-text-3" id="text-5-1">
 <p>
 Love how you can use column names with the range operator.  Numbers work too, but that is boring.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">dplyr::select(mtcarsR, cyl:drat)         
+<pre class="src src-R">mtcarsR <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
+  dplyr::select(cyl:drat) <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
+  head()
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-text">   cyl  disp  hp drat
-1    6 160.0 110 3.90
-2    6 160.0 110 3.90
-3    4 108.0  93 3.85
-4    6 258.0 110 3.08
-5    8 360.0 175 3.15
-6    6 225.0 105 2.76
-7    8 360.0 245 3.21
-8    4 146.7  62 3.69
-9    4 140.8  95 3.92
-10   6 167.6 123 3.92
-11   6 167.6 123 3.92
-12   8 275.8 180 3.07
-13   8 275.8 180 3.07
-14   8 275.8 180 3.07
-15   8 472.0 205 2.93
-16   8 460.0 215 3.00
-17   8 440.0 230 3.23
-18   4  78.7  66 4.08
-19   4  75.7  52 4.93
-20   4  71.1  65 4.22
-21   4 120.1  97 3.70
-22   8 318.0 150 2.76
-23   8 304.0 150 3.15
-24   8 350.0 245 3.73
-25   8 400.0 175 3.08
-26   4  79.0  66 4.08
-27   4 120.3  91 4.43
-28   4  95.1 113 3.77
-29   8 351.0 264 4.22
-30   6 145.0 175 3.62
-31   8 301.0 335 3.54
-32   4 121.0 109 4.11
+<pre class="src src-text">   cyl disp  hp drat
+1:   6  160 110 3.90
+2:   6  160 110 3.90
+3:   4  108  93 3.85
+4:   6  258 110 3.08
+5:   8  360 175 3.15
+6:   6  225 105 2.76
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgb347afe" class="outline-3">
-<h3 id="orgb347afe"><span class="section-number-3">5.2</span> Select and rename</h3>
+<div id="outline-container-orgfca0d3d" class="outline-3">
+<h3 id="orgfca0d3d"><span class="section-number-3">5.2.</span> Select and rename</h3>
 <div class="outline-text-3" id="text-5-2">
 <div class="org-src-container">
-<pre class="src src-R">dplyr::select(mtcarsR, displacement=disp, cyl)
+<pre class="src src-R">mtcarsR <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
+  dplyr::select(displacement=disp, cyl) <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
+  head()
 </pre>
 </div>
 
 <div class="org-src-container">
 <pre class="src src-text">   displacement cyl
-1         160.0   6
-2         160.0   6
-3         108.0   4
-4         258.0   6
-5         360.0   8
-6         225.0   6
-7         360.0   8
-8         146.7   4
-9         140.8   4
-10        167.6   6
-11        167.6   6
-12        275.8   8
-13        275.8   8
-14        275.8   8
-15        472.0   8
-16        460.0   8
-17        440.0   8
-18         78.7   4
-19         75.7   4
-20         71.1   4
-21        120.1   4
-22        318.0   8
-23        304.0   8
-24        350.0   8
-25        400.0   8
-26         79.0   4
-27        120.3   4
-28         95.1   4
-29        351.0   8
-30        145.0   6
-31        301.0   8
-32        121.0   4
+1:          160   6
+2:          160   6
+3:          108   4
+4:          258   6
+5:          360   8
+6:          225   6
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org55f20bd" class="outline-3">
-<h3 id="org55f20bd"><span class="section-number-3">5.3</span> Just rename (but keep other columns)</h3>
+<div id="outline-container-org59af236" class="outline-3">
+<h3 id="org59af236"><span class="section-number-3">5.3.</span> Just rename (but keep other columns)</h3>
 <div class="outline-text-3" id="text-5-3">
 <div class="org-src-container">
-<pre class="src src-R">dplyr::rename(mtcarsR, displacement=disp, weight=wt)
+<pre class="src src-R">mtcarsR <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
+  dplyr::rename(displacement=disp, weight=wt) <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
+  head()
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-text">              car_name  mpg cyl displacement  hp drat weight  qsec vs am gear carb
-1            Mazda RX4 21.0   6        160.0 110 3.90  2.620 16.46  0  1    4    4
-2        Mazda RX4 Wag 21.0   6        160.0 110 3.90  2.875 17.02  0  1    4    4
-3           Datsun 710 22.8   4        108.0  93 3.85  2.320 18.61  1  1    4    1
-4       Hornet 4 Drive 21.4   6        258.0 110 3.08  3.215 19.44  1  0    3    1
-5    Hornet Sportabout 18.7   8        360.0 175 3.15  3.440 17.02  0  0    3    2
-6              Valiant 18.1   6        225.0 105 2.76  3.460 20.22  1  0    3    1
-7           Duster 360 14.3   8        360.0 245 3.21  3.570 15.84  0  0    3    4
-8            Merc 240D 24.4   4        146.7  62 3.69  3.190 20.00  1  0    4    2
-9             Merc 230 22.8   4        140.8  95 3.92  3.150 22.90  1  0    4    2
-10            Merc 280 19.2   6        167.6 123 3.92  3.440 18.30  1  0    4    4
-11           Merc 280C 17.8   6        167.6 123 3.92  3.440 18.90  1  0    4    4
-12          Merc 450SE 16.4   8        275.8 180 3.07  4.070 17.40  0  0    3    3
-13          Merc 450SL 17.3   8        275.8 180 3.07  3.730 17.60  0  0    3    3
-14         Merc 450SLC 15.2   8        275.8 180 3.07  3.780 18.00  0  0    3    3
-15  Cadillac Fleetwood 10.4   8        472.0 205 2.93  5.250 17.98  0  0    3    4
-16 Lincoln Continental 10.4   8        460.0 215 3.00  5.424 17.82  0  0    3    4
-17   Chrysler Imperial 14.7   8        440.0 230 3.23  5.345 17.42  0  0    3    4
-18            Fiat 128 32.4   4         78.7  66 4.08  2.200 19.47  1  1    4    1
-19         Honda Civic 30.4   4         75.7  52 4.93  1.615 18.52  1  1    4    2
-20      Toyota Corolla 33.9   4         71.1  65 4.22  1.835 19.90  1  1    4    1
-21       Toyota Corona 21.5   4        120.1  97 3.70  2.465 20.01  1  0    3    1
-22    Dodge Challenger 15.5   8        318.0 150 2.76  3.520 16.87  0  0    3    2
-23         AMC Javelin 15.2   8        304.0 150 3.15  3.435 17.30  0  0    3    2
-24          Camaro Z28 13.3   8        350.0 245 3.73  3.840 15.41  0  0    3    4
-25    Pontiac Firebird 19.2   8        400.0 175 3.08  3.845 17.05  0  0    3    2
-26           Fiat X1-9 27.3   4         79.0  66 4.08  1.935 18.90  1  1    4    1
-27       Porsche 914-2 26.0   4        120.3  91 4.43  2.140 16.70  0  1    5    2
-28        Lotus Europa 30.4   4         95.1 113 3.77  1.513 16.90  1  1    5    2
-29      Ford Pantera L 15.8   8        351.0 264 4.22  3.170 14.50  0  1    5    4
-30        Ferrari Dino 19.7   6        145.0 175 3.62  2.770 15.50  0  1    5    6
-31       Maserati Bora 15.0   8        301.0 335 3.54  3.570 14.60  0  1    5    8
-32          Volvo 142E 21.4   4        121.0 109 4.11  2.780 18.60  1  1    4    2
+<pre class="src src-text">            car_name  mpg cyl displacement  hp drat weight  qsec vs am gear carb
+1:         Mazda RX4 21.0   6          160 110 3.90  2.620 16.46  0  1    4    4
+2:     Mazda RX4 Wag 21.0   6          160 110 3.90  2.875 17.02  0  1    4    4
+3:        Datsun 710 22.8   4          108  93 3.85  2.320 18.61  1  1    4    1
+4:    Hornet 4 Drive 21.4   6          258 110 3.08  3.215 19.44  1  0    3    1
+5: Hornet Sportabout 18.7   8          360 175 3.15  3.440 17.02  0  0    3    2
+6:           Valiant 18.1   6          225 105 2.76  3.460 20.22  1  0    3    1
 </pre>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org23b1915" class="outline-2">
-<h2 id="org23b1915"><span class="section-number-2">6</span> New columns</h2>
+<div id="outline-container-org4f1004f" class="outline-2">
+<h2 id="org4f1004f"><span class="section-number-2">6.</span> New columns</h2>
 <div class="outline-text-2" id="text-6">
 </div>
-<div id="outline-container-org2979af1" class="outline-3">
-<h3 id="org2979af1"><span class="section-number-3">6.1</span> Compute new columns based on other columns</h3>
+<div id="outline-container-org46ab67d" class="outline-3">
+<h3 id="org46ab67d"><span class="section-number-3">6.1.</span> Compute new columns based on other columns</h3>
 <div class="outline-text-3" id="text-6-1">
 <div class="org-src-container">
-<pre class="src src-R">dplyr::mutate(mtcarsR, mpc=mpg/cyl, impc=1/mpc) 
+<pre class="src src-R">mtcarsR <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
+  dplyr::mutate(mpc=mpg/cyl, impc=1/mpc) <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
+  head()
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-text">              car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb      mpc      impc
-1            Mazda RX4 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4 3.500000 0.2857143
-2        Mazda RX4 Wag 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4 3.500000 0.2857143
-3           Datsun 710 22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1 5.700000 0.1754386
-4       Hornet 4 Drive 21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1 3.566667 0.2803738
-5    Hornet Sportabout 18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2 2.337500 0.4278075
-6              Valiant 18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1 3.016667 0.3314917
-7           Duster 360 14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4 1.787500 0.5594406
-8            Merc 240D 24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2 6.100000 0.1639344
-9             Merc 230 22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2 5.700000 0.1754386
-10            Merc 280 19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4 3.200000 0.3125000
-11           Merc 280C 17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4 2.966667 0.3370787
-12          Merc 450SE 16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3 2.050000 0.4878049
-13          Merc 450SL 17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3 2.162500 0.4624277
-14         Merc 450SLC 15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3 1.900000 0.5263158
-15  Cadillac Fleetwood 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4 1.300000 0.7692308
-16 Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4 1.300000 0.7692308
-17   Chrysler Imperial 14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4 1.837500 0.5442177
-18            Fiat 128 32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1 8.100000 0.1234568
-19         Honda Civic 30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2 7.600000 0.1315789
-20      Toyota Corolla 33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1 8.475000 0.1179941
-21       Toyota Corona 21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1 5.375000 0.1860465
-22    Dodge Challenger 15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2 1.937500 0.5161290
-23         AMC Javelin 15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2 1.900000 0.5263158
-24          Camaro Z28 13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4 1.662500 0.6015038
-25    Pontiac Firebird 19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2 2.400000 0.4166667
-26           Fiat X1-9 27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1 6.825000 0.1465201
-27       Porsche 914-2 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2 6.500000 0.1538462
-28        Lotus Europa 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2 7.600000 0.1315789
-29      Ford Pantera L 15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4 1.975000 0.5063291
-30        Ferrari Dino 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6 3.283333 0.3045685
-31       Maserati Bora 15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8 1.875000 0.5333333
-32          Volvo 142E 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2 5.350000 0.1869159
+<pre class="src src-text">            car_name  mpg cyl disp  hp drat    wt  qsec vs am gear carb      mpc      impc
+1:         Mazda RX4 21.0   6  160 110 3.90 2.620 16.46  0  1    4    4 3.500000 0.2857143
+2:     Mazda RX4 Wag 21.0   6  160 110 3.90 2.875 17.02  0  1    4    4 3.500000 0.2857143
+3:        Datsun 710 22.8   4  108  93 3.85 2.320 18.61  1  1    4    1 5.700000 0.1754386
+4:    Hornet 4 Drive 21.4   6  258 110 3.08 3.215 19.44  1  0    3    1 3.566667 0.2803738
+5: Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2 2.337500 0.4278075
+6:           Valiant 18.1   6  225 105 2.76 3.460 20.22  1  0    3    1 3.016667 0.3314917
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgaabdf25" class="outline-3">
-<h3 id="orgaabdf25"><span class="section-number-3">6.2</span> Compute new columns based on other columns and throw away all the old columns</h3>
+<div id="outline-container-orgff67a42" class="outline-3">
+<h3 id="orgff67a42"><span class="section-number-3">6.2.</span> Compute new columns based on other columns and throw away all the old columns</h3>
 <div class="outline-text-3" id="text-6-2">
 <div class="org-src-container">
-<pre class="src src-R">dplyr::transmute(mtcarsR, mpc=mpg/cyl, mpd=mpg/disp)
+<pre class="src src-R">mtcarsR <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
+  dplyr::transmute(mpc=mpg/cyl, mpd=mpg/disp) <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
+  head()
 </pre>
 </div>
 
 <div class="org-src-container">
 <pre class="src src-text">        mpc        mpd
-1  3.500000 0.13125000
-2  3.500000 0.13125000
-3  5.700000 0.21111111
-4  3.566667 0.08294574
-5  2.337500 0.05194444
-6  3.016667 0.08044444
-7  1.787500 0.03972222
-8  6.100000 0.16632584
-9  5.700000 0.16193182
-10 3.200000 0.11455847
-11 2.966667 0.10620525
-12 2.050000 0.05946338
-13 2.162500 0.06272661
-14 1.900000 0.05511240
-15 1.300000 0.02203390
-16 1.300000 0.02260870
-17 1.837500 0.03340909
-18 8.100000 0.41168996
-19 7.600000 0.40158520
-20 8.475000 0.47679325
-21 5.375000 0.17901749
-22 1.937500 0.04874214
-23 1.900000 0.05000000
-24 1.662500 0.03800000
-25 2.400000 0.04800000
-26 6.825000 0.34556962
-27 6.500000 0.21612635
-28 7.600000 0.31966351
-29 1.975000 0.04501425
-30 3.283333 0.13586207
-31 1.875000 0.04983389
-32 5.350000 0.17685950
+1: 3.500000 0.13125000
+2: 3.500000 0.13125000
+3: 5.700000 0.21111111
+4: 3.566667 0.08294574
+5: 2.337500 0.05194444
+6: 3.016667 0.08044444
 </pre>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org18dddde" class="outline-2">
-<h2 id="org18dddde"><span class="section-number-2">7</span> Aggregation</h2>
+<div id="outline-container-orgb3e95a6" class="outline-2">
+<h2 id="orgb3e95a6"><span class="section-number-2">7.</span> Aggregation</h2>
 <div class="outline-text-2" id="text-7">
 </div>
-<div id="outline-container-org625ec79" class="outline-3">
-<h3 id="org625ec79"><span class="section-number-3">7.1</span> Global Aggregation</h3>
+<div id="outline-container-orge3a3863" class="outline-3">
+<h3 id="orge3a3863"><span class="section-number-3">7.1.</span> Global Aggregation</h3>
 <div class="outline-text-3" id="text-7-1">
 <div class="org-src-container">
-<pre class="src src-R">dplyr::summarize(mtcars, mean_disp=mean(disp), sd_disp=sd(disp), mean_wt=mean(wt))
+<pre class="src src-R">mtcarsR <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
+  dplyr::summarize(mean_disp=mean(disp), sd_disp=sd(disp), mean_wt=mean(wt)) <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
+  data.table::data.table()
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-text">  mean_disp  sd_disp mean_wt
-1  230.7219 123.9387 3.21725
+<pre class="src src-text">   mean_disp  sd_disp mean_wt
+1:  230.7219 123.9387 3.21725
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org8696e33" class="outline-3">
-<h3 id="org8696e33"><span class="section-number-3">7.2</span> Aggregate by factor level</h3>
+<div id="outline-container-org0c784fc" class="outline-3">
+<h3 id="org0c784fc"><span class="section-number-3">7.2.</span> Aggregate by factor level</h3>
 <div class="outline-text-3" id="text-7-2">
 <div class="org-src-container">
-<pre class="src src-R">dplyr::summarize(dplyr::group_by(mtcars, cyl), mean_disp_by_cyl=mean(disp), .groups = <span style="color: #fa8072;">'drop'</span>)
+<pre class="src src-R">mtcarsR <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
+  dplyr::group_by(cyl) <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
+  dplyr::summarize(mean_disp_by_cyl=mean(disp), .groups = <span style="color: #fa8072;">'drop'</span>) <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
+  data.table::data.table()
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-text"># A tibble: 3 x 2
-    cyl mean_disp_by_cyl
-1     4             105.
-2     6             183.
-3     8             353.
+<pre class="src src-text">   cyl mean_disp_by_cyl
+1:   4         105.1364
+2:   6         183.3143
+3:   8         353.1000
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgb9a9fdb" class="outline-3">
-<h3 id="orgb9a9fdb"><span class="section-number-3">7.3</span> Aggregate by multiple factors</h3>
+<div id="outline-container-orgf9a13b6" class="outline-3">
+<h3 id="orgf9a13b6"><span class="section-number-3">7.3.</span> Aggregate by multiple factors</h3>
 <div class="outline-text-3" id="text-7-3">
 <div class="org-src-container">
-<pre class="src src-R">dplyr::summarize(dplyr::group_by(mtcars, cyl, gear), mean_disp_by_cyl_and_gear=mean(disp), .groups = <span style="color: #fa8072;">'drop'</span>)
+<pre class="src src-R">mtcarsR <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
+  dplyr::group_by(cyl, gear) <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
+  dplyr::summarize(, mean_disp_by_cyl_and_gear=mean(disp), .groups = <span style="color: #fa8072;">'drop'</span>) <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
+  data.table::data.table()
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-text"># A tibble: 8 x 3
-    cyl  gear mean_disp_by_cyl_and_gear
-1     4     3                      120.
-2     4     4                      103.
-3     4     5                      108.
-4     6     3                      242.
-5     6     4                      164.
-6     6     5                      145 
-7     8     3                      358.
-8     8     5                      326
+<pre class="src src-text">   cyl gear mean_disp_by_cyl_and_gear
+1:   4    3                  120.1000
+2:   4    4                  102.6250
+3:   4    5                  107.7000
+4:   6    3                  241.5000
+5:   6    4                  163.8000
+6:   6    5                  145.0000
+7:   8    3                  357.6167
+8:   8    5                  326.0000
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org10dc682" class="outline-3">
-<h3 id="org10dc682"><span class="section-number-3">7.4</span> Summarize by group and put results back in data frame</h3>
+<div id="outline-container-org3dd6692" class="outline-3">
+<h3 id="org3dd6692"><span class="section-number-3">7.4.</span> Summarize by group and put results back in data frame</h3>
 <div class="outline-text-3" id="text-7-4">
 <div class="org-src-container">
-<pre class="src src-R">dplyr::mutate(dplyr::group_by(mtcars, cyl, gear), mean_disp_by_cyl_and_gear=mean(disp))
+<pre class="src src-R">mtcarsR <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
+  dplyr::group_by(cyl, gear) <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
+  dplyr::mutate(mean_disp_by_cyl_and_gear=mean(disp)) <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
+  data.table::data.table()
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-text"># A tibble: 32 x 12
-# Groups:   cyl, gear [8]
-     mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb mean_disp_by_cyl_and_gear
- 1  21       6 160     110  3.9   2.62  16.5     0     1     4     4                      164.
- 2  21       6 160     110  3.9   2.88  17.0     0     1     4     4                      164.
- 3  22.8     4 108      93  3.85  2.32  18.6     1     1     4     1                      103.
- 4  21.4     6 258     110  3.08  3.22  19.4     1     0     3     1                      242.
- 5  18.7     8 360     175  3.15  3.44  17.0     0     0     3     2                      358.
- 6  18.1     6 225     105  2.76  3.46  20.2     1     0     3     1                      242.
- 7  14.3     8 360     245  3.21  3.57  15.8     0     0     3     4                      358.
- 8  24.4     4 147.     62  3.69  3.19  20       1     0     4     2                      103.
- 9  22.8     4 141.     95  3.92  3.15  22.9     1     0     4     2                      103.
-10  19.2     6 168.    123  3.92  3.44  18.3     1     0     4     4                      164.
-11  17.8     6 168.    123  3.92  3.44  18.9     1     0     4     4                      164.
-12  16.4     8 276.    180  3.07  4.07  17.4     0     0     3     3                      358.
-13  17.3     8 276.    180  3.07  3.73  17.6     0     0     3     3                      358.
-14  15.2     8 276.    180  3.07  3.78  18       0     0     3     3                      358.
-15  10.4     8 472     205  2.93  5.25  18.0     0     0     3     4                      358.
-16  10.4     8 460     215  3     5.42  17.8     0     0     3     4                      358.
-17  14.7     8 440     230  3.23  5.34  17.4     0     0     3     4                      358.
-18  32.4     4  78.7    66  4.08  2.2   19.5     1     1     4     1                      103.
-19  30.4     4  75.7    52  4.93  1.62  18.5     1     1     4     2                      103.
-20  33.9     4  71.1    65  4.22  1.84  19.9     1     1     4     1                      103.
-21  21.5     4 120.     97  3.7   2.46  20.0     1     0     3     1                      120.
-22  15.5     8 318     150  2.76  3.52  16.9     0     0     3     2                      358.
-23  15.2     8 304     150  3.15  3.44  17.3     0     0     3     2                      358.
-24  13.3     8 350     245  3.73  3.84  15.4     0     0     3     4                      358.
-25  19.2     8 400     175  3.08  3.84  17.0     0     0     3     2                      358.
-26  27.3     4  79      66  4.08  1.94  18.9     1     1     4     1                      103.
-27  26       4 120.     91  4.43  2.14  16.7     0     1     5     2                      108.
-28  30.4     4  95.1   113  3.77  1.51  16.9     1     1     5     2                      108.
-29  15.8     8 351     264  4.22  3.17  14.5     0     1     5     4                      326 
-30  19.7     6 145     175  3.62  2.77  15.5     0     1     5     6                      145 
-31  15       8 301     335  3.54  3.57  14.6     0     1     5     8                      326 
-32  21.4     4 121     109  4.11  2.78  18.6     1     1     4     2                      103.
+<pre class="src src-text">               car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb mean_disp_by_cyl_and_gear
+ 1:           Mazda RX4 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4                  163.8000
+ 2:       Mazda RX4 Wag 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4                  163.8000
+ 3:          Datsun 710 22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1                  102.6250
+ 4:      Hornet 4 Drive 21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1                  241.5000
+ 5:   Hornet Sportabout 18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2                  357.6167
+ 6:             Valiant 18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1                  241.5000
+ 7:          Duster 360 14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4                  357.6167
+ 8:           Merc 240D 24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2                  102.6250
+ 9:            Merc 230 22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2                  102.6250
+10:            Merc 280 19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4                  163.8000
+11:           Merc 280C 17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4                  163.8000
+12:          Merc 450SE 16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3                  357.6167
+13:          Merc 450SL 17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3                  357.6167
+14:         Merc 450SLC 15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3                  357.6167
+15:  Cadillac Fleetwood 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4                  357.6167
+16: Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4                  357.6167
+17:   Chrysler Imperial 14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4                  357.6167
+18:            Fiat 128 32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1                  102.6250
+19:         Honda Civic 30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2                  102.6250
+20:      Toyota Corolla 33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1                  102.6250
+21:       Toyota Corona 21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1                  120.1000
+22:    Dodge Challenger 15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2                  357.6167
+23:         AMC Javelin 15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2                  357.6167
+24:          Camaro Z28 13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4                  357.6167
+25:    Pontiac Firebird 19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2                  357.6167
+26:           Fiat X1-9 27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1                  102.6250
+27:       Porsche 914-2 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2                  107.7000
+28:        Lotus Europa 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2                  107.7000
+29:      Ford Pantera L 15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4                  326.0000
+30:        Ferrari Dino 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6                  145.0000
+31:       Maserati Bora 15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8                  326.0000
+32:          Volvo 142E 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2                  102.6250
+               car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb mean_disp_by_cyl_and_gear
 </pre>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org2b12d35" class="outline-2">
-<h2 id="org2b12d35"><span class="section-number-2">8</span> Join</h2>
+<div id="outline-container-org46240c6" class="outline-2">
+<h2 id="org46240c6"><span class="section-number-2">8.</span> Join</h2>
 <div class="outline-text-2" id="text-8">
 </div>
-<div id="outline-container-org5ea46f0" class="outline-3">
-<h3 id="org5ea46f0"><span class="section-number-3">8.1</span> Example Data For Joins</h3>
+<div id="outline-container-orgde9a515" class="outline-3">
+<h3 id="orgde9a515"><span class="section-number-3">8.1.</span> Example Data For Joins</h3>
 <div class="outline-text-3" id="text-8-1">
 <div class="org-src-container">
 <pre class="src src-R">carSurvey <span style="color: #8470ff; font-weight: bold;">&lt;-</span> data.table::fread(header=T, text=<span style="color: #fa8072;">'</span>
@@ -1010,36 +989,37 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-org93334fb" class="outline-3">
-<h3 id="org93334fb"><span class="section-number-3">8.2</span> Inner Join</h3>
+<div id="outline-container-org93fefdd" class="outline-3">
+<h3 id="org93fefdd"><span class="section-number-3">8.2.</span> Inner Join</h3>
 <div class="outline-text-3" id="text-8-2">
 <p>
 Here we only get records that match on both the left (x) and right (y) sides.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">dplyr::inner_join(mtcarsR, carSurvey, by=c(<span style="color: #fa8072;">'car_name'</span>, <span style="color: #fa8072;">'gear'</span>=<span style="color: #fa8072;">'GEARS'</span>));
+<pre class="src src-R">mtcarsR <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
+  dplyr::inner_join(carSurvey, by=c(<span style="color: #fa8072;">'car_name'</span>, <span style="color: #fa8072;">'gear'</span>=<span style="color: #fa8072;">'GEARS'</span>))
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-text">             car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb         word
-1           Mazda RX4 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4     ZoomZoom
-2       Mazda RX4 Wag 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4     ZoomZoom
-3  Cadillac Fleetwood 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4 RollingCouch
-4 Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4 RollingCouch
-5       Porsche 914-2 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2     SuperCar
-6        Lotus Europa 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2     SuperCar
-7        Ferrari Dino 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6     SuperCar
-8        Ferrari Dino 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6  SuperRedCar
-9          Volvo 142E 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2 BoxeyButGood
+<pre class="src src-text">              car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb         word
+1:           Mazda RX4 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4     ZoomZoom
+2:       Mazda RX4 Wag 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4     ZoomZoom
+3:  Cadillac Fleetwood 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4 RollingCouch
+4: Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4 RollingCouch
+5:       Porsche 914-2 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2     SuperCar
+6:        Lotus Europa 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2     SuperCar
+7:        Ferrari Dino 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6     SuperCar
+8:        Ferrari Dino 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6  SuperRedCar
+9:          Volvo 142E 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2 BoxeyButGood
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org6ffed13" class="outline-3">
-<h3 id="org6ffed13"><span class="section-number-3">8.3</span> Left Join</h3>
+<div id="outline-container-orgd4ae55f" class="outline-3">
+<h3 id="orgd4ae55f"><span class="section-number-3">8.3.</span> Left Join</h3>
 <div class="outline-text-3" id="text-8-3">
 <p>
 Now we get a record for <b>every</b> record on the left (x), and any records on the right (y) that match one on the left (x).  For the "extra" records with no
@@ -1047,52 +1027,54 @@ matching data on the right (y), <code>NA</code> values are introduced.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">dplyr::left_join(mtcarsR, carSurvey, by=c(<span style="color: #fa8072;">'car_name'</span>, <span style="color: #fa8072;">'gear'</span>=<span style="color: #fa8072;">'GEARS'</span>));
+<pre class="src src-R">mtcarsR <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
+  dplyr::left_join(carSurvey, by=c(<span style="color: #fa8072;">'car_name'</span>, <span style="color: #fa8072;">'gear'</span>=<span style="color: #fa8072;">'GEARS'</span>))
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-text">              car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb         word
-1            Mazda RX4 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4     ZoomZoom
-2        Mazda RX4 Wag 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4     ZoomZoom
-3           Datsun 710 22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1         &lt;NA&gt;
-4       Hornet 4 Drive 21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1         &lt;NA&gt;
-5    Hornet Sportabout 18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2         &lt;NA&gt;
-6              Valiant 18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1         &lt;NA&gt;
-7           Duster 360 14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4         &lt;NA&gt;
-8            Merc 240D 24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2         &lt;NA&gt;
-9             Merc 230 22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2         &lt;NA&gt;
-10            Merc 280 19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4         &lt;NA&gt;
-11           Merc 280C 17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4         &lt;NA&gt;
-12          Merc 450SE 16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3         &lt;NA&gt;
-13          Merc 450SL 17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3         &lt;NA&gt;
-14         Merc 450SLC 15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3         &lt;NA&gt;
-15  Cadillac Fleetwood 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4 RollingCouch
-16 Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4 RollingCouch
-17   Chrysler Imperial 14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4         &lt;NA&gt;
-18            Fiat 128 32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1         &lt;NA&gt;
-19         Honda Civic 30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2         &lt;NA&gt;
-20      Toyota Corolla 33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1         &lt;NA&gt;
-21       Toyota Corona 21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1         &lt;NA&gt;
-22    Dodge Challenger 15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2         &lt;NA&gt;
-23         AMC Javelin 15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2         &lt;NA&gt;
-24          Camaro Z28 13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4         &lt;NA&gt;
-25    Pontiac Firebird 19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2         &lt;NA&gt;
-26           Fiat X1-9 27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1         &lt;NA&gt;
-27       Porsche 914-2 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2     SuperCar
-28        Lotus Europa 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2     SuperCar
-29      Ford Pantera L 15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4         &lt;NA&gt;
-30        Ferrari Dino 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6     SuperCar
-31        Ferrari Dino 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6  SuperRedCar
-32       Maserati Bora 15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8         &lt;NA&gt;
-33          Volvo 142E 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2 BoxeyButGood
+<pre class="src src-text">               car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb         word
+ 1:           Mazda RX4 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4     ZoomZoom
+ 2:       Mazda RX4 Wag 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4     ZoomZoom
+ 3:          Datsun 710 22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1         &lt;NA&gt;
+ 4:      Hornet 4 Drive 21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1         &lt;NA&gt;
+ 5:   Hornet Sportabout 18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2         &lt;NA&gt;
+ 6:             Valiant 18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1         &lt;NA&gt;
+ 7:          Duster 360 14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4         &lt;NA&gt;
+ 8:           Merc 240D 24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2         &lt;NA&gt;
+ 9:            Merc 230 22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2         &lt;NA&gt;
+10:            Merc 280 19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4         &lt;NA&gt;
+11:           Merc 280C 17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4         &lt;NA&gt;
+12:          Merc 450SE 16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3         &lt;NA&gt;
+13:          Merc 450SL 17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3         &lt;NA&gt;
+14:         Merc 450SLC 15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3         &lt;NA&gt;
+15:  Cadillac Fleetwood 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4 RollingCouch
+16: Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4 RollingCouch
+17:   Chrysler Imperial 14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4         &lt;NA&gt;
+18:            Fiat 128 32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1         &lt;NA&gt;
+19:         Honda Civic 30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2         &lt;NA&gt;
+20:      Toyota Corolla 33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1         &lt;NA&gt;
+21:       Toyota Corona 21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1         &lt;NA&gt;
+22:    Dodge Challenger 15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2         &lt;NA&gt;
+23:         AMC Javelin 15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2         &lt;NA&gt;
+24:          Camaro Z28 13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4         &lt;NA&gt;
+25:    Pontiac Firebird 19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2         &lt;NA&gt;
+26:           Fiat X1-9 27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1         &lt;NA&gt;
+27:       Porsche 914-2 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2     SuperCar
+28:        Lotus Europa 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2     SuperCar
+29:      Ford Pantera L 15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4         &lt;NA&gt;
+30:        Ferrari Dino 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6     SuperCar
+31:        Ferrari Dino 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6  SuperRedCar
+32:       Maserati Bora 15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8         &lt;NA&gt;
+33:          Volvo 142E 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2 BoxeyButGood
+               car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb         word
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org8138a47" class="outline-3">
-<h3 id="org8138a47"><span class="section-number-3">8.4</span> Right Join</h3>
+<div id="outline-container-org63812cf" class="outline-3">
+<h3 id="org63812cf"><span class="section-number-3">8.4.</span> Right Join</h3>
 <div class="outline-text-3" id="text-8-4">
 <p>
 Now we get a record for <b>every</b> record on the right (y), and any records on the left (x) that match one on the right (y).  For the "extra" records with no
@@ -1100,82 +1082,85 @@ matching data on the left (x), <code>NA</code> values are introduced.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">dplyr::right_join(mtcarsR, carSurvey, by=c(<span style="color: #fa8072;">'car_name'</span>, <span style="color: #fa8072;">'gear'</span>=<span style="color: #fa8072;">'GEARS'</span>));
+<pre class="src src-R">mtcarsR <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
+  dplyr::right_join(carSurvey, by=c(<span style="color: #fa8072;">'car_name'</span>, <span style="color: #fa8072;">'gear'</span>=<span style="color: #fa8072;">'GEARS'</span>));
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-text">              car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb         word
-1            Mazda RX4 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4     ZoomZoom
-2        Mazda RX4 Wag 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4     ZoomZoom
-3   Cadillac Fleetwood 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4 RollingCouch
-4  Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4 RollingCouch
-5        Porsche 914-2 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2     SuperCar
-6         Lotus Europa 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2     SuperCar
-7         Ferrari Dino 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6     SuperCar
-8         Ferrari Dino 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6  SuperRedCar
-9           Volvo 142E 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2 BoxeyButGood
-10            Delorean   NA  NA    NA  NA   NA    NA    NA NA NA   16   NA     TimeWarp
+<pre class="src src-text">               car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb         word
+ 1:           Mazda RX4 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4     ZoomZoom
+ 2:       Mazda RX4 Wag 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4     ZoomZoom
+ 3:  Cadillac Fleetwood 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4 RollingCouch
+ 4: Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4 RollingCouch
+ 5:       Porsche 914-2 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2     SuperCar
+ 6:        Lotus Europa 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2     SuperCar
+ 7:        Ferrari Dino 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6     SuperCar
+ 8:        Ferrari Dino 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6  SuperRedCar
+ 9:          Volvo 142E 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2 BoxeyButGood
+10:            Delorean   NA  NA    NA  NA   NA    NA    NA NA NA   16   NA     TimeWarp
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org93927f0" class="outline-3">
-<h3 id="org93927f0"><span class="section-number-3">8.5</span> full outer Join</h3>
+<div id="outline-container-org0fbcf21" class="outline-3">
+<h3 id="org0fbcf21"><span class="section-number-3">8.5.</span> full outer Join</h3>
 <div class="outline-text-3" id="text-8-5">
 <p>
 Now we get a record for <b>every</b> record on the left (x) and right (y).  Any extra records that don't match the other side get <code>NA</code> values.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">dplyr::full_join(mtcarsR, carSurvey, by=c(<span style="color: #fa8072;">'car_name'</span>, <span style="color: #fa8072;">'gear'</span>=<span style="color: #fa8072;">'GEARS'</span>));
+<pre class="src src-R">mtcarsR <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
+  dplyr::full_join(carSurvey, by=c(<span style="color: #fa8072;">'car_name'</span>, <span style="color: #fa8072;">'gear'</span>=<span style="color: #fa8072;">'GEARS'</span>));
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-text">              car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb         word
-1            Mazda RX4 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4     ZoomZoom
-2        Mazda RX4 Wag 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4     ZoomZoom
-3           Datsun 710 22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1         &lt;NA&gt;
-4       Hornet 4 Drive 21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1         &lt;NA&gt;
-5    Hornet Sportabout 18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2         &lt;NA&gt;
-6              Valiant 18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1         &lt;NA&gt;
-7           Duster 360 14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4         &lt;NA&gt;
-8            Merc 240D 24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2         &lt;NA&gt;
-9             Merc 230 22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2         &lt;NA&gt;
-10            Merc 280 19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4         &lt;NA&gt;
-11           Merc 280C 17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4         &lt;NA&gt;
-12          Merc 450SE 16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3         &lt;NA&gt;
-13          Merc 450SL 17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3         &lt;NA&gt;
-14         Merc 450SLC 15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3         &lt;NA&gt;
-15  Cadillac Fleetwood 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4 RollingCouch
-16 Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4 RollingCouch
-17   Chrysler Imperial 14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4         &lt;NA&gt;
-18            Fiat 128 32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1         &lt;NA&gt;
-19         Honda Civic 30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2         &lt;NA&gt;
-20      Toyota Corolla 33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1         &lt;NA&gt;
-21       Toyota Corona 21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1         &lt;NA&gt;
-22    Dodge Challenger 15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2         &lt;NA&gt;
-23         AMC Javelin 15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2         &lt;NA&gt;
-24          Camaro Z28 13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4         &lt;NA&gt;
-25    Pontiac Firebird 19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2         &lt;NA&gt;
-26           Fiat X1-9 27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1         &lt;NA&gt;
-27       Porsche 914-2 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2     SuperCar
-28        Lotus Europa 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2     SuperCar
-29      Ford Pantera L 15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4         &lt;NA&gt;
-30        Ferrari Dino 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6     SuperCar
-31        Ferrari Dino 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6  SuperRedCar
-32       Maserati Bora 15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8         &lt;NA&gt;
-33          Volvo 142E 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2 BoxeyButGood
-34            Delorean   NA  NA    NA  NA   NA    NA    NA NA NA   16   NA     TimeWarp
+<pre class="src src-text">               car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb         word
+ 1:           Mazda RX4 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4     ZoomZoom
+ 2:       Mazda RX4 Wag 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4     ZoomZoom
+ 3:          Datsun 710 22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1         &lt;NA&gt;
+ 4:      Hornet 4 Drive 21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1         &lt;NA&gt;
+ 5:   Hornet Sportabout 18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2         &lt;NA&gt;
+ 6:             Valiant 18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1         &lt;NA&gt;
+ 7:          Duster 360 14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4         &lt;NA&gt;
+ 8:           Merc 240D 24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2         &lt;NA&gt;
+ 9:            Merc 230 22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2         &lt;NA&gt;
+10:            Merc 280 19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4         &lt;NA&gt;
+11:           Merc 280C 17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4         &lt;NA&gt;
+12:          Merc 450SE 16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3         &lt;NA&gt;
+13:          Merc 450SL 17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3         &lt;NA&gt;
+14:         Merc 450SLC 15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3         &lt;NA&gt;
+15:  Cadillac Fleetwood 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4 RollingCouch
+16: Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4 RollingCouch
+17:   Chrysler Imperial 14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4         &lt;NA&gt;
+18:            Fiat 128 32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1         &lt;NA&gt;
+19:         Honda Civic 30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2         &lt;NA&gt;
+20:      Toyota Corolla 33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1         &lt;NA&gt;
+21:       Toyota Corona 21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1         &lt;NA&gt;
+22:    Dodge Challenger 15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2         &lt;NA&gt;
+23:         AMC Javelin 15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2         &lt;NA&gt;
+24:          Camaro Z28 13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4         &lt;NA&gt;
+25:    Pontiac Firebird 19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2         &lt;NA&gt;
+26:           Fiat X1-9 27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1         &lt;NA&gt;
+27:       Porsche 914-2 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2     SuperCar
+28:        Lotus Europa 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2     SuperCar
+29:      Ford Pantera L 15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4         &lt;NA&gt;
+30:        Ferrari Dino 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6     SuperCar
+31:        Ferrari Dino 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6  SuperRedCar
+32:       Maserati Bora 15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8         &lt;NA&gt;
+33:          Volvo 142E 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2 BoxeyButGood
+34:            Delorean   NA  NA    NA  NA   NA    NA    NA NA NA   16   NA     TimeWarp
+               car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb         word
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgc2ed9b3" class="outline-3">
-<h3 id="orgc2ed9b3"><span class="section-number-3">8.6</span> Find left matches</h3>
+<div id="outline-container-orgf2dfa58" class="outline-3">
+<h3 id="orgf2dfa58"><span class="section-number-3">8.6.</span> Find left matches</h3>
 <div class="outline-text-3" id="text-8-6">
 <p>
 Sometimes you just want to filter a table by keeping only records that match some other table.  Note <code>semi_join</code> is not just a <code>left_join</code> followed by the
@@ -1183,131 +1168,143 @@ removal of the right columns: 1) The column titles are from the left side only, 
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">dplyr::semi_join(mtcarsR, carSurvey, by=c(<span style="color: #fa8072;">'car_name'</span>, <span style="color: #fa8072;">'gear'</span>=<span style="color: #fa8072;">'GEARS'</span>));
+<pre class="src src-R">mtcarsR <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
+  dplyr::semi_join(carSurvey, by=c(<span style="color: #fa8072;">'car_name'</span>, <span style="color: #fa8072;">'gear'</span>=<span style="color: #fa8072;">'GEARS'</span>));
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-text">             car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb
-1           Mazda RX4 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
-2       Mazda RX4 Wag 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
-3  Cadillac Fleetwood 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
-4 Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4
-5       Porsche 914-2 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2
-6        Lotus Europa 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2
-7        Ferrari Dino 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6
-8          Volvo 142E 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2
+<pre class="src src-text">              car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+1:           Mazda RX4 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
+2:       Mazda RX4 Wag 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
+3:  Cadillac Fleetwood 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
+4: Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4
+5:       Porsche 914-2 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2
+6:        Lotus Europa 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2
+7:        Ferrari Dino 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6
+8:          Volvo 142E 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org4f3ef28" class="outline-3">
-<h3 id="org4f3ef28"><span class="section-number-3">8.7</span> Fixing column names</h3>
+<div id="outline-container-orgad064df" class="outline-3">
+<h3 id="orgad064df"><span class="section-number-3">8.7.</span> Fixing column names</h3>
 <div class="outline-text-3" id="text-8-7">
 <div class="org-src-container">
-<pre class="src src-R">dplyr::inner_join(mtcarsR, rename(carSurvey, gear=GEARS, survey_word=word), by=c(<span style="color: #fa8072;">'car_name'</span>, <span style="color: #fa8072;">'gear'</span>));
+<pre class="src src-R">mtcarsR <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
+  dplyr::inner_join(rename(carSurvey, gear=GEARS, survey_word=word), by=c(<span style="color: #fa8072;">'car_name'</span>, <span style="color: #fa8072;">'gear'</span>));
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-text">             car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb  survey_word
-1           Mazda RX4 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4     ZoomZoom
-2       Mazda RX4 Wag 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4     ZoomZoom
-3  Cadillac Fleetwood 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4 RollingCouch
-4 Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4 RollingCouch
-5       Porsche 914-2 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2     SuperCar
-6        Lotus Europa 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2     SuperCar
-7        Ferrari Dino 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6     SuperCar
-8        Ferrari Dino 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6  SuperRedCar
-9          Volvo 142E 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2 BoxeyButGood
+<pre class="src src-text">              car_name  mpg cyl  disp  hp drat    wt  qsec vs am gear carb  survey_word
+1:           Mazda RX4 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4     ZoomZoom
+2:       Mazda RX4 Wag 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4     ZoomZoom
+3:  Cadillac Fleetwood 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4 RollingCouch
+4: Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4 RollingCouch
+5:       Porsche 914-2 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2     SuperCar
+6:        Lotus Europa 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2     SuperCar
+7:        Ferrari Dino 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6     SuperCar
+8:        Ferrari Dino 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6  SuperRedCar
+9:          Volvo 142E 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2 BoxeyButGood
 </pre>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgb1f021b" class="outline-2">
-<h2 id="orgb1f021b"><span class="section-number-2">9</span> Chaining vs Nesting</h2>
+<div id="outline-container-orgac8d10a" class="outline-2">
+<h2 id="orgac8d10a"><span class="section-number-2">9.</span> Long &amp; Wide</h2>
 <div class="outline-text-2" id="text-9">
-</div>
-<div id="outline-container-orgba6aefb" class="outline-3">
-<h3 id="orgba6aefb"><span class="section-number-3">9.1</span> Chaining</h3>
-<div class="outline-text-3" id="text-9-1">
 <p>
-Chaining is a technique using the %&gt;% operator that can be used to "chain" together dplyr calls into sequential steps.  The idea is very much like how pipes
-are used on the UNIX command line.
+In the past I had an entire page with examples of how to transform data between wide and long formats using various R tools.  Today I almost always use <code>tidyr</code>&#x2026;
+</p>
+
+<p>
+First we need some long data:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R">mtcarsR <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
-  dplyr::group_by(cyl, carb) <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
-  dplyr::select(mpg, hp, cyl, carb) <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
-  dplyr::summarise(meanMPG=mean(mpg, na.rm=<span style="color: #63b8ff;">TRUE</span>),
-                   meanCYL=mean(hp,  na.rm=<span style="color: #63b8ff;">TRUE</span>),
-                   .groups = <span style="color: #fa8072;">'drop'</span>)  <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
-  filter(meanMPG &gt; 20)
+<pre class="src src-R">longData <span style="color: #8470ff; font-weight: bold;">&lt;-</span>
+  mtcarsR <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
+  dplyr::select(gear, carb, mpg) <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
+  dplyr::group_by(gear, carb) <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
+  dplyr::summarise(mpg=mean(mpg), .groups = <span style="color: #fa8072;">'drop'</span>) <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
+  data.table::data.table()
+longData
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-text"># A tibble: 2 x 4
-    cyl  carb meanMPG meanCYL
-1     4     1    27.6    77.4
-2     4     2    25.9    87
+<pre class="src src-text">    gear carb      mpg
+ 1:    3    1 20.33333
+ 2:    3    2 17.15000
+ 3:    3    3 16.30000
+ 4:    3    4 12.62000
+ 5:    4    1 29.10000
+ 6:    4    2 24.75000
+ 7:    4    4 19.75000
+ 8:    5    2 28.20000
+ 9:    5    4 15.80000
+10:    5    6 19.70000
+11:    5    8 15.00000
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org576ec42" class="outline-3">
+<h3 id="org576ec42"><span class="section-number-3">9.1.</span> Long to Wide</h3>
+<div class="outline-text-3" id="text-9-1">
+<div class="org-src-container">
+<pre class="src src-R">wideData <span style="color: #8470ff; font-weight: bold;">&lt;-</span>
+  longData <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
+  tidyr::pivot_wider(names_from=carb,
+                     names_prefix=<span style="color: #fa8072;">'carb_'</span>,            <span style="color: #ffa500;">### </span><span style="color: #ff7f24;">This prepends "carb_" to the column titles created from the  carb column</span>
+                     values_from=mpg) <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
+  data.table::data.table()
+wideData
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-text">   gear   carb_1 carb_2 carb_3 carb_4 carb_6 carb_8
+1:    3 20.33333  17.15   16.3  12.62     NA     NA
+2:    4 29.10000  24.75     NA  19.75     NA     NA
+3:    5       NA  28.20     NA  15.80   19.7     15
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org6465e79" class="outline-3">
-<h3 id="org6465e79"><span class="section-number-3">9.2</span> Temporary Variables</h3>
+<div id="outline-container-org8a73936" class="outline-3">
+<h3 id="org8a73936"><span class="section-number-3">9.2.</span> Long to Wide</h3>
 <div class="outline-text-3" id="text-9-2">
 <div class="org-src-container">
-<pre class="src src-R">tmp <span style="color: #8470ff; font-weight: bold;">&lt;-</span> dplyr::group_by(mtcarsR, cyl, carb)
-tmp <span style="color: #8470ff; font-weight: bold;">&lt;-</span> dplyr::select(tmp, mpg, hp, cyl, carb)
-tmp <span style="color: #8470ff; font-weight: bold;">&lt;-</span> dplyr::summarise(tmp,
-                        meanMPG=mean(mpg, na.rm=<span style="color: #63b8ff;">TRUE</span>),
-                        meanCYL=mean(hp,  na.rm=<span style="color: #63b8ff;">TRUE</span>),
-                        .groups = <span style="color: #fa8072;">'drop'</span>)
-tmp <span style="color: #8470ff; font-weight: bold;">&lt;-</span> dplyr::filter(tmp, meanMPG &gt; 20)
-tmp
+<pre class="src src-R">wideData <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
+  tidyr::pivot_longer(cols=2:7,
+                      names_to=<span style="color: #fa8072;">"carb"</span>,
+                      names_prefix=<span style="color: #fa8072;">'carb_'</span>,                     <span style="color: #ffa500;">### </span><span style="color: #ff7f24;">Wack the "carb_" we added to the column names.</span>
+                      names_transform = list(carb=as.integer),  <span style="color: #ffa500;">#### </span><span style="color: #ff7f24;">Previous line gets rid of the "carb_", but left a string.  Convert it to integers.</span>
+                      values_drop_na=<span style="color: #63b8ff;">TRUE</span>,                      <span style="color: #ffa500;">### </span><span style="color: #ff7f24;">Get rid of the NA values we created when we made teh wide dta</span>
+                      values_to=<span style="color: #fa8072;">'mpg'</span>) <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
+  data.table::data.table()
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-text"># A tibble: 2 x 4
-    cyl  carb meanMPG meanCYL
-1     4     1    27.6    77.4
-2     4     2    25.9    87
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org9a4172c" class="outline-3">
-<h3 id="org9a4172c"><span class="section-number-3">9.3</span> Composition (for the LISPers)</h3>
-<div class="outline-text-3" id="text-9-3">
-<div class="org-src-container">
-<pre class="src src-R">dplyr::filter(dplyr::summarise(dplyr::select(dplyr::group_by(mtcarsR, 
-                                                             cyl, 
-                                                             carb), 
-                                             mpg, 
-                                             hp, 
-                                             cyl, 
-                                             carb),
-                               meanMPG=mean(mpg, na.rm=<span style="color: #63b8ff;">TRUE</span>),
-                               meanCYL=mean(hp,  na.rm=<span style="color: #63b8ff;">TRUE</span>),
-                               .groups = <span style="color: #fa8072;">'drop'</span>), 
-              meanMPG &gt; 20)
-</pre>
-</div>
-
-<div class="org-src-container">
-<pre class="src src-text"># A tibble: 2 x 4
-    cyl  carb meanMPG meanCYL
-1     4     1    27.6    77.4
-2     4     2    25.9    87
+<pre class="src src-text">    gear carb      mpg
+ 1:    3    1 20.33333
+ 2:    3    2 17.15000
+ 3:    3    3 16.30000
+ 4:    3    4 12.62000
+ 5:    4    1 29.10000
+ 6:    4    2 24.75000
+ 7:    4    4 19.75000
+ 8:    5    2 28.20000
+ 9:    5    4 15.80000
+10:    5    6 19.70000
+11:    5    8 15.00000
 </pre>
 </div>
 </div>
@@ -1315,7 +1312,11 @@ tmp
 </div>
 </div>
 <div id="postamble" class="status">
-Created by Mitch Richling <<a href="mailto:http://www.mitchr.me/">http://www.mitchr.me/</a>>.  Rendered on 2021-05-04 Tue 18:35 via <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.4.5)
+<br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br />
+<br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br />
+<br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br />
+<br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br />
+<br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br />
 </div>
 </body>
 </html>
