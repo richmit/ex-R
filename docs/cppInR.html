@@ -3,17 +3,16 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-05-04 Tue 18:35 -->
+<!-- 2022-06-04 Sat 16:19 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="viewport" content="width=1024, initial-scale=1" />
 <title>Inline C++ Example</title>
-<meta name="generator" content="Org mode" />
 <meta name="author" content="Mitch Richling" />
-<meta name="description" content="Inline C++ Example"
- />
+<meta name="description" content="Inline C++ Example" />
 <meta name="keywords" content="Inline C++ Example" />
-<style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
   .title  { text-align: center;
              margin-bottom: .2em; }
   .subtitle { text-align: center;
@@ -34,8 +33,9 @@
   #postamble p, #preamble p { font-size: 90%; margin: .2em; }
   p.verse { margin-left: 3%; }
   pre {
-    border: 1px solid #ccc;
-    box-shadow: 3px 3px 3px #eee;
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
     padding: 8pt;
     font-family: monospace;
     overflow: auto;
@@ -44,21 +44,21 @@
   pre.src {
     position: relative;
     overflow: auto;
-    padding-top: 1.2em;
   }
   pre.src:before {
     display: none;
     position: absolute;
-    background-color: white;
-    top: -10px;
-    right: 10px;
+    top: -8px;
+    right: 12px;
     padding: 3px;
-    border: 1px solid black;
+    color: #555;
+    background-color: #f2f2f299;
   }
   pre.src:hover:before { display: inline; margin-top: 14px;}
   /* Languages per Org manual */
   pre.src-asymptote:before { content: 'Asymptote'; }
   pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
   pre.src-C:before { content: 'C'; }
   /* pre.src-C++ doesn't work in CSS */
   pre.src-clojure:before { content: 'Clojure'; }
@@ -194,7 +194,6 @@
   .org-info-js_search-highlight
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   .org-svg { width: 90%; }
-  /*]]>*/-->
 </style>
 <style>body { width: 95%; margin: 2% auto; font-size: 18px; line-height: 1.4em; font-family: Georgia, serif; color: black; background-color: white; }</style>
 <style>body { min-width: 820px; max-width: 1024px; }</style>
@@ -212,7 +211,7 @@
  <a accesskey="h" href="https://richmit.github.io/ex-R/"> UP </a>
  |
  <a accesskey="H" href="https://www.mitchr.me/"> HOME </a>
-</div><div id="content">
+</div><div id="content" class="content">
 <h1 class="title">Inline C++ Example</h1>
 <table border="2 solid #ccc" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" align="center">
 
@@ -230,7 +229,7 @@
 
 <tr>
 <td class="org-right"><b>Updated:</b></td>
-<td class="org-left"><i>2021-05-04 18:33:04</i></td>
+<td class="org-left"><i>2022-06-04 16:17:46</i></td>
 </tr>
 </tbody>
 </table>
@@ -238,34 +237,34 @@
 Copyright 2020-2021 Mitch Richling. All rights reserved.
 </p>
 
-<div id="table-of-contents">
+<div id="table-of-contents" role="doc-toc">
 <h2>Table of Contents</h2>
-<div id="text-table-of-contents">
+<div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org77871db">1. Metadata</a></li>
-<li><a href="#org299faab">2. Load the library</a></li>
-<li><a href="#orgc9648f6">3. External C++ Code</a>
+<li><a href="#orgb197580">1. Metadata</a></li>
+<li><a href="#org13921e5">2. Load the library</a></li>
+<li><a href="#org820214c">3. External C++ Code</a>
 <ul>
-<li><a href="#org16e306f">3.1. The External Code File</a></li>
-<li><a href="#org8423bbb">3.2. Telling R about our external code</a></li>
+<li><a href="#org2bb3743">3.1. The External Code File</a></li>
+<li><a href="#org1ab8cdc">3.2. Telling R about our external code</a></li>
 </ul>
 </li>
-<li><a href="#orgd8e2ecb">4. Inline C++ Code</a>
+<li><a href="#org5a62505">4. Inline C++ Code</a>
 <ul>
 <li>
 <ul>
-<li><a href="#org58ac33e">4.0.1. Function returning a number</a></li>
+<li><a href="#org1e068f4">4.0.1. Function returning a number</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org245e075">5. Calling our functions</a></li>
+<li><a href="#org42cf320">5. Calling our functions</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org77871db" class="outline-2">
-<h2 id="org77871db"><span class="section-number-2">1</span> Metadata</h2>
+<div id="outline-container-orgb197580" class="outline-2">
+<h2 id="orgb197580"><span class="section-number-2">1.</span> Metadata</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 The home for this HTML file is: <a href="https://richmit.github.io/ex-R/cppInR.html">https://richmit.github.io/ex-R/cppInR.html</a>
@@ -317,8 +316,8 @@ Directory contents:
 </div>
 </div>
 
-<div id="outline-container-org299faab" class="outline-2">
-<h2 id="org299faab"><span class="section-number-2">2</span> Load the library</h2>
+<div id="outline-container-org13921e5" class="outline-2">
+<h2 id="org13921e5"><span class="section-number-2">2.</span> Load the library</h2>
 <div class="outline-text-2" id="text-2">
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #8470ff; font-weight: bold;">library</span>(Rcpp)
@@ -327,16 +326,16 @@ Directory contents:
 </div>
 </div>
 
-<div id="outline-container-orgc9648f6" class="outline-2">
-<h2 id="orgc9648f6"><span class="section-number-2">3</span> External C++ Code</h2>
+<div id="outline-container-org820214c" class="outline-2">
+<h2 id="org820214c"><span class="section-number-2">3.</span> External C++ Code</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 We can put our code in an external file, and tell R where to find it.
 </p>
 </div>
 
-<div id="outline-container-org16e306f" class="outline-3">
-<h3 id="org16e306f"><span class="section-number-3">3.1</span> The External Code File</h3>
+<div id="outline-container-org2bb3743" class="outline-3">
+<h3 id="org2bb3743"><span class="section-number-3">3.1.</span> The External Code File</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 In the code below we define two functions.  The first concatinates two R vecotrs, and the second computes the sum of an R vector.  We place the code into a
@@ -381,8 +380,8 @@ file called <code>cppInR.cpp</code>.  Note the export direcives in the comments!
 </div>
 </div>
 
-<div id="outline-container-org8423bbb" class="outline-3">
-<h3 id="org8423bbb"><span class="section-number-3">3.2</span> Telling R about our external code</h3>
+<div id="outline-container-org1ab8cdc" class="outline-3">
+<h3 id="org1ab8cdc"><span class="section-number-3">3.2.</span> Telling R about our external code</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 We must tell R where to find our enxternal code.  We do that with the <code>sourceCpp</code> function &#x2013; it will compile the code and create R wrappers to call the
@@ -394,7 +393,7 @@ functions.  Note that little bit of R code in the comment at the bottom of <code
 </pre>
 </div>
 
-<pre class="example" id="org781d605">
+<pre class="example" id="org79bdcde">
 print('HI -- I am some code in cppRcppOutOfLine.cpp')
 [1] "HI -- I am some code in cppRcppOutOfLine.cpp"
 </pre>
@@ -402,8 +401,8 @@ print('HI -- I am some code in cppRcppOutOfLine.cpp')
 </div>
 </div>
 
-<div id="outline-container-orgd8e2ecb" class="outline-2">
-<h2 id="orgd8e2ecb"><span class="section-number-2">4</span> Inline C++ Code</h2>
+<div id="outline-container-org5a62505" class="outline-2">
+<h2 id="org5a62505"><span class="section-number-2">4.</span> Inline C++ Code</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 We define the same two functions, but we put them directly in our R code as strings.  Instead of using <code>sourceCpp</code>, we use <code>cppFunction</code>.  <code>cppFunction</code> takes care of several things for us:
@@ -428,8 +427,8 @@ We define the same two functions, but we put them directly in our R code as stri
 </div>
 </div>
 
-<div id="outline-container-org58ac33e" class="outline-4">
-<h4 id="org58ac33e"><span class="section-number-4">4.0.1</span> Function returning a number</h4>
+<div id="outline-container-org1e068f4" class="outline-4">
+<h4 id="org1e068f4"><span class="section-number-4">4.0.1.</span> Function returning a number</h4>
 <div class="outline-text-4" id="text-4-0-1">
 <div class="org-src-container">
 <pre class="src src-R">Rcpp::cppFunction(<span style="color: #fa8072;">'double cppIntSum(NumericVector x) {</span>
@@ -445,8 +444,8 @@ We define the same two functions, but we put them directly in our R code as stri
 </div>
 </div>
 
-<div id="outline-container-org245e075" class="outline-2">
-<h2 id="org245e075"><span class="section-number-2">5</span> Calling our functions</h2>
+<div id="outline-container-org42cf320" class="outline-2">
+<h2 id="org42cf320"><span class="section-number-2">5.</span> Calling our functions</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 Here we call our concatination functions (the internal one and external one):
@@ -457,7 +456,7 @@ Here we call our concatination functions (the internal one and external one):
 </pre>
 </div>
 
-<pre class="example" id="org51e278b">
+<pre class="example" id="org0f9ede5">
 [1]  1  2  3  4  5  6  7  8  9 10  2  3  4  5  6  7  8  9 10 11
 </pre>
 
@@ -466,7 +465,7 @@ Here we call our concatination functions (the internal one and external one):
 </pre>
 </div>
 
-<pre class="example" id="orgb50a462">
+<pre class="example" id="org8de4792">
 [1]  1  2  3  4  5  6  7  8  9 10  2  3  4  5  6  7  8  9 10 11
 </pre>
 
@@ -479,7 +478,7 @@ Here we call our sum functions (the internal one and external one):
 </pre>
 </div>
 
-<pre class="example" id="orgb747476">
+<pre class="example" id="orgc4dfa5c">
 [1] 55
 </pre>
 
@@ -488,14 +487,18 @@ Here we call our sum functions (the internal one and external one):
 </pre>
 </div>
 
-<pre class="example" id="orgf8bb26b">
+<pre class="example" id="orgf6bbdeb">
 [1] 55
 </pre>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-Created by Mitch Richling <<a href="mailto:http://www.mitchr.me/">http://www.mitchr.me/</a>>.  Rendered on 2021-05-04 Tue 18:35 via <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.4.5)
+<br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br />
+<br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br />
+<br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br />
+<br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br />
+<br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br />
 </div>
 </body>
 </html>

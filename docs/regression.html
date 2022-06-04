@@ -3,17 +3,16 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-05-04 Tue 18:36 -->
+<!-- 2022-06-04 Sat 16:19 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="viewport" content="width=1024, initial-scale=1" />
 <title>Regression Examples</title>
-<meta name="generator" content="Org mode" />
 <meta name="author" content="Mitch Richling" />
-<meta name="description" content="Regression Examples"
- />
+<meta name="description" content="Regression Examples" />
 <meta name="keywords" content="Regression Examples" />
-<style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
   .title  { text-align: center;
              margin-bottom: .2em; }
   .subtitle { text-align: center;
@@ -34,8 +33,9 @@
   #postamble p, #preamble p { font-size: 90%; margin: .2em; }
   p.verse { margin-left: 3%; }
   pre {
-    border: 1px solid #ccc;
-    box-shadow: 3px 3px 3px #eee;
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
     padding: 8pt;
     font-family: monospace;
     overflow: auto;
@@ -44,21 +44,21 @@
   pre.src {
     position: relative;
     overflow: auto;
-    padding-top: 1.2em;
   }
   pre.src:before {
     display: none;
     position: absolute;
-    background-color: white;
-    top: -10px;
-    right: 10px;
+    top: -8px;
+    right: 12px;
     padding: 3px;
-    border: 1px solid black;
+    color: #555;
+    background-color: #f2f2f299;
   }
   pre.src:hover:before { display: inline; margin-top: 14px;}
   /* Languages per Org manual */
   pre.src-asymptote:before { content: 'Asymptote'; }
   pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
   pre.src-C:before { content: 'C'; }
   /* pre.src-C++ doesn't work in CSS */
   pre.src-clojure:before { content: 'Clojure'; }
@@ -194,7 +194,6 @@
   .org-info-js_search-highlight
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   .org-svg { width: 90%; }
-  /*]]>*/-->
 </style>
 <style>body { width: 95%; margin: 2% auto; font-size: 18px; line-height: 1.4em; font-family: Georgia, serif; color: black; background-color: white; }</style>
 <style>body { min-width: 820px; max-width: 1024px; }</style>
@@ -212,7 +211,7 @@
  <a accesskey="h" href="https://richmit.github.io/ex-R/"> UP </a>
  |
  <a accesskey="H" href="https://www.mitchr.me/"> HOME </a>
-</div><div id="content">
+</div><div id="content" class="content">
 <h1 class="title">Regression Examples</h1>
 <table border="2 solid #ccc" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" align="center">
 
@@ -230,7 +229,7 @@
 
 <tr>
 <td class="org-right"><b>Updated:</b></td>
-<td class="org-left"><i>2021-05-04 18:34:55</i></td>
+<td class="org-left"><i>2022-06-04 16:17:47</i></td>
 </tr>
 </tbody>
 </table>
@@ -238,54 +237,54 @@
 Copyright 2020-2021 Mitch Richling. All rights reserved.
 </p>
 
-<div id="table-of-contents">
+<div id="table-of-contents" role="doc-toc">
 <h2>Table of Contents</h2>
-<div id="text-table-of-contents">
+<div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org2fe0c2b">1. Metadata</a></li>
-<li><a href="#orgc533568">2. Linear</a>
+<li><a href="#org33dcf26">1. Metadata</a></li>
+<li><a href="#org669d792">2. Linear</a>
 <ul>
-<li><a href="#org8ac0ff9">2.1. Example Data</a></li>
-<li><a href="#orgca687c9">2.2. Compute the linear model</a></li>
-<li><a href="#orgb25ece5">2.3. Plot Model</a></li>
-<li><a href="#orga111e48">2.4. Check our residuals for normally</a>
+<li><a href="#org9c8b08e">2.1. Example Data</a></li>
+<li><a href="#orgb4ea2c0">2.2. Compute the linear model</a></li>
+<li><a href="#org39b2052">2.3. Plot Model</a></li>
+<li><a href="#orgddac9ec">2.4. Check our residuals for normally</a>
 <ul>
-<li><a href="#org43d62a8">2.4.1. With the Shpiro-Wilk test</a></li>
-<li><a href="#org428757a">2.4.2. With a Q-Q plot</a></li>
-<li><a href="#org41ea100">2.4.3. With a scatter plot (lines at mean, +sd, -sd, 2*sd, * -2*sd) and a histogram</a></li>
+<li><a href="#org7956a1d">2.4.1. With the Shpiro-Wilk test</a></li>
+<li><a href="#org5edf396">2.4.2. With a Q-Q plot</a></li>
+<li><a href="#org9d4bae9">2.4.3. With a scatter plot (lines at mean, +sd, -sd, 2*sd, * -2*sd) and a histogram</a></li>
 </ul>
 </li>
-<li><a href="#org233dba0">2.5. Prediction</a>
+<li><a href="#orgfbef12f">2.5. Prediction</a>
 <ul>
-<li><a href="#org9cb458e">2.5.1. Predict model values beyond our x-data</a></li>
-<li><a href="#org110243b">2.5.2. Plot our predictions</a></li>
+<li><a href="#orgf50d364">2.5.1. Predict model values beyond our x-data</a></li>
+<li><a href="#org34e3938">2.5.2. Plot our predictions</a></li>
 </ul>
 </li>
-<li><a href="#orgd5c6990">2.6. Cleanup</a></li>
+<li><a href="#orgbae1dd2">2.6. Cleanup</a></li>
 </ul>
 </li>
-<li><a href="#org581a7e2">3. Polynomial Regression</a>
+<li><a href="#orgc7d0943">3. Polynomial Regression</a>
 <ul>
-<li><a href="#orgb1142c8">3.1. Example Data</a></li>
-<li><a href="#orga4b157f">3.2. Compute the polynomial models with progressively higher degree</a></li>
-<li><a href="#org568ebca">3.3. Plot Models</a></li>
-<li><a href="#org43807b5">3.4. Which fit is best?</a></li>
-<li><a href="#orge2c6db0">3.5. Prediction intervals and confidence intervals</a></li>
+<li><a href="#org779cf52">3.1. Example Data</a></li>
+<li><a href="#org792ed33">3.2. Compute the polynomial models with progressively higher degree</a></li>
+<li><a href="#org3a75607">3.3. Plot Models</a></li>
+<li><a href="#orgec1659a">3.4. Which fit is best?</a></li>
+<li><a href="#orgee75ac6">3.5. Prediction intervals and confidence intervals</a></li>
 </ul>
 </li>
-<li><a href="#org758b06c">4. Non-Linear Regression</a>
+<li><a href="#org87fdde2">4. Non-Linear Regression</a>
 <ul>
-<li><a href="#org6d61d8e">4.1. Example Data</a></li>
-<li><a href="#org2f92f77">4.2. Compute non-linear model</a></li>
-<li><a href="#org12b56b9">4.3. Plot Model</a></li>
+<li><a href="#org59db652">4.1. Example Data</a></li>
+<li><a href="#org7ab424b">4.2. Compute non-linear model</a></li>
+<li><a href="#org87cec46">4.3. Plot Model</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org2fe0c2b" class="outline-2">
-<h2 id="org2fe0c2b"><span class="section-number-2">1</span> Metadata</h2>
+<div id="outline-container-org33dcf26" class="outline-2">
+<h2 id="org33dcf26"><span class="section-number-2">1.</span> Metadata</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 The home for this HTML file is: <a href="https://richmit.github.io/ex-R/regression.html">https://richmit.github.io/ex-R/regression.html</a>
@@ -337,12 +336,12 @@ Directory contents:
 </div>
 </div>
 
-<div id="outline-container-orgc533568" class="outline-2">
-<h2 id="orgc533568"><span class="section-number-2">2</span> Linear</h2>
+<div id="outline-container-org669d792" class="outline-2">
+<h2 id="org669d792"><span class="section-number-2">2.</span> Linear</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-org8ac0ff9" class="outline-3">
-<h3 id="org8ac0ff9"><span class="section-number-3">2.1</span> Example Data</h3>
+<div id="outline-container-org9c8b08e" class="outline-3">
+<h3 id="org9c8b08e"><span class="section-number-3">2.1.</span> Example Data</h3>
 <div class="outline-text-3" id="text-2-1">
 <div class="org-src-container">
 <pre class="src src-R">daDat <span style="color: #8470ff; font-weight: bold;">&lt;-</span> data.frame(x=c(1, 2, 3, 4, 7, 8, 9, 10, 12, 13, 17, 18, 20, 21, 22, 23, 24, 27, 28, 29,
@@ -360,8 +359,8 @@ daDat$y <span style="color: #8470ff; font-weight: bold;">&lt;-</span> daDat$f + 
 </div>
 </div>
 
-<div id="outline-container-orgca687c9" class="outline-3">
-<h3 id="orgca687c9"><span class="section-number-3">2.2</span> Compute the linear model</h3>
+<div id="outline-container-orgb4ea2c0" class="outline-3">
+<h3 id="orgb4ea2c0"><span class="section-number-3">2.2.</span> Compute the linear model</h3>
 <div class="outline-text-3" id="text-2-2">
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #ffa500;"># </span><span style="color: #ff7f24;">x is the independent variable and y being the dependent one.</span>
@@ -395,8 +394,8 @@ F-statistic: 282.6 on 1 and 70 DF,  p-value: &lt; 2.2e-16
 </div>
 </div>
 
-<div id="outline-container-orgb25ece5" class="outline-3">
-<h3 id="orgb25ece5"><span class="section-number-3">2.3</span> Plot Model</h3>
+<div id="outline-container-org39b2052" class="outline-3">
+<h3 id="org39b2052"><span class="section-number-3">2.3.</span> Plot Model</h3>
 <div class="outline-text-3" id="text-2-3">
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #ffa500;"># </span><span style="color: #ff7f24;">plot the data with lines connecting points, draw the fitted line, mark the </span>
@@ -412,19 +411,19 @@ ggplot(data=daDat, aes(x=x)) +
 </div>
 
 
-<div id="orga91d6f4" class="figure">
+<div id="org95c5ea6" class="figure">
 <p><img src="figures/regression/lin-basic.png" alt="lin-basic.png" />
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orga111e48" class="outline-3">
-<h3 id="orga111e48"><span class="section-number-3">2.4</span> Check our residuals for normally</h3>
+<div id="outline-container-orgddac9ec" class="outline-3">
+<h3 id="orgddac9ec"><span class="section-number-3">2.4.</span> Check our residuals for normally</h3>
 <div class="outline-text-3" id="text-2-4">
 </div>
-<div id="outline-container-org43d62a8" class="outline-4">
-<h4 id="org43d62a8"><span class="section-number-4">2.4.1</span> With the Shpiro-Wilk test</h4>
+<div id="outline-container-org7956a1d" class="outline-4">
+<h4 id="org7956a1d"><span class="section-number-4">2.4.1.</span> With the Shpiro-Wilk test</h4>
 <div class="outline-text-4" id="text-2-4-1">
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #ffa500;"># </span><span style="color: #ff7f24;">If p-value&lt;0.1, then we reject the hypothesis that the residuals are normally distributed.</span>
@@ -446,8 +445,8 @@ W = 0.97823, p-value = 0.2458
 </div>
 </div>
 
-<div id="outline-container-org428757a" class="outline-4">
-<h4 id="org428757a"><span class="section-number-4">2.4.2</span> With a Q-Q plot</h4>
+<div id="outline-container-org5edf396" class="outline-4">
+<h4 id="org5edf396"><span class="section-number-4">2.4.2.</span> With a Q-Q plot</h4>
 <div class="outline-text-4" id="text-2-4-2">
 <div class="org-src-container">
 <pre class="src src-R">slope=(quantile(residuals(daFit),p=.75)-quantile(residuals(daFit),.25))/(qnorm(.75)-qnorm(.25))
@@ -459,7 +458,7 @@ ggplot() +
 </div>
 
 
-<div id="org68f6803" class="figure">
+<div id="org41627af" class="figure">
 <p><img src="figures/regression/lin-qq.png" alt="lin-qq.png" />
 </p>
 </div>
@@ -472,8 +471,8 @@ ggplot() +
 </div>
 </div>
 
-<div id="outline-container-org41ea100" class="outline-4">
-<h4 id="org41ea100"><span class="section-number-4">2.4.3</span> With a scatter plot (lines at mean, +sd, -sd, 2*sd, * -2*sd) and a histogram</h4>
+<div id="outline-container-org9d4bae9" class="outline-4">
+<h4 id="org9d4bae9"><span class="section-number-4">2.4.3.</span> With a scatter plot (lines at mean, +sd, -sd, 2*sd, * -2*sd) and a histogram</h4>
 <div class="outline-text-4" id="text-2-4-3">
 <div class="org-src-container">
 <pre class="src src-R">daScat <span style="color: #8470ff; font-weight: bold;">&lt;-</span> ggplot(data=daDat, aes(x=x)) +
@@ -496,7 +495,7 @@ grid.arrange(daScat, daHist, ncol=2, nrow=1, widths=c(5, 2))
 </div>
 
 
-<div id="org8e793d7" class="figure">
+<div id="org5c25b0b" class="figure">
 <p><img src="figures/regression/lin-sp.png" alt="lin-sp.png" />
 </p>
 </div>
@@ -510,12 +509,12 @@ grid.arrange(daScat, daHist, ncol=2, nrow=1, widths=c(5, 2))
 </div>
 </div>
 
-<div id="outline-container-org233dba0" class="outline-3">
-<h3 id="org233dba0"><span class="section-number-3">2.5</span> Prediction</h3>
+<div id="outline-container-orgfbef12f" class="outline-3">
+<h3 id="orgfbef12f"><span class="section-number-3">2.5.</span> Prediction</h3>
 <div class="outline-text-3" id="text-2-5">
 </div>
-<div id="outline-container-org9cb458e" class="outline-4">
-<h4 id="org9cb458e"><span class="section-number-4">2.5.1</span> Predict model values beyond our x-data</h4>
+<div id="outline-container-orgf50d364" class="outline-4">
+<h4 id="orgf50d364"><span class="section-number-4">2.5.1.</span> Predict model values beyond our x-data</h4>
 <div class="outline-text-4" id="text-2-5-1">
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #ffa500;"># </span><span style="color: #ff7f24;">Compute prediction intervals and confidence over the x-data and a an extended interval beyond the data...</span>
@@ -533,8 +532,8 @@ newx <span style="color: #8470ff; font-weight: bold;">&lt;-</span> data.frame(x=
 </div>
 </div>
 
-<div id="outline-container-org110243b" class="outline-4">
-<h4 id="org110243b"><span class="section-number-4">2.5.2</span> Plot our predictions</h4>
+<div id="outline-container-org34e3938" class="outline-4">
+<h4 id="org34e3938"><span class="section-number-4">2.5.2.</span> Plot our predictions</h4>
 <div class="outline-text-4" id="text-2-5-2">
 <div class="org-src-container">
 <pre class="src src-R">ggplot() +
@@ -550,7 +549,7 @@ newx <span style="color: #8470ff; font-weight: bold;">&lt;-</span> data.frame(x=
 </div>
 
 
-<div id="org8b308ec" class="figure">
+<div id="org6379c4a" class="figure">
 <p><img src="figures/regression/lin-predict.png" alt="lin-predict.png" />
 </p>
 </div>
@@ -563,8 +562,8 @@ newx <span style="color: #8470ff; font-weight: bold;">&lt;-</span> data.frame(x=
 </div>
 </div>
 
-<div id="outline-container-orgd5c6990" class="outline-3">
-<h3 id="orgd5c6990"><span class="section-number-3">2.6</span> Cleanup</h3>
+<div id="outline-container-orgbae1dd2" class="outline-3">
+<h3 id="orgbae1dd2"><span class="section-number-3">2.6.</span> Cleanup</h3>
 <div class="outline-text-3" id="text-2-6">
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #8470ff; font-weight: bold;">rm</span>(daDat, daFit)
@@ -575,12 +574,12 @@ newx <span style="color: #8470ff; font-weight: bold;">&lt;-</span> data.frame(x=
 </div>
 
 
-<div id="outline-container-org581a7e2" class="outline-2">
-<h2 id="org581a7e2"><span class="section-number-2">3</span> Polynomial Regression</h2>
+<div id="outline-container-orgc7d0943" class="outline-2">
+<h2 id="orgc7d0943"><span class="section-number-2">3.</span> Polynomial Regression</h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-orgb1142c8" class="outline-3">
-<h3 id="orgb1142c8"><span class="section-number-3">3.1</span> Example Data</h3>
+<div id="outline-container-org779cf52" class="outline-3">
+<h3 id="org779cf52"><span class="section-number-3">3.1.</span> Example Data</h3>
 <div class="outline-text-3" id="text-3-1">
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #ffa500;"># </span><span style="color: #ff7f24;">TRUE =&gt; fixed data, FALSE =&gt; randomly generated data.</span>
@@ -600,8 +599,8 @@ newx <span style="color: #8470ff; font-weight: bold;">&lt;-</span> data.frame(x=
 </div>
 </div>
 
-<div id="outline-container-orga4b157f" class="outline-3">
-<h3 id="orga4b157f"><span class="section-number-3">3.2</span> Compute the polynomial models with progressively higher degree</h3>
+<div id="outline-container-org792ed33" class="outline-3">
+<h3 id="org792ed33"><span class="section-number-3">3.2.</span> Compute the polynomial models with progressively higher degree</h3>
 <div class="outline-text-3" id="text-3-2">
 <div class="org-src-container">
 <pre class="src src-R">maxFdeg <span style="color: #8470ff; font-weight: bold;">&lt;-</span> 4                                            <span style="color: #ffa500;">######## </span><span style="color: #ff7f24;">TRY THIS: Value of 6 vs. 4</span>
@@ -671,8 +670,8 @@ Coefficients:
 </div>
 </div>
 
-<div id="outline-container-org568ebca" class="outline-3">
-<h3 id="org568ebca"><span class="section-number-3">3.3</span> Plot Models</h3>
+<div id="outline-container-org3a75607" class="outline-3">
+<h3 id="org3a75607"><span class="section-number-3">3.3.</span> Plot Models</h3>
 <div class="outline-text-3" id="text-3-3">
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #ffa500;"># </span><span style="color: #ff7f24;">Compute model values at 100 points between the min and max x values</span>
@@ -694,15 +693,15 @@ newy$degree <span style="color: #8470ff; font-weight: bold;">&lt;-</span> factor
 </div>
 
 
-<div id="org3ce1337" class="figure">
+<div id="org5c6ffaa" class="figure">
 <p><img src="figures/regression/poly-basic.png" alt="poly-basic.png" />
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org43807b5" class="outline-3">
-<h3 id="org43807b5"><span class="section-number-3">3.4</span> Which fit is best?</h3>
+<div id="outline-container-orgec1659a" class="outline-3">
+<h3 id="orgec1659a"><span class="section-number-3">3.4.</span> Which fit is best?</h3>
 <div class="outline-text-3" id="text-3-4">
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #ffa500;"># </span><span style="color: #ff7f24;">Use ANOVA to determine which fit seems best</span>
@@ -731,8 +730,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 </div>
 </div>
 
-<div id="outline-container-orge2c6db0" class="outline-3">
-<h3 id="orge2c6db0"><span class="section-number-3">3.5</span> Prediction intervals and confidence intervals</h3>
+<div id="outline-container-orgee75ac6" class="outline-3">
+<h3 id="orgee75ac6"><span class="section-number-3">3.5.</span> Prediction intervals and confidence intervals</h3>
 <div class="outline-text-3" id="text-3-5">
 <div class="org-src-container">
 <pre class="src src-R">newx  <span style="color: #8470ff; font-weight: bold;">&lt;-</span> data.frame(x=seq(from=min(daDat$x),                                    
@@ -764,7 +763,7 @@ newy$degree <span style="color: #8470ff; font-weight: bold;">&lt;-</span> factor
 </div>
 
 
-<div id="org1c57e73" class="figure">
+<div id="org3e6f4bf" class="figure">
 <p><img src="figures/regression/poly-int.png" alt="poly-int.png" />
 </p>
 </div>
@@ -772,12 +771,12 @@ newy$degree <span style="color: #8470ff; font-weight: bold;">&lt;-</span> factor
 </div>
 </div>
 
-<div id="outline-container-org758b06c" class="outline-2">
-<h2 id="org758b06c"><span class="section-number-2">4</span> Non-Linear Regression</h2>
+<div id="outline-container-org87fdde2" class="outline-2">
+<h2 id="org87fdde2"><span class="section-number-2">4.</span> Non-Linear Regression</h2>
 <div class="outline-text-2" id="text-4">
 </div>
-<div id="outline-container-org6d61d8e" class="outline-3">
-<h3 id="org6d61d8e"><span class="section-number-3">4.1</span> Example Data</h3>
+<div id="outline-container-org59db652" class="outline-3">
+<h3 id="org59db652"><span class="section-number-3">4.1.</span> Example Data</h3>
 <div class="outline-text-3" id="text-4-1">
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #ffa500;">## </span><span style="color: #ff7f24;">Make up some data: y=sin(x)+e where e is random (normal or uniform)</span>
@@ -794,8 +793,8 @@ daDat$y  <span style="color: #8470ff; font-weight: bold;">&lt;-</span> daDat$f +
 </div>
 </div>
 
-<div id="outline-container-org2f92f77" class="outline-3">
-<h3 id="org2f92f77"><span class="section-number-3">4.2</span> Compute non-linear model</h3>
+<div id="outline-container-org7ab424b" class="outline-3">
+<h3 id="org7ab424b"><span class="section-number-3">4.2.</span> Compute non-linear model</h3>
 <div class="outline-text-3" id="text-4-2">
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #ffa500;"># </span><span style="color: #ff7f24;">Compute the non-linear model</span>
@@ -833,8 +832,8 @@ Achieved convergence tolerance: 2.464e-06
 </div>
 </div>
 
-<div id="outline-container-org12b56b9" class="outline-3">
-<h3 id="org12b56b9"><span class="section-number-3">4.3</span> Plot Model</h3>
+<div id="outline-container-org87cec46" class="outline-3">
+<h3 id="org87cec46"><span class="section-number-3">4.3.</span> Plot Model</h3>
 <div class="outline-text-3" id="text-4-3">
 <div class="org-src-container">
 <pre class="src src-R">
@@ -862,7 +861,7 @@ ggplot(daDat) +
 </div>
 
 
-<div id="org91ae7d7" class="figure">
+<div id="org3bcfe94" class="figure">
 <p><img src="figures/regression/nl-basic.png" alt="nl-basic.png" />
 </p>
 </div>
@@ -871,7 +870,11 @@ ggplot(daDat) +
 </div>
 </div>
 <div id="postamble" class="status">
-Created by Mitch Richling <<a href="mailto:http://www.mitchr.me/">http://www.mitchr.me/</a>>.  Rendered on 2021-05-04 Tue 18:36 via <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.4.5)
+<br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br />
+<br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br />
+<br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br />
+<br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br />
+<br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br />
 </div>
 </body>
 </html>
