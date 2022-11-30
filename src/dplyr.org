@@ -800,7 +800,7 @@ wideData
 3:    5       NA  28.20     NA  15.80   19.7     15
 #+end_src
 
-** Long to Wide
+** Wide to Long
 
 #+BEGIN_SRC R :session :results output verbatim :exports both :tangle "../tangled/dplyr.R" :wrap "src text :eval never :tangle no"
 wideData %>%

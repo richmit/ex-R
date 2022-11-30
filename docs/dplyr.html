@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-06-04 Sat 16:19 -->
+<!-- 2022-11-29 Tue 18:13 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=1024, initial-scale=1" />
 <title>dplyr Examples</title>
@@ -193,7 +193,7 @@
     { font-size: 10px; font-weight: bold; white-space: nowrap; }
   .org-info-js_search-highlight
     { background-color: #ffff00; color: #000000; font-weight: bold; }
-  .org-svg { width: 90%; }
+  .org-svg { }
 </style>
 <style>body { width: 95%; margin: 2% auto; font-size: 18px; line-height: 1.4em; font-family: Georgia, serif; color: black; background-color: white; }</style>
 <style>body { min-width: 820px; max-width: 1024px; }</style>
@@ -229,7 +229,7 @@
 
 <tr>
 <td class="org-right"><b>Updated:</b></td>
-<td class="org-left"><i>2022-06-04 16:17:46</i></td>
+<td class="org-left"><i>2022-11-29 18:02:56</i></td>
 </tr>
 </tbody>
 </table>
@@ -241,73 +241,73 @@ Copyright 2020-2021 Mitch Richling. All rights reserved.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org881ebb1">1. Metadata</a></li>
-<li><a href="#org37ae34c">2. First Steps</a>
+<li><a href="#orgde082ea">1. Metadata</a></li>
+<li><a href="#orgc9a83fe">2. First Steps</a>
 <ul>
-<li><a href="#orgd688bf1">2.1. Load the library</a></li>
-<li><a href="#orgd0b876b">2.2. Example Data</a></li>
-<li><a href="#orga07966a">2.3. Row Names</a></li>
-<li><a href="#org7c8a9ae">2.4. Chaining/Pipes vs Nesting vs Assignments</a>
+<li><a href="#orgd71cb02">2.1. Load the library</a></li>
+<li><a href="#org9bdce80">2.2. Example Data</a></li>
+<li><a href="#org0fa0990">2.3. Row Names</a></li>
+<li><a href="#orgfa080d6">2.4. Chaining/Pipes vs Nesting vs Assignments</a>
 <ul>
-<li><a href="#org5c14014">2.4.1. Chaining (Pipes)</a></li>
-<li><a href="#orga526d32">2.4.2. Temporary Variables</a></li>
-<li><a href="#org2261a12">2.4.3. Composition</a></li>
+<li><a href="#orga9b0ce9">2.4.1. Chaining (Pipes)</a></li>
+<li><a href="#org48c9d2a">2.4.2. Temporary Variables</a></li>
+<li><a href="#orgcf75900">2.4.3. Composition</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org45edd33">3. Selecting Rows</a>
+<li><a href="#org4634448">3. Selecting Rows</a>
 <ul>
-<li><a href="#org07cead1">3.1. With a boolean expression</a></li>
-<li><a href="#org4eef0fd">3.2. With an index</a></li>
-<li><a href="#org3d76403">3.3. Pull out a sample row for each distinct record</a></li>
+<li><a href="#org075d0d1">3.1. With a boolean expression</a></li>
+<li><a href="#orgd69a464">3.2. With an index</a></li>
+<li><a href="#orga1096e0">3.3. Pull out a sample row for each distinct record</a></li>
 </ul>
 </li>
-<li><a href="#org84e7062">4. Sorting</a></li>
-<li><a href="#org7c4043d">5. Selecting Columns</a>
+<li><a href="#org8743ea7">4. Sorting</a></li>
+<li><a href="#org5f487f0">5. Selecting Columns</a>
 <ul>
-<li><a href="#org22d9d12">5.1. With a range</a></li>
-<li><a href="#orge2d0ccd">5.2. Select and rename</a></li>
-<li><a href="#orgaa414df">5.3. Just rename (but keep other columns)</a></li>
+<li><a href="#orgf977dc0">5.1. With a range</a></li>
+<li><a href="#org8996b23">5.2. Select and rename</a></li>
+<li><a href="#org88d31bb">5.3. Just rename (but keep other columns)</a></li>
 </ul>
 </li>
-<li><a href="#org4157ecf">6. New columns</a>
+<li><a href="#org7a3c7df">6. New columns</a>
 <ul>
-<li><a href="#org058cdb5">6.1. Compute new columns based on other columns</a></li>
-<li><a href="#orge39a06f">6.2. Compute new columns based on other columns and throw away all the old columns</a></li>
+<li><a href="#org6a0e3e0">6.1. Compute new columns based on other columns</a></li>
+<li><a href="#orgbdbee63">6.2. Compute new columns based on other columns and throw away all the old columns</a></li>
 </ul>
 </li>
-<li><a href="#org70f7eaa">7. Aggregation</a>
+<li><a href="#org44d3c7c">7. Aggregation</a>
 <ul>
-<li><a href="#org71aa152">7.1. Global Aggregation</a></li>
-<li><a href="#orgff41fff">7.2. Aggregate by factor level</a></li>
-<li><a href="#org932975d">7.3. Aggregate by multiple factors</a></li>
-<li><a href="#org1a32373">7.4. Summarize by group and put results back in data frame</a></li>
+<li><a href="#org3141a12">7.1. Global Aggregation</a></li>
+<li><a href="#orgc8652f8">7.2. Aggregate by factor level</a></li>
+<li><a href="#org8a9d870">7.3. Aggregate by multiple factors</a></li>
+<li><a href="#org090e781">7.4. Summarize by group and put results back in data frame</a></li>
 </ul>
 </li>
-<li><a href="#orgc0d05f9">8. Join</a>
+<li><a href="#orgc47864e">8. Join</a>
 <ul>
-<li><a href="#org979f933">8.1. Example Data For Joins</a></li>
-<li><a href="#org8b7bf8d">8.2. Inner Join</a></li>
-<li><a href="#orga544a0d">8.3. Left Join</a></li>
-<li><a href="#org6184e43">8.4. Right Join</a></li>
-<li><a href="#org0a8a9ca">8.5. full outer Join</a></li>
-<li><a href="#orgf9e27d9">8.6. Find left matches</a></li>
-<li><a href="#org4f8fb0e">8.7. Fixing column names</a></li>
+<li><a href="#orgc725c86">8.1. Example Data For Joins</a></li>
+<li><a href="#org86f7764">8.2. Inner Join</a></li>
+<li><a href="#org1b3089e">8.3. Left Join</a></li>
+<li><a href="#org2a7914a">8.4. Right Join</a></li>
+<li><a href="#org46a2e42">8.5. full outer Join</a></li>
+<li><a href="#org3a1e9b7">8.6. Find left matches</a></li>
+<li><a href="#orgf2cc60e">8.7. Fixing column names</a></li>
 </ul>
 </li>
-<li><a href="#org5e7f9aa">9. Long &amp; Wide</a>
+<li><a href="#org370072d">9. Long &amp; Wide</a>
 <ul>
-<li><a href="#org3ef72ab">9.1. Long to Wide</a></li>
-<li><a href="#org81ae511">9.2. Long to Wide</a></li>
+<li><a href="#org3f18146">9.1. Long to Wide</a></li>
+<li><a href="#org9f7ce1c">9.2. Wide to Long</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org881ebb1" class="outline-2">
-<h2 id="org881ebb1"><span class="section-number-2">1.</span> Metadata</h2>
+<div id="outline-container-orgde082ea" class="outline-2">
+<h2 id="orgde082ea"><span class="section-number-2">1.</span> Metadata</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 The home for this HTML file is: <a href="https://richmit.github.io/ex-R/dplyr.html">https://richmit.github.io/ex-R/dplyr.html</a>
@@ -359,12 +359,12 @@ Directory contents:
 </div>
 </div>
 
-<div id="outline-container-org37ae34c" class="outline-2">
-<h2 id="org37ae34c"><span class="section-number-2">2.</span> First Steps</h2>
+<div id="outline-container-orgc9a83fe" class="outline-2">
+<h2 id="orgc9a83fe"><span class="section-number-2">2.</span> First Steps</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-orgd688bf1" class="outline-3">
-<h3 id="orgd688bf1"><span class="section-number-3">2.1.</span> Load the library</h3>
+<div id="outline-container-orgd71cb02" class="outline-3">
+<h3 id="orgd71cb02"><span class="section-number-3">2.1.</span> Load the library</h3>
 <div class="outline-text-3" id="text-2-1">
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #8470ff; font-weight: bold;">library</span>(dplyr)
@@ -375,8 +375,8 @@ Directory contents:
 </div>
 </div>
 
-<div id="outline-container-orgd0b876b" class="outline-3">
-<h3 id="orgd0b876b"><span class="section-number-3">2.2.</span> Example Data</h3>
+<div id="outline-container-org9bdce80" class="outline-3">
+<h3 id="org9bdce80"><span class="section-number-3">2.2.</span> Example Data</h3>
 <div class="outline-text-3" id="text-2-2">
 <div class="org-src-container">
 <pre class="src src-R">mtcars
@@ -422,8 +422,8 @@ Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2
 </div>
 </div>
 
-<div id="outline-container-orga07966a" class="outline-3">
-<h3 id="orga07966a"><span class="section-number-3">2.3.</span> Row Names</h3>
+<div id="outline-container-org0fa0990" class="outline-3">
+<h3 id="org0fa0990"><span class="section-number-3">2.3.</span> Row Names</h3>
 <div class="outline-text-3" id="text-2-3">
 <div class="org-src-container">
 <pre class="src src-R">mtcarsR <span style="color: #8470ff; font-weight: bold;">&lt;-</span>
@@ -448,8 +448,8 @@ mtcarsR <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
 </div>
 </div>
 
-<div id="outline-container-org7c8a9ae" class="outline-3">
-<h3 id="org7c8a9ae"><span class="section-number-3">2.4.</span> Chaining/Pipes vs Nesting vs Assignments</h3>
+<div id="outline-container-orgfa080d6" class="outline-3">
+<h3 id="orgfa080d6"><span class="section-number-3">2.4.</span> Chaining/Pipes vs Nesting vs Assignments</h3>
 <div class="outline-text-3" id="text-2-4">
 <p>
 Using the Tidyverse tends to lead to deeply nested function calls, which can get a bit messy using traditional infix notation.  Ofcource the LISPers would
@@ -459,8 +459,8 @@ taransformations, so the pipe concept seems liek a good fit.  After this section
 </p>
 </div>
 
-<div id="outline-container-org5c14014" class="outline-4">
-<h4 id="org5c14014"><span class="section-number-4">2.4.1.</span> Chaining (Pipes)</h4>
+<div id="outline-container-orga9b0ce9" class="outline-4">
+<h4 id="orga9b0ce9"><span class="section-number-4">2.4.1.</span> Chaining (Pipes)</h4>
 <div class="outline-text-4" id="text-2-4-1">
 <p>
 Chaining is a technique using the %&gt;% operator that can be used to "chain" together dplyr calls into sequential steps.  Note modern R versions contain native
@@ -488,8 +488,8 @@ pipe operators that have slightly different semantics.  In this document I'll st
 </div>
 </div>
 
-<div id="outline-container-orga526d32" class="outline-4">
-<h4 id="orga526d32"><span class="section-number-4">2.4.2.</span> Temporary Variables</h4>
+<div id="outline-container-org48c9d2a" class="outline-4">
+<h4 id="org48c9d2a"><span class="section-number-4">2.4.2.</span> Temporary Variables</h4>
 <div class="outline-text-4" id="text-2-4-2">
 <p>
 A favorite for FORTRAN programmers!
@@ -517,8 +517,8 @@ tmp
 </div>
 </div>
 
-<div id="outline-container-org2261a12" class="outline-4">
-<h4 id="org2261a12"><span class="section-number-4">2.4.3.</span> Composition</h4>
+<div id="outline-container-orgcf75900" class="outline-4">
+<h4 id="orgcf75900"><span class="section-number-4">2.4.3.</span> Composition</h4>
 <div class="outline-text-4" id="text-2-4-3">
 <p>
 How the LISPers do it, but with worse syntax. ;)
@@ -550,12 +550,12 @@ How the LISPers do it, but with worse syntax. ;)
 </div>
 </div>
 
-<div id="outline-container-org45edd33" class="outline-2">
-<h2 id="org45edd33"><span class="section-number-2">3.</span> Selecting Rows</h2>
+<div id="outline-container-org4634448" class="outline-2">
+<h2 id="org4634448"><span class="section-number-2">3.</span> Selecting Rows</h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-org07cead1" class="outline-3">
-<h3 id="org07cead1"><span class="section-number-3">3.1.</span> With a boolean expression</h3>
+<div id="outline-container-org075d0d1" class="outline-3">
+<h3 id="org075d0d1"><span class="section-number-3">3.1.</span> With a boolean expression</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 You can actually replace that &amp; with a comma, but I'm usually explicit about this sort of thing
@@ -584,8 +584,8 @@ You can actually replace that &amp; with a comma, but I'm usually explicit about
 </div>
 </div>
 
-<div id="outline-container-org4eef0fd" class="outline-3">
-<h3 id="org4eef0fd"><span class="section-number-3">3.2.</span> With an index</h3>
+<div id="outline-container-orgd69a464" class="outline-3">
+<h3 id="orgd69a464"><span class="section-number-3">3.2.</span> With an index</h3>
 <div class="outline-text-3" id="text-3-2">
 <div class="org-src-container">
 <pre class="src src-R">mtcarsR <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
@@ -606,8 +606,8 @@ You can actually replace that &amp; with a comma, but I'm usually explicit about
 </div>
 </div>
 
-<div id="outline-container-org3d76403" class="outline-3">
-<h3 id="org3d76403"><span class="section-number-3">3.3.</span> Pull out a sample row for each distinct record</h3>
+<div id="outline-container-orga1096e0" class="outline-3">
+<h3 id="orga1096e0"><span class="section-number-3">3.3.</span> Pull out a sample row for each distinct record</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 More useful if <code>dplyr::select</code> is used to limit input to the column(s)
@@ -636,8 +636,8 @@ More useful if <code>dplyr::select</code> is used to limit input to the column(s
 </div>
 </div>
 
-<div id="outline-container-org84e7062" class="outline-2">
-<h2 id="org84e7062"><span class="section-number-2">4.</span> Sorting</h2>
+<div id="outline-container-org8743ea7" class="outline-2">
+<h2 id="org8743ea7"><span class="section-number-2">4.</span> Sorting</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 Could have used '-gear' here as 'gear' is numeric, but 'desc' works on strings as well.
@@ -689,12 +689,12 @@ Could have used '-gear' here as 'gear' is numeric, but 'desc' works on strings a
 </div>
 </div>
 
-<div id="outline-container-org7c4043d" class="outline-2">
-<h2 id="org7c4043d"><span class="section-number-2">5.</span> Selecting Columns</h2>
+<div id="outline-container-org5f487f0" class="outline-2">
+<h2 id="org5f487f0"><span class="section-number-2">5.</span> Selecting Columns</h2>
 <div class="outline-text-2" id="text-5">
 </div>
-<div id="outline-container-org22d9d12" class="outline-3">
-<h3 id="org22d9d12"><span class="section-number-3">5.1.</span> With a range</h3>
+<div id="outline-container-orgf977dc0" class="outline-3">
+<h3 id="orgf977dc0"><span class="section-number-3">5.1.</span> With a range</h3>
 <div class="outline-text-3" id="text-5-1">
 <p>
 Love how you can use column names with the range operator.  Numbers work too, but that is boring.
@@ -720,8 +720,8 @@ Love how you can use column names with the range operator.  Numbers work too, bu
 </div>
 </div>
 
-<div id="outline-container-orge2d0ccd" class="outline-3">
-<h3 id="orge2d0ccd"><span class="section-number-3">5.2.</span> Select and rename</h3>
+<div id="outline-container-org8996b23" class="outline-3">
+<h3 id="org8996b23"><span class="section-number-3">5.2.</span> Select and rename</h3>
 <div class="outline-text-3" id="text-5-2">
 <div class="org-src-container">
 <pre class="src src-R">mtcarsR <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
@@ -743,8 +743,8 @@ Love how you can use column names with the range operator.  Numbers work too, bu
 </div>
 </div>
 
-<div id="outline-container-orgaa414df" class="outline-3">
-<h3 id="orgaa414df"><span class="section-number-3">5.3.</span> Just rename (but keep other columns)</h3>
+<div id="outline-container-org88d31bb" class="outline-3">
+<h3 id="org88d31bb"><span class="section-number-3">5.3.</span> Just rename (but keep other columns)</h3>
 <div class="outline-text-3" id="text-5-3">
 <div class="org-src-container">
 <pre class="src src-R">mtcarsR <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
@@ -767,12 +767,12 @@ Love how you can use column names with the range operator.  Numbers work too, bu
 </div>
 </div>
 
-<div id="outline-container-org4157ecf" class="outline-2">
-<h2 id="org4157ecf"><span class="section-number-2">6.</span> New columns</h2>
+<div id="outline-container-org7a3c7df" class="outline-2">
+<h2 id="org7a3c7df"><span class="section-number-2">6.</span> New columns</h2>
 <div class="outline-text-2" id="text-6">
 </div>
-<div id="outline-container-org058cdb5" class="outline-3">
-<h3 id="org058cdb5"><span class="section-number-3">6.1.</span> Compute new columns based on other columns</h3>
+<div id="outline-container-org6a0e3e0" class="outline-3">
+<h3 id="org6a0e3e0"><span class="section-number-3">6.1.</span> Compute new columns based on other columns</h3>
 <div class="outline-text-3" id="text-6-1">
 <div class="org-src-container">
 <pre class="src src-R">mtcarsR <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
@@ -794,8 +794,8 @@ Love how you can use column names with the range operator.  Numbers work too, bu
 </div>
 </div>
 
-<div id="outline-container-orge39a06f" class="outline-3">
-<h3 id="orge39a06f"><span class="section-number-3">6.2.</span> Compute new columns based on other columns and throw away all the old columns</h3>
+<div id="outline-container-orgbdbee63" class="outline-3">
+<h3 id="orgbdbee63"><span class="section-number-3">6.2.</span> Compute new columns based on other columns and throw away all the old columns</h3>
 <div class="outline-text-3" id="text-6-2">
 <div class="org-src-container">
 <pre class="src src-R">mtcarsR <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
@@ -818,12 +818,12 @@ Love how you can use column names with the range operator.  Numbers work too, bu
 </div>
 </div>
 
-<div id="outline-container-org70f7eaa" class="outline-2">
-<h2 id="org70f7eaa"><span class="section-number-2">7.</span> Aggregation</h2>
+<div id="outline-container-org44d3c7c" class="outline-2">
+<h2 id="org44d3c7c"><span class="section-number-2">7.</span> Aggregation</h2>
 <div class="outline-text-2" id="text-7">
 </div>
-<div id="outline-container-org71aa152" class="outline-3">
-<h3 id="org71aa152"><span class="section-number-3">7.1.</span> Global Aggregation</h3>
+<div id="outline-container-org3141a12" class="outline-3">
+<h3 id="org3141a12"><span class="section-number-3">7.1.</span> Global Aggregation</h3>
 <div class="outline-text-3" id="text-7-1">
 <div class="org-src-container">
 <pre class="src src-R">mtcarsR <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
@@ -840,8 +840,8 @@ Love how you can use column names with the range operator.  Numbers work too, bu
 </div>
 </div>
 
-<div id="outline-container-orgff41fff" class="outline-3">
-<h3 id="orgff41fff"><span class="section-number-3">7.2.</span> Aggregate by factor level</h3>
+<div id="outline-container-orgc8652f8" class="outline-3">
+<h3 id="orgc8652f8"><span class="section-number-3">7.2.</span> Aggregate by factor level</h3>
 <div class="outline-text-3" id="text-7-2">
 <div class="org-src-container">
 <pre class="src src-R">mtcarsR <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
@@ -861,8 +861,8 @@ Love how you can use column names with the range operator.  Numbers work too, bu
 </div>
 </div>
 
-<div id="outline-container-org932975d" class="outline-3">
-<h3 id="org932975d"><span class="section-number-3">7.3.</span> Aggregate by multiple factors</h3>
+<div id="outline-container-org8a9d870" class="outline-3">
+<h3 id="org8a9d870"><span class="section-number-3">7.3.</span> Aggregate by multiple factors</h3>
 <div class="outline-text-3" id="text-7-3">
 <div class="org-src-container">
 <pre class="src src-R">mtcarsR <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
@@ -887,8 +887,8 @@ Love how you can use column names with the range operator.  Numbers work too, bu
 </div>
 </div>
 
-<div id="outline-container-org1a32373" class="outline-3">
-<h3 id="org1a32373"><span class="section-number-3">7.4.</span> Summarize by group and put results back in data frame</h3>
+<div id="outline-container-org090e781" class="outline-3">
+<h3 id="org090e781"><span class="section-number-3">7.4.</span> Summarize by group and put results back in data frame</h3>
 <div class="outline-text-3" id="text-7-4">
 <div class="org-src-container">
 <pre class="src src-R">mtcarsR <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
@@ -939,12 +939,12 @@ Love how you can use column names with the range operator.  Numbers work too, bu
 </div>
 </div>
 
-<div id="outline-container-orgc0d05f9" class="outline-2">
-<h2 id="orgc0d05f9"><span class="section-number-2">8.</span> Join</h2>
+<div id="outline-container-orgc47864e" class="outline-2">
+<h2 id="orgc47864e"><span class="section-number-2">8.</span> Join</h2>
 <div class="outline-text-2" id="text-8">
 </div>
-<div id="outline-container-org979f933" class="outline-3">
-<h3 id="org979f933"><span class="section-number-3">8.1.</span> Example Data For Joins</h3>
+<div id="outline-container-orgc725c86" class="outline-3">
+<h3 id="orgc725c86"><span class="section-number-3">8.1.</span> Example Data For Joins</h3>
 <div class="outline-text-3" id="text-8-1">
 <div class="org-src-container">
 <pre class="src src-R">carSurvey <span style="color: #8470ff; font-weight: bold;">&lt;-</span> data.table::fread(header=T, text=<span style="color: #fa8072;">'</span>
@@ -989,8 +989,8 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-org8b7bf8d" class="outline-3">
-<h3 id="org8b7bf8d"><span class="section-number-3">8.2.</span> Inner Join</h3>
+<div id="outline-container-org86f7764" class="outline-3">
+<h3 id="org86f7764"><span class="section-number-3">8.2.</span> Inner Join</h3>
 <div class="outline-text-3" id="text-8-2">
 <p>
 Here we only get records that match on both the left (x) and right (y) sides.
@@ -1018,8 +1018,8 @@ Here we only get records that match on both the left (x) and right (y) sides.
 </div>
 </div>
 
-<div id="outline-container-orga544a0d" class="outline-3">
-<h3 id="orga544a0d"><span class="section-number-3">8.3.</span> Left Join</h3>
+<div id="outline-container-org1b3089e" class="outline-3">
+<h3 id="org1b3089e"><span class="section-number-3">8.3.</span> Left Join</h3>
 <div class="outline-text-3" id="text-8-3">
 <p>
 Now we get a record for <b>every</b> record on the left (x), and any records on the right (y) that match one on the left (x).  For the "extra" records with no
@@ -1073,8 +1073,8 @@ matching data on the right (y), <code>NA</code> values are introduced.
 </div>
 </div>
 
-<div id="outline-container-org6184e43" class="outline-3">
-<h3 id="org6184e43"><span class="section-number-3">8.4.</span> Right Join</h3>
+<div id="outline-container-org2a7914a" class="outline-3">
+<h3 id="org2a7914a"><span class="section-number-3">8.4.</span> Right Join</h3>
 <div class="outline-text-3" id="text-8-4">
 <p>
 Now we get a record for <b>every</b> record on the right (y), and any records on the left (x) that match one on the right (y).  For the "extra" records with no
@@ -1104,8 +1104,8 @@ matching data on the left (x), <code>NA</code> values are introduced.
 </div>
 </div>
 
-<div id="outline-container-org0a8a9ca" class="outline-3">
-<h3 id="org0a8a9ca"><span class="section-number-3">8.5.</span> full outer Join</h3>
+<div id="outline-container-org46a2e42" class="outline-3">
+<h3 id="org46a2e42"><span class="section-number-3">8.5.</span> full outer Join</h3>
 <div class="outline-text-3" id="text-8-5">
 <p>
 Now we get a record for <b>every</b> record on the left (x) and right (y).  Any extra records that don't match the other side get <code>NA</code> values.
@@ -1159,8 +1159,8 @@ Now we get a record for <b>every</b> record on the left (x) and right (y).  Any 
 </div>
 </div>
 
-<div id="outline-container-orgf9e27d9" class="outline-3">
-<h3 id="orgf9e27d9"><span class="section-number-3">8.6.</span> Find left matches</h3>
+<div id="outline-container-org3a1e9b7" class="outline-3">
+<h3 id="org3a1e9b7"><span class="section-number-3">8.6.</span> Find left matches</h3>
 <div class="outline-text-3" id="text-8-6">
 <p>
 Sometimes you just want to filter a table by keeping only records that match some other table.  Note <code>semi_join</code> is not just a <code>left_join</code> followed by the
@@ -1188,8 +1188,8 @@ removal of the right columns: 1) The column titles are from the left side only, 
 </div>
 </div>
 
-<div id="outline-container-org4f8fb0e" class="outline-3">
-<h3 id="org4f8fb0e"><span class="section-number-3">8.7.</span> Fixing column names</h3>
+<div id="outline-container-orgf2cc60e" class="outline-3">
+<h3 id="orgf2cc60e"><span class="section-number-3">8.7.</span> Fixing column names</h3>
 <div class="outline-text-3" id="text-8-7">
 <div class="org-src-container">
 <pre class="src src-R">mtcarsR <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
@@ -1214,8 +1214,8 @@ removal of the right columns: 1) The column titles are from the left side only, 
 </div>
 </div>
 
-<div id="outline-container-org5e7f9aa" class="outline-2">
-<h2 id="org5e7f9aa"><span class="section-number-2">9.</span> Long &amp; Wide</h2>
+<div id="outline-container-org370072d" class="outline-2">
+<h2 id="org370072d"><span class="section-number-2">9.</span> Long &amp; Wide</h2>
 <div class="outline-text-2" id="text-9">
 <p>
 In the past I had an entire page with examples of how to transform data between wide and long formats using various R tools.  Today I almost always use <code>tidyr</code>&#x2026;
@@ -1253,8 +1253,8 @@ longData
 </div>
 </div>
 
-<div id="outline-container-org3ef72ab" class="outline-3">
-<h3 id="org3ef72ab"><span class="section-number-3">9.1.</span> Long to Wide</h3>
+<div id="outline-container-org3f18146" class="outline-3">
+<h3 id="org3f18146"><span class="section-number-3">9.1.</span> Long to Wide</h3>
 <div class="outline-text-3" id="text-9-1">
 <div class="org-src-container">
 <pre class="src src-R">wideData <span style="color: #8470ff; font-weight: bold;">&lt;-</span>
@@ -1277,8 +1277,8 @@ wideData
 </div>
 </div>
 
-<div id="outline-container-org81ae511" class="outline-3">
-<h3 id="org81ae511"><span class="section-number-3">9.2.</span> Long to Wide</h3>
+<div id="outline-container-org9f7ce1c" class="outline-3">
+<h3 id="org9f7ce1c"><span class="section-number-3">9.2.</span> Wide to Long</h3>
 <div class="outline-text-3" id="text-9-2">
 <div class="org-src-container">
 <pre class="src src-R">wideData <span style="color: #8470ff; font-weight: bold;">%&gt;%</span>
