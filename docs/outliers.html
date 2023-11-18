@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-06-04 Sat 16:19 -->
+<!-- 2023-11-15 Wed 09:31 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=1024, initial-scale=1" />
 <title>Outliers</title>
@@ -193,7 +193,7 @@
     { font-size: 10px; font-weight: bold; white-space: nowrap; }
   .org-info-js_search-highlight
     { background-color: #ffff00; color: #000000; font-weight: bold; }
-  .org-svg { width: 90%; }
+  .org-svg { }
 </style>
 <style>body { width: 95%; margin: 2% auto; font-size: 18px; line-height: 1.4em; font-family: Georgia, serif; color: black; background-color: white; }</style>
 <style>body { min-width: 820px; max-width: 1024px; }</style>
@@ -229,7 +229,7 @@
 
 <tr>
 <td class="org-right"><b>Updated:</b></td>
-<td class="org-left"><i>2022-06-04 16:17:46</i></td>
+<td class="org-left"><i>2023-11-15 09:31:12</i></td>
 </tr>
 </tbody>
 </table>
@@ -241,18 +241,22 @@ Copyright 2020-2021 Mitch Richling. All rights reserved.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org106922b">1. Metadata</a></li>
-<li><a href="#org5bad1f1">2. Example Data</a></li>
-<li><a href="#orgd92dc4b">3. Good Old 3 sigma rule</a></li>
-<li><a href="#org1c6635b">4. Hampel identifier</a></li>
-<li><a href="#orgcb7e933">5. boxplot rule</a></li>
-<li><a href="#org8f00e33">6. Plot it all</a></li>
+<li><a href="#orge243d2e">1. Metadata</a></li>
+<li><a href="#org65ed3a5">2. Example Data</a></li>
+<li><a href="#orgaa8679d">3. Good Old 3 sigma rule</a></li>
+<li><a href="#org6c28f9b">4. Hampel identifier</a></li>
+<li><a href="#orge7d5db0">5. boxplot rule</a></li>
+<li><a href="#org1bfe627">6. Plot it all</a>
+<ul>
+<li><a href="#orgcd0cfc9">6.1. Refrence Plots</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org106922b" class="outline-2">
-<h2 id="org106922b"><span class="section-number-2">1.</span> Metadata</h2>
+<div id="outline-container-orge243d2e" class="outline-2">
+<h2 id="orge243d2e"><span class="section-number-2">1.</span> Metadata</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 The home for this HTML file is: <a href="https://richmit.github.io/ex-R/outliers.html">https://richmit.github.io/ex-R/outliers.html</a>
@@ -304,8 +308,8 @@ Directory contents:
 </div>
 </div>
 
-<div id="outline-container-org5bad1f1" class="outline-2">
-<h2 id="org5bad1f1"><span class="section-number-2">2.</span> Example Data</h2>
+<div id="outline-container-org65ed3a5" class="outline-2">
+<h2 id="org65ed3a5"><span class="section-number-2">2.</span> Example Data</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Three kinds of data (set <code>dataType</code> to one of the following):
@@ -335,8 +339,8 @@ dataType
 </div>
 </div>
 
-<div id="outline-container-orgd92dc4b" class="outline-2">
-<h2 id="orgd92dc4b"><span class="section-number-2">3.</span> Good Old 3 sigma rule</h2>
+<div id="outline-container-orgaa8679d" class="outline-2">
+<h2 id="orgaa8679d"><span class="section-number-2">3.</span> Good Old 3 sigma rule</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Also called the "normal" Rule
@@ -356,8 +360,8 @@ cutOffSig <span style="color: #8470ff; font-weight: bold;">&lt;-</span> cParmSig
 </div>
 </div>
 
-<div id="outline-container-org1c6635b" class="outline-2">
-<h2 id="org1c6635b"><span class="section-number-2">4.</span> Hampel identifier</h2>
+<div id="outline-container-org6c28f9b" class="outline-2">
+<h2 id="org6c28f9b"><span class="section-number-2">4.</span> Hampel identifier</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 Good data: [median–c*mad, median+c*mad]
@@ -373,8 +377,8 @@ cutOffHem <span style="color: #8470ff; font-weight: bold;">&lt;-</span> cParmHem
 </div>
 </div>
 
-<div id="outline-container-orgcb7e933" class="outline-2">
-<h2 id="orgcb7e933"><span class="section-number-2">5.</span> boxplot rule</h2>
+<div id="outline-container-orge7d5db0" class="outline-2">
+<h2 id="orge7d5db0"><span class="section-number-2">5.</span> boxplot rule</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 Good data: [Q1–c*IQD,Q3+c*IQD], IQD=Q3–Q1, Q1 is the first quartile, and Q3 the third
@@ -389,29 +393,30 @@ cutOffBox <span style="color: #8470ff; font-weight: bold;">&lt;-</span> daQUAR+c
 </div>
 </div>
 
-<div id="outline-container-org8f00e33" class="outline-2">
-<h2 id="org8f00e33"><span class="section-number-2">6.</span> Plot it all</h2>
+<div id="outline-container-org1bfe627" class="outline-2">
+<h2 id="org1bfe627"><span class="section-number-2">6.</span> Plot it all</h2>
 <div class="outline-text-2" id="text-6">
 <div class="org-src-container">
 <pre class="src src-R">plot(1:length(daData), daData,                                                 <span style="color: #ffa500;"># </span><span style="color: #ff7f24;">Plot the data with artificial x-data</span>
      ylim=c(-1,1)*max(abs(c(daData,                                            <span style="color: #ffa500;"># </span><span style="color: #ff7f24;">Set the y-axis to be symmetric about 0 and</span>
-                            cutOffSig, cutOffHem, cutOffBox))),                  <span style="color: #ffa500;"># </span><span style="color: #ff7f24;">big enough for all data and intervals</span>
-     pch=<span style="color: #fa8072;">'.'</span>)                                                                  <span style="color: #ffa500;"># </span><span style="color: #ff7f24;">Plot tiny dots for data points!</span>
+                            cutOffSig, cutOffHem, cutOffBox))),                <span style="color: #ffa500;"># </span><span style="color: #ff7f24;">big enough for all data and intervals</span>
+     main=paste(<span style="color: #fa8072;">'Outliers Plot ('</span>, dataType, <span style="color: #fa8072;">')'</span>, sep=<span style="color: #fa8072;">''</span>),
+     ylab=<span style="color: #fa8072;">'Data'</span>, xlab=<span style="color: #fa8072;">'Data Index'</span>)
 
 abline(h=cutOffSig, col=<span style="color: #fa8072;">'red'</span>)                                                 <span style="color: #ffa500;"># </span><span style="color: #ff7f24;">Draw the interval limit lines</span>
 outIdx <span style="color: #8470ff; font-weight: bold;">&lt;-</span> daData&lt;cutOffSig[1] | daData&gt;cutOffSig[2]                            <span style="color: #ffa500;"># </span><span style="color: #ff7f24;">Find outliers</span>
 points((1:length(daData))[outIdx], daData[outIdx], col=<span style="color: #fa8072;">'red'</span>, cex=2, pch=3)    <span style="color: #ffa500;"># </span><span style="color: #ff7f24;">Draw red, pch=3 points on outliers</span>
-<span style="color: #00ffff;">if</span>(dataType==<span style="color: #fa8072;">'hand'</span>) text(12, cutOffSig, <span style="color: #fa8072;">"3 Sigma"</span>, pos=c(3,1), col=<span style="color: #fa8072;">'red'</span>)     <span style="color: #ffa500;"># </span><span style="color: #ff7f24;">For hand crafted data, label interval limit lines</span>
+<span style="color: #00ffff;">if</span>(dataType==<span style="color: #fa8072;">'hand'</span>) text(12, cutOffSig, <span style="color: #fa8072;">"3 Sigma"</span>, pos=c(3,1), col=<span style="color: #fa8072;">'red'</span>)     <span style="color: #ffa500;"># </span><span style="color: #ff7f24;">Label interval limits for hand crafted data</span>
 
 abline(h=cutOffHem, col=<span style="color: #fa8072;">'blue'</span>)                                                <span style="color: #ffa500;"># </span><span style="color: #ff7f24;">Draw the interval limit lines</span>
 outIdx <span style="color: #8470ff; font-weight: bold;">&lt;-</span> daData&lt;cutOffHem[1] | daData&gt;cutOffHem[2]                            <span style="color: #ffa500;"># </span><span style="color: #ff7f24;">Find outliers</span>
 points((1:length(daData))[outIdx], daData[outIdx], col=<span style="color: #fa8072;">'blue'</span>, cex=2, pch=4)   <span style="color: #ffa500;"># </span><span style="color: #ff7f24;">Draw blue, pch=4 points on outliers</span>
-<span style="color: #00ffff;">if</span>(dataType==<span style="color: #fa8072;">'hand'</span>) text(12, cutOffHem, <span style="color: #fa8072;">"Hampel"</span>, pos=c(3,1), col=<span style="color: #fa8072;">'blue'</span>)     <span style="color: #ffa500;"># </span><span style="color: #ff7f24;">For hand crafted data, label interval limit lines</span>
+<span style="color: #00ffff;">if</span>(dataType==<span style="color: #fa8072;">'hand'</span>) text(12, cutOffHem, <span style="color: #fa8072;">"Hampel"</span>, pos=c(3,1), col=<span style="color: #fa8072;">'blue'</span>)     <span style="color: #ffa500;"># </span><span style="color: #ff7f24;">Label interval limits for hand crafted data</span>
 
 abline(h=cutOffBox, col=<span style="color: #fa8072;">'green3'</span>)                                              <span style="color: #ffa500;"># </span><span style="color: #ff7f24;">Draw the interval limit lines</span>
 outIdx <span style="color: #8470ff; font-weight: bold;">&lt;-</span> daData&lt;cutOffBox[1] | daData&gt;cutOffBox[2]                            <span style="color: #ffa500;"># </span><span style="color: #ff7f24;">Find outliers</span>
 points((1:length(daData))[outIdx], daData[outIdx], col=<span style="color: #fa8072;">'green3'</span>, cex=2, pch=5) <span style="color: #ffa500;"># </span><span style="color: #ff7f24;">Draw green3, pch=5 points on outliers</span>
-<span style="color: #00ffff;">if</span>(dataType==<span style="color: #fa8072;">'hand'</span>) text(12, cutOffBox, <span style="color: #fa8072;">"BoxPlot"</span>, pos=c(3,1), col=<span style="color: #fa8072;">'green3'</span>)  <span style="color: #ffa500;"># </span><span style="color: #ff7f24;">For hand crafted data, label interval limit lines</span>
+<span style="color: #00ffff;">if</span>(dataType==<span style="color: #fa8072;">'hand'</span>) text(12, cutOffBox, <span style="color: #fa8072;">"BoxPlot"</span>, pos=c(3,1), col=<span style="color: #fa8072;">'green3'</span>)  <span style="color: #ffa500;"># </span><span style="color: #ff7f24;">Label interval limits for hand crafted data</span>
 
 <span style="color: #00ffff;">if</span>(dataType!=<span style="color: #fa8072;">'hand'</span>)                                                           <span style="color: #ffa500;"># </span><span style="color: #ff7f24;">For non-hand crafted data, draw a legend</span>
   legend(<span style="color: #fa8072;">"bottomleft"</span>, legend=c(<span style="color: #fa8072;">"3 Sigma"</span>, <span style="color: #fa8072;">"Hampel"</span>, <span style="color: #fa8072;">"BoxPlot"</span>),
@@ -421,9 +426,32 @@ points((1:length(daData))[outIdx], daData[outIdx], col=<span style="color: #fa80
 </div>
 
 
-<div id="orgb3f7e4b" class="figure">
+<div id="org707c76a" class="figure">
 <p><img src="../docs/figures/outliers/plot.png" alt="plot.png" />
 </p>
+</div>
+</div>
+
+<div id="outline-container-orgcd0cfc9" class="outline-3">
+<h3 id="orgcd0cfc9"><span class="section-number-3">6.1.</span> Refrence Plots</h3>
+<div class="outline-text-3" id="text-6-1">
+
+<div id="orgf947f0f" class="figure">
+<p><img src="../docs/figures/outliers/normzoom.png" alt="normzoom.png" />
+</p>
+</div>
+
+
+<div id="org8bd9c1a" class="figure">
+<p><img src="../docs/figures/outliers/weibull.png" alt="weibull.png" />
+</p>
+</div>
+
+
+<div id="orgf0f8daf" class="figure">
+<p><img src="../docs/figures/outliers/plot.png" alt="plot.png" />
+</p>
+</div>
 </div>
 </div>
 </div>

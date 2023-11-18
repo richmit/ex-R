@@ -111,23 +111,24 @@ cutOffBox <- daQUAR+cParmBox*c(-1,1)*(daQUAR[2]-daQUAR[1])    # Lower and upper 
 #+BEGIN_SRC R :session :file ../docs/figures/outliers/plot.png :width 1024 :height 768 :results graphics
 plot(1:length(daData), daData,                                                 # Plot the data with artificial x-data
      ylim=c(-1,1)*max(abs(c(daData,                                            # Set the y-axis to be symmetric about 0 and
-                            cutOffSig, cutOffHem, cutOffBox))),                  # big enough for all data and intervals
-     pch='.')                                                                  # Plot tiny dots for data points!
+                            cutOffSig, cutOffHem, cutOffBox))),                # big enough for all data and intervals
+     main=paste('Outliers Plot (', dataType, ')', sep=''),
+     ylab='Data', xlab='Data Index')
 
 abline(h=cutOffSig, col='red')                                                 # Draw the interval limit lines
 outIdx <- daData<cutOffSig[1] | daData>cutOffSig[2]                            # Find outliers
 points((1:length(daData))[outIdx], daData[outIdx], col='red', cex=2, pch=3)    # Draw red, pch=3 points on outliers
-if(dataType=='hand') text(12, cutOffSig, "3 Sigma", pos=c(3,1), col='red')     # For hand crafted data, label interval limit lines
+if(dataType=='hand') text(12, cutOffSig, "3 Sigma", pos=c(3,1), col='red')     # Label interval limits for hand crafted data
 
 abline(h=cutOffHem, col='blue')                                                # Draw the interval limit lines
 outIdx <- daData<cutOffHem[1] | daData>cutOffHem[2]                            # Find outliers
 points((1:length(daData))[outIdx], daData[outIdx], col='blue', cex=2, pch=4)   # Draw blue, pch=4 points on outliers
-if(dataType=='hand') text(12, cutOffHem, "Hampel", pos=c(3,1), col='blue')     # For hand crafted data, label interval limit lines
+if(dataType=='hand') text(12, cutOffHem, "Hampel", pos=c(3,1), col='blue')     # Label interval limits for hand crafted data
 
 abline(h=cutOffBox, col='green3')                                              # Draw the interval limit lines
 outIdx <- daData<cutOffBox[1] | daData>cutOffBox[2]                            # Find outliers
 points((1:length(daData))[outIdx], daData[outIdx], col='green3', cex=2, pch=5) # Draw green3, pch=5 points on outliers
-if(dataType=='hand') text(12, cutOffBox, "BoxPlot", pos=c(3,1), col='green3')  # For hand crafted data, label interval limit lines
+if(dataType=='hand') text(12, cutOffBox, "BoxPlot", pos=c(3,1), col='green3')  # Label interval limits for hand crafted data
 
 if(dataType!='hand')                                                           # For non-hand crafted data, draw a legend
   legend("bottomleft", legend=c("3 Sigma", "Hampel", "BoxPlot"),
@@ -136,5 +137,13 @@ if(dataType!='hand')                                                           #
 #+END_SRC
 
 #+RESULTS:
+
+file:../docs/figures/outliers/plot.png
+
+** Refrence Plots
+
+file:../docs/figures/outliers/normzoom.png
+
+file:../docs/figures/outliers/weibull.png
 
 file:../docs/figures/outliers/plot.png
