@@ -138,12 +138,12 @@ if(dataType!='hand')                                                           #
 
 #+RESULTS:
 
-file:../docs/figures/outliers/plot.png
+file:figures/outliers/plot.png
 
 ** Refrence Plots
 
-file:../docs/figures/outliers/normzoom.png
+file:figures/outliers/normzoom.png
 
-file:../docs/figures/outliers/weibull.png
+file:figures/outliers/weibull.png
 
-file:../docs/figures/outliers/plot.png
+file:figures/outliers/plot.png

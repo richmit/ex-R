@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-11-15 Wed 09:31 -->
+<!-- 2023-11-19 Sun 14:25 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=1024, initial-scale=1" />
 <title>Outliers</title>
@@ -229,7 +229,7 @@
 
 <tr>
 <td class="org-right"><b>Updated:</b></td>
-<td class="org-left"><i>2023-11-15 09:31:12</i></td>
+<td class="org-left"><i>2023-11-19 14:25:41</i></td>
 </tr>
 </tbody>
 </table>
@@ -241,22 +241,22 @@ Copyright 2020-2021 Mitch Richling. All rights reserved.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orge243d2e">1. Metadata</a></li>
-<li><a href="#org65ed3a5">2. Example Data</a></li>
-<li><a href="#orgaa8679d">3. Good Old 3 sigma rule</a></li>
-<li><a href="#org6c28f9b">4. Hampel identifier</a></li>
-<li><a href="#orge7d5db0">5. boxplot rule</a></li>
-<li><a href="#org1bfe627">6. Plot it all</a>
+<li><a href="#org80db6df">1. Metadata</a></li>
+<li><a href="#org03bdb61">2. Example Data</a></li>
+<li><a href="#orge1f6c04">3. Good Old 3 sigma rule</a></li>
+<li><a href="#org4e29bfa">4. Hampel identifier</a></li>
+<li><a href="#orge22ecda">5. boxplot rule</a></li>
+<li><a href="#org5e5eba7">6. Plot it all</a>
 <ul>
-<li><a href="#orgcd0cfc9">6.1. Refrence Plots</a></li>
+<li><a href="#org0746c53">6.1. Refrence Plots</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orge243d2e" class="outline-2">
-<h2 id="orge243d2e"><span class="section-number-2">1.</span> Metadata</h2>
+<div id="outline-container-org80db6df" class="outline-2">
+<h2 id="org80db6df"><span class="section-number-2">1.</span> Metadata</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 The home for this HTML file is: <a href="https://richmit.github.io/ex-R/outliers.html">https://richmit.github.io/ex-R/outliers.html</a>
@@ -308,8 +308,8 @@ Directory contents:
 </div>
 </div>
 
-<div id="outline-container-org65ed3a5" class="outline-2">
-<h2 id="org65ed3a5"><span class="section-number-2">2.</span> Example Data</h2>
+<div id="outline-container-org03bdb61" class="outline-2">
+<h2 id="org03bdb61"><span class="section-number-2">2.</span> Example Data</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Three kinds of data (set <code>dataType</code> to one of the following):
@@ -339,8 +339,8 @@ dataType
 </div>
 </div>
 
-<div id="outline-container-orgaa8679d" class="outline-2">
-<h2 id="orgaa8679d"><span class="section-number-2">3.</span> Good Old 3 sigma rule</h2>
+<div id="outline-container-orge1f6c04" class="outline-2">
+<h2 id="orge1f6c04"><span class="section-number-2">3.</span> Good Old 3 sigma rule</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Also called the "normal" Rule
@@ -360,8 +360,8 @@ cutOffSig <span style="color: #8470ff; font-weight: bold;">&lt;-</span> cParmSig
 </div>
 </div>
 
-<div id="outline-container-org6c28f9b" class="outline-2">
-<h2 id="org6c28f9b"><span class="section-number-2">4.</span> Hampel identifier</h2>
+<div id="outline-container-org4e29bfa" class="outline-2">
+<h2 id="org4e29bfa"><span class="section-number-2">4.</span> Hampel identifier</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 Good data: [median–c*mad, median+c*mad]
@@ -377,8 +377,8 @@ cutOffHem <span style="color: #8470ff; font-weight: bold;">&lt;-</span> cParmHem
 </div>
 </div>
 
-<div id="outline-container-orge7d5db0" class="outline-2">
-<h2 id="orge7d5db0"><span class="section-number-2">5.</span> boxplot rule</h2>
+<div id="outline-container-orge22ecda" class="outline-2">
+<h2 id="orge22ecda"><span class="section-number-2">5.</span> boxplot rule</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 Good data: [Q1–c*IQD,Q3+c*IQD], IQD=Q3–Q1, Q1 is the first quartile, and Q3 the third
@@ -393,8 +393,8 @@ cutOffBox <span style="color: #8470ff; font-weight: bold;">&lt;-</span> daQUAR+c
 </div>
 </div>
 
-<div id="outline-container-org1bfe627" class="outline-2">
-<h2 id="org1bfe627"><span class="section-number-2">6.</span> Plot it all</h2>
+<div id="outline-container-org5e5eba7" class="outline-2">
+<h2 id="org5e5eba7"><span class="section-number-2">6.</span> Plot it all</h2>
 <div class="outline-text-2" id="text-6">
 <div class="org-src-container">
 <pre class="src src-R">plot(1:length(daData), daData,                                                 <span style="color: #ffa500;"># </span><span style="color: #ff7f24;">Plot the data with artificial x-data</span>
@@ -426,30 +426,30 @@ points((1:length(daData))[outIdx], daData[outIdx], col=<span style="color: #fa80
 </div>
 
 
-<div id="org707c76a" class="figure">
-<p><img src="../docs/figures/outliers/plot.png" alt="plot.png" />
+<div id="org332c93d" class="figure">
+<p><img src="figures/outliers/plot.png" alt="plot.png" />
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgcd0cfc9" class="outline-3">
-<h3 id="orgcd0cfc9"><span class="section-number-3">6.1.</span> Refrence Plots</h3>
+<div id="outline-container-org0746c53" class="outline-3">
+<h3 id="org0746c53"><span class="section-number-3">6.1.</span> Refrence Plots</h3>
 <div class="outline-text-3" id="text-6-1">
 
-<div id="orgf947f0f" class="figure">
-<p><img src="../docs/figures/outliers/normzoom.png" alt="normzoom.png" />
+<div id="org3b7acc5" class="figure">
+<p><img src="figures/outliers/normzoom.png" alt="normzoom.png" />
 </p>
 </div>
 
 
-<div id="org8bd9c1a" class="figure">
-<p><img src="../docs/figures/outliers/weibull.png" alt="weibull.png" />
+<div id="org3d55e3f" class="figure">
+<p><img src="figures/outliers/weibull.png" alt="weibull.png" />
 </p>
 </div>
 
 
-<div id="orgf0f8daf" class="figure">
-<p><img src="../docs/figures/outliers/plot.png" alt="plot.png" />
+<div id="orgde5ea18" class="figure">
+<p><img src="figures/outliers/plot.png" alt="plot.png" />
 </p>
 </div>
 </div>
